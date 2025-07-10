@@ -1,70 +1,165 @@
-# Getting Started with Create React App
+## 📌 Git 작업 흐름 요약
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+※ 본인 브랜치명이 `PSH`일 경우
 
-## Available Scripts
+```bash
+1. git clone https://github.com/팀이름/project-name.git
+2. cd project-name
+3. git checkout -b PSH origin/PSH
+4. git checkout main
+5. git pull origin main
+6. git checkout PSH
+7. git merge main
 
-In the project directory, you can run:
+8. 작업
+9. git add .
+10. git commit -m "[250710] feat: 메인 페이지 레이아웃 구현"
+11. git push origin PSH
 
-### `npm start`
+12. GitHub에서 PR 생성
+13. 팀장이 PR 병합 (Squash and Merge)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+14. git checkout main
+15. git pull origin main
+16. git checkout PSH
+17. git merge main
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## ✅1. 저장소 클론 및 브랜치 설정
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 🔹 1) 저장소 클론 받기
 
-### `npm run build`
+```bash
+git clone https://github.com/팀이름/project-name.git
+cd project-name
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 🔹 2) 자신의 브랜치로 전환 (팀장이 미리 만든 브랜치 사용)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- 미리 생성되어 있는 자신의 이니셜 브랜치를 사용하세요! (ex- 박서현 → `PSH`)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+git checkout -b PSH origin/PSH
+```
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## ✅ 2. 작업 전 항상 main 최신화
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+모든 작업 전에는 항상 **main 브랜치를 최신 상태로 유지**해야 합니다.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+git checkout main
+git pull origin main
+git checkout PSH
+git merge main
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## ✅ 3. 코드 작업 → 커밋 → 푸시
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 🔹 1) 코드 작업
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+코드를 작성하거나 수정하세요.
 
-### Code Splitting
+### 🔹 2) 커밋하기
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+git add .
+git commit -m "[250710] feat: 메인 페이지 레이아웃 구현"
+```
 
-### Analyzing the Bundle Size
+> 커밋 메시지 규칙 예시:
+> 
+> - `feat`: 새로운 기능
+> - `fix`: 버그 수정
+> - `style`: 스타일 변경
+> - `refactor`: 코드 개선
+> - `docs`: 문서 수정
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### 🔹 3) 푸시하기
 
-### Making a Progressive Web App
+```bash
+git push origin PSH
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## ✅ 4. PR(Pull Request) 보내기
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+1. GitHub에서 레포지터리 저장소 접속
+2. 상단 `Pull Requests` → `New Pull Request`
+3. **base**: `main` / **compare**: `본인브랜치`
+4. 제목과 설명 작성
+    
+    <aside>
+    📌
+    
+    예시)
+    
+    - **제목**: `JYS | 메인 페이지 Hero 섹션 구현`
+    - **본문**:
+        
+        > 반응형 구현 완료버튼 컴포넌트 공용화함
+        🙏 리뷰 부탁드립니다!
+        > 
+    </aside>
+    
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## ✅ 5. 팀장이 PR 리뷰 후 main에 병합 (merge)
 
-### `npm run build` fails to minify
+### 병합 방식 추천: `Squash and merge`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- 커밋을 하나로 합쳐서 main 브랜치가 깔끔해짐
+- 병합 후 자동으로 브랜치 삭제 설정 가능
+
+---
+
+## ✅ 6. 병합된 후 각자 로컬에 main 업데이트 필수!
+
+main이 병합되었더라도 본인 로컬 main은 아직 이전 상태입니다. **꼭 main을 최신화하세요!**
+
+```bash
+git checkout main
+git pull origin main
+git checkout PSH
+git merge main
+```
+
+---
+
+## ✅ 7. `.gitignore` 설정하기 (React 프로젝트)
+
+### `.gitignore`란?
+
+> Git이 추적하지 않아야 할 파일을 설정하는 곳입니다.
+> 
+> 
+> ex) `node_modules`, `.env`, 시스템 파일 등
+> 
+
+### 📄 기본 예시 (`.gitignore` 파일에 아래 내용 추가)
+
+```bash
+# node modules
+node_modules/
+
+# build output
+build/
+dist/
+
+# dotenv 환경 변수
+.env
+
+# macOS, log 파일 등
+.DS_Store
+*.log
+```
+
+- `.gitignore` 파일은 **프로젝트 루트**에 위치해야 합니다.
+- `create-react-app` 등으로 생성 시 기본 포함되어 있습니다.
