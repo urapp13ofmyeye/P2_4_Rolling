@@ -1,13 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+
 .list-header {
   box-sizing: border-box;
   height: 64px;
   background-color: #ffffff;
   border-bottom: 1px solid #ededed;
-  padding: 11px 10rem;
+  padding: 11px 0;
 }
 
 .navbar {
-  max-width: 1920px;
+  margin: 0 auto;
+  max-width: 1247px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -39,10 +42,12 @@ main {
   flex-direction: column;
   align-items: center;
   text-align: left;
+  box-sizing: border-box;
 }
 
 .card-wrapper {
   max-width: 1160px;
+  margin: 20px 0;
 }
 
 .card-list-title {
@@ -52,11 +57,13 @@ main {
 .card-list {
   display: flex;
   gap: 20px;
+  position: relative;
+  height: 260px;
 }
 
 .card {
   width: 275px;
-  padding: 20px;
+  padding: 24px 30px;
   border-radius: 16px;
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -89,6 +96,14 @@ main {
   margin-left: 0;
 }
 
+.card-recent-profileImg-count {
+  padding: 5px 6px;
+  background-color: #ffffff;
+  border-radius: 30px;
+  margin-left: -12px;
+  font-size: 12px;
+}
+
 .card-message-count {
   color: #616161;
 }
@@ -113,4 +128,47 @@ main {
   border-radius: 32px;
   background-color: rgba(0, 0, 0, 0.54);
   color: #ffffff;
+}
+
+.toReaction-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.arrow-button {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #dadcdf;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.arrow-button-prev {
+  left: -20px;
+}
+
+.arrow-button-next {
+  right: -20px;
+}
+
+.arrow-button img {
+  width: 0.5rem;
+  height: 0.8rem;
+}
+
+.add-card-button {
+  margin: 40px;
+  color: white;
+  width: 280px;
+  background-color: #805ad5;
+  padding: 14px 24px;
+  border-radius: 12px;
+  border: 1px solid #805ad5;
+  font-size: 18px;
 }

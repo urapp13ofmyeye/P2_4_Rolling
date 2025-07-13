@@ -2,10 +2,10 @@ const mockRecipients = [
   {
     id: 1,
     name: "김하늘",
-    backgroundColor: "#CE93D8",
+    backgroundColor: "rgba(220, 185, 255, 0.4)",
     backgroundImageURL: null,
     createdAt: "2023-11-01T10:00:00Z",
-    messageCount: 2,
+    messageCount: 3,
     recentMessages: [
       {
         id: 101,
@@ -40,18 +40,18 @@ const mockRecipients = [
     ],
     reactionCount: 12,
     topReactions: [
-      { id: 1, emoji: "👍", count: 5 },
-      { id: 2, emoji: "❤️", count: 3 },
-      { id: 3, emoji: "❤️", count: 3 },
+      { id: 1, emoji: "👍", count: 20 },
+      { id: 2, emoji: "❤️", count: 12 },
+      { id: 3, emoji: "❤️", count: 7 },
     ],
   },
   {
     id: 2,
     name: "강영훈",
-    backgroundColor: "green",
+    backgroundColor: "rgba(255,211,130,0.7)",
     backgroundImageURL: null,
-    createdAt: "2023-10-26T13:19:31Z",
-    messageCount: 3,
+    createdAt: "2024-10-26T13:19:31Z",
+    messageCount: 1,
     recentMessages: [
       {
         id: 103,
@@ -73,10 +73,10 @@ const mockRecipients = [
   {
     id: 3,
     name: "이지은",
-    backgroundColor: "purple",
+    backgroundColor: "#9DDDFF",
     backgroundImageURL: null,
     createdAt: "2023-11-03T09:00:00Z",
-    messageCount: 1,
+    messageCount: 3,
     recentMessages: [
       {
         id: 104,
@@ -95,10 +95,10 @@ const mockRecipients = [
   {
     id: 4,
     name: "최우식",
-    backgroundColor: "beige",
+    backgroundColor: "rgba(155, 226, 130, 0.3)",
     backgroundImageURL: null,
-    createdAt: "2023-11-02T15:00:00Z",
-    messageCount: 4,
+    createdAt: "2025-11-02T15:00:00Z",
+    messageCount: 0,
     recentMessages: [],
     reactionCount: 0,
     topReactions: [],
@@ -106,10 +106,10 @@ const mockRecipients = [
   {
     id: 5,
     name: "한지민",
-    backgroundColor: "blue",
+    backgroundColor: "rgba(220, 185, 255, 0.4)",
     backgroundImageURL: null,
     createdAt: "2023-11-04T12:00:00Z",
-    messageCount: 2,
+    messageCount: 0,
     recentMessages: [],
     reactionCount: 3,
     topReactions: [{ id: 39, emoji: "💐", count: 3 }],
@@ -117,7 +117,7 @@ const mockRecipients = [
   {
     id: 6,
     name: "박서준",
-    backgroundColor: "green",
+    backgroundColor: "rgba(155, 226, 130, 0.3)",
     backgroundImageURL: null,
     createdAt: "2023-11-05T13:00:00Z",
     messageCount: 0,
