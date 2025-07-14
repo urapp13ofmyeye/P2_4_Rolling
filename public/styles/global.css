@@ -1,0 +1,117 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    background: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+img {
+    vertical-align: bottom;
+}
+
+body {
+    color: #ffffff;
+    word-break: keep-all;
+    font-family: "Pretendard"
+}
+
+/* 헤더 */
+/* 전체 헤더 배경, 선 포함 */
+header {
+    width: 100%;
+    height: 64px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #ededed;
+}
+
+/* 헤더 내부의 콘텐츠 정렬*/
+.header-inner {
+    max-width: 1248px;
+    margin: 0 auto;
+    padding: 0 24px;
+    box-sizing: border-box;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.wrapper {
+    max-width: 1248px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 24px; 
+    box-sizing: border-box;
+}
+
+/* 버튼 공통 가이드 */
+/* Primary Button */
+.primaryButton {
+    background-color: #9935ff;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.primaryButton:hover {
+    background-color: #861dee;
+}
+
+.primaryButton:focus {
+    background-color: #6e0ad1;
+}
+
+.primaryButton:active {
+    background-color: #6e0ad1; 
+}
+
+.primaryButton:disabled {
+    background-color: #cccccc;
+    cursor: default;
+    pointer-events: none;
+}
+
+
+/* Outline Button */
+.outLinedButton {
+    background-color: #ffffff;
+    color: #181818;
+    outline: 1px solid #cccccc;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.outLinedButton:hover {
+    background-color: #f6f6f6;
+}
+
+.outLinedButton:focus {
+    background-color: #ffffff;
+    outline: 1px solid #555555;
+}
+
+.outLinedButton:active {
+    background-color: #f6f6f6; 
+}
+
+.outLinedButton:disabled {
+    background-color: #cccccc;
+    cursor: default;
+    pointer-events: none;
+}

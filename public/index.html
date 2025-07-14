@@ -1,17 +1,71 @@
 <!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="%PUBLIC_URL%/images/favicon_Rolling.png" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css"
-    />
+<html>
+    <head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <link rel="icon" href="/images/logo/favicon_rolling.png">
+	    <meta property="og:title" content="롤링">
+	    <meta property="og:description" content="전통적인 롤링페이퍼 문화를 웹으로 구현한 커뮤니티형 플랫폼입니다.">
+	    <meta property="og:image" content="/images/logo/meta-image.png">
+	    <meta property="og:url" content="/">
+	    <link rel="stylesheet" as="style" crossorigin="" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+        <link rel="stylesheet" href="/styles/global.css">
+        <link rel="stylesheet" href="styles/home.css">
+        <link rel="stylesheet" href="styles/toast-popup.css">
+	    <title>롤링(Rolling)</title>
+    </head>
+    <body>
+        <header class="header">
+            <div class="header-inner">
+                <a href="/">
+                    <img src="images/logo/rolling-logo.png" alt="롤링 홈" class="logo" />
+                </a>
+                <a href="/post.html" id="postLinkButton" class="outLinedButton">롤링 페이퍼 만들기</a>
+            </div>
+        </header>
+        <main>
+            <section id="features" class="wrapper">
+                <div class="feature">
+                <img src="images/home/feature1-image.png" alt="Point 01" width="50%"/>
+                    <div class="feature-content">
+                        <h2 class="feature-tag">Point 01</h2>
+                        <h1 class="feature-title">
+                            누구나 손쉽게, 온라인<br />
+                            롤링 페이퍼를 만들 수 있어요
+                        </h1>
+                        <p class="feature-description">
+                            로그인 없이 자유롭게 만들어요
+                        </p>
+                    </div>
+                </div>
+                <div class="feature">
+                <img src="images/home/feature2-image.png" alt="Point 02" width="50%"/>
+                    <div class="feature-content">
+                        <h2 class="feature-tag">Point 02</h2>
+                        <h1 class="feature-title">
+                            서로에게 이모지로 감정을<br />
+                            표현해보세요
+                        </h1>
+                        <p class="feature-description">
+                            롤링 페이퍼에 이모지를 추가할 수 있어요
+                        </p>
+                    </div>
+                </div>
+                <div class="buttonBox">
+                    <a href="/list.html" id="listLinkButton" class="primaryButton">구경해보기</a>
+                </div>
+                
+                <!-- 토스트 박스 -->
+                <script src="/toast.js"></script>
+                <div id="toast" class="toast">
+                    <img src="images/toast/completed.png" alt="check" class="toast-icon" />
+                    <span class="toast-message">URL이 복사되었습니다.</span>
+                    <img src="images/toast/close.png" alt="close" class="toast-close" onclick="closeToast()" />
+                </div>
 
-    <title>React App</title>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+                <!-- 테스트용 버튼 -->
+                <button onclick="copyUrl()">URL 공유</button>
+            </section>
+        </main>
+    </body>
 </html>

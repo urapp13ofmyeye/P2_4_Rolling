@@ -1,0 +1,47 @@
+/* Desktop */
+.toast { 
+    background-color: #000000;
+    width: 100%;
+    max-width: 524px;
+    height: 64px;
+    border-radius: 8px;
+    padding: 0 20px;
+    
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    z-index: 9999;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.toast-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.toast-message {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 26px;
+    color: #ffffff;
+    padding-left: 10px;
+}
+
+.toast-close {
+    width: 24px;
+    height: 24px;
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.toast.show {
+  opacity: 0.8;
+  visibility: visible;
+}
