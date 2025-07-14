@@ -1,0 +1,40 @@
+/* 전역 초기화 */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Header 스타일 */
+.header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 100;
+  padding: 19px 20px;
+  margin-bottom: 32px;
+  /*border-bottom: 1px solid #ddd;*/
+  box-sizing: border-box;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: -200px;
+  padding-left: 0;
+}
+
+.logo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.header h2 {
+  font-weight: 600;
+  font-size: 20px;
+  margin: 0;
+}

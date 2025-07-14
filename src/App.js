@@ -11,6 +11,8 @@ import CardList from "./components/CardList";
 import Card from "./components/Card";
 import Option from "./components/Option";
 
+import MessagePage from "./pages/Message/MessagePage"; // 📌 MessagePage 컴포넌트 import
+
 const HomePage = () => (
   <>
     <Header />
@@ -40,7 +42,7 @@ const PostPage = () => (
 const PostDetailPage = () => (
   <>
     <Header />
-    <h1>생성된 롤링페이퍼 상세 페이지 (/post/123)</h1> {/* 하드코딩 */}
+    <h1>생성된 롤링페이퍼 상세 페이지 (/post/:id)</h1>
     <Card />
   </>
 );
@@ -48,21 +50,12 @@ const PostDetailPage = () => (
 const PostEditPage = () => (
   <>
     <Header />
-    <h1>롤링페이퍼 수정 페이지 (/post/123/edit)</h1>
+    <h1>롤링페이퍼 수정 페이지 (/post/:id/edit)</h1>
     <Button>삭제하기</Button>
   </>
 );
 
-const MessagePage = () => (
-  <>
-    <Header />
-    <h1>롤링페이퍼 메시지 보내기 페이지 (/post/123/message)</h1>
-    <TextField placeholder="From." />
-    <Option />
-    <Button>생성하기</Button>
-  </>
-);
-
+// ✅ 기존의 /post/:id/message 외에, /message 경로도 임시로 추가
 function App() {
   return (
     <Router>
@@ -73,6 +66,7 @@ function App() {
         <Route path="/post/:id" element={<PostDetailPage />} />
         <Route path="/post/:id/edit" element={<PostEditPage />} />
         <Route path="/post/:id/message" element={<MessagePage />} />
+        <Route path="/message" element={<MessagePage />} /> {/* ✅ 임시로 /message 추가 */}
       </Routes>
     </Router>
   );
