@@ -1,0 +1,248 @@
+/* src/components/Header.css */
+.detail-header {
+  position: sticky;
+  top: 64px; 
+  background-color: #ffffff; 
+  z-index: 900;
+  border-bottom: 1px solid #ededed;
+}
+
+.detail-header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detail-header-left {
+  flex: 1;
+}
+
+.recipient-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2d3436;
+  margin: 0;
+  font-family: "Pretendard", sans-serif;
+}
+
+.detail-header-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.participants-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-avatars {
+  display: flex;
+  align-items: center;
+  margin-right: 4px;
+}
+
+.profile-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid white;
+  margin-left: -8px;
+}
+
+.profile-avatar:first-child {
+  margin-left: 0;
+}
+
+.avatar-1 {
+  background: #ff6b6b;
+}
+
+.avatar-2 {
+  background: #4ecdc4;
+}
+
+.avatar-3 {
+  background: #45b7d1;
+}
+
+.participant-count {
+  color: #636e72;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Pretendard", sans-serif;
+  background: none;
+  padding: 0;
+  border: none;
+}
+
+.reactions-section {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.reaction-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 20px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.reaction-item:hover {
+  background: #e9ecef;
+  border-color: #dee2e6;
+}
+
+.reaction-emoji {
+  font-size: 16px;
+}
+
+.reaction-count {
+  font-size: 14px;
+  font-weight: 500;
+  color: #495057;
+  font-family: "Pretendard", sans-serif;
+}
+
+.toggle-reactions-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  margin-left: 4px;
+  color: #6c757d;
+}
+
+.toggle-reactions-btn:hover {
+  background: #e9ecef;
+  border-color: #dee2e6;
+}
+
+.arrow-icon {
+  transition: transform 0.2s ease;
+}
+
+.arrow-icon.rotated {
+  transform: rotate(180deg);
+}
+
+.add-reaction-container {
+  position: relative;
+  margin-left: 4px;
+}
+
+.add-reaction-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #6c757d;
+  transition: all 0.2s;
+  font-family: "Pretendard", sans-serif;
+}
+
+.add-reaction-btn:hover {
+  background: #e9ecef;
+  border-color: #dee2e6;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  position: relative;
+}
+
+.btn-share {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.btn-share:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.share-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+/* 1248px 이하에서 반응형 */
+@media (max-width: 1248px) {
+  .logo-bar-content,
+  .header-content {
+    margin: 0 24px;
+    max-width: none;
+  }
+
+  .header-right {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .logo-bar-content,
+  .header-content {
+    margin: 0 16px;
+    padding: 12px 0;
+  }
+
+  .header-content {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .header-right {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .reactions-section {
+    order: 1;
+  }
+
+  .participants-section {
+    order: 2;
+  }
+
+  .action-buttons {
+    order: 3;
+    align-self: flex-end;
+  }
+}
