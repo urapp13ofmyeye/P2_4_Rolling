@@ -72,13 +72,12 @@ const DetailHeader = ({
      <Header />
 
      <div className="detail-header">
-      <div className="detail-header">
         <div className="detail-header-content">
           <div className="detail-header-left">
             <h1 className="recipient-name">To. {recipientName}</h1>
           </div>
 
-          <div className="header-right">
+          <div className="detail-header-right">
             <div className="participants-section">
               <div className="profile-avatars">
                 <div className="profile-avatar avatar-1"></div>
@@ -166,7 +165,6 @@ const DetailHeader = ({
             </div>
           </div>
         </div>
-      </div>
       </div>
     </>
   );

@@ -10,7 +10,7 @@ function Header({ showPostButton = false }) {
           <img src="/images/logo/rolling-logo.png" alt="롤링 홈" className="logo" />
         </a>
         {showPostButton && (
-          <Button id="postLinkButton" type="outLined" to="/post">
+          <Button id="postLinkButton" type="outLined" to="/PostCreate">
             롤링 페이퍼 만들기
           </Button>
         )}

@@ -23,7 +23,7 @@ export default function ListPage() {
         <ListSection title="최근에 만든 롤링 페이퍼 ⭐️" cards={cards} sortBy="createdAt" />
 
         <div className="buttonBox">
-          <Button id="createLinkButton" type="primary" to="/post">
+          <Button id="createLinkButton" type="primary" to="/PostCreate">
           나도 만들어보기
           </Button>
         </div>

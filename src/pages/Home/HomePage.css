@@ -1,16 +1,4 @@
 /* Desktop */
-
-/* Header */
-/* 롤링 페이퍼 만들기 버튼 */
-#postLinkButton {
-    width: 157px;
-    height: 40px;
-    font-size: 16px;
-    font-weight: 700;
-    border-radius: 6px;
-    padding: 8px 16px;
-}
-
 /* 본문 서비스 소개 영역 */
 .wrapper {
     max-width: 1248px;

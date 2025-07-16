@@ -5,15 +5,24 @@ main {
   text-align: left;
 }
 
+main > * {
+  margin-top: 50px;
+}
+
 .card-wrapper {
   max-width: 1160px;
 }
 
 .card-list-title {
+  color: #000000;
   font-size: 24px;
+  font-weight: 700;
+  line-height: 36px;
+  margin-bottom: 20px;
 }
 
 .card-list {
+  position: relative;
   display: flex;
   gap: 20px;
 }
@@ -32,8 +41,10 @@ main {
 }
 
 .card-name {
+  color: #181818;
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 700;
+  line-height: 36px;
 }
 
 .card-recent-profileImg {
@@ -43,23 +54,47 @@ main {
 }
 
 .card-profile {
+  background-color: #ffffff;
   width: 28px;
   height: 28px;
   border-radius: 50%;
   margin-left: -12px;
+  border: 1.5px solid #ffffff ;
+  box-sizing: border-box;
 }
 
 .card-profile:first-child {
   margin-left: 0;
 }
 
+.card-recent-profileImg-count {
+  background-color: #ffffff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-left: -12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #555555;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+}
+
 .card-message-count {
-  color: #616161;
+  color: #3A3A3A;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
 }
 
 .card-message-count span {
-  font-weight: bold;
-  color: black;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 26px;
 }
 
 .card-toReactions {
@@ -73,10 +108,58 @@ main {
 }
 
 .toReaction {
+  width: 65px;
+  height: 36px;
   padding: 8px 12px;
   border-radius: 32px;
-  background-color: rgba(0, 0, 0, 0.54);
+  background-color: #000000;
+  opacity: 54%;
+  
   color: #ffffff;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.toReaction-icons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  width: 20px;
+  height: 20px;
+}
+
+.arrow-button {
+  position: absolute; 
+  top: 50%; 
+  transform: translateY(-50%); 
+  
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #dadcdf;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* 왼쪽 화살표 버튼 */
+.arrow-button-prev {
+  left: -20px;
+}
+
+/* 오른쪽 화살표 버튼 */
+.arrow-button-next {
+  right: -20px;
+}
+
+.arrow-button img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
 }
 
 /* 나도 만들어보기 버튼 */
@@ -84,7 +167,8 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 24px 0px
+    padding: 24px 0px;
+    margin-top: 20px;
 }
 
 #createLinkButton {

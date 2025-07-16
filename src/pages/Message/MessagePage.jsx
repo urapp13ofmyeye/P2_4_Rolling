@@ -3,6 +3,7 @@ import Header from "../../components/Header";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import "./MessagePage.css";
+import Header from '../../components/Header';
 
 const profileImages = [
   "/images/messagepage_profile1.png",

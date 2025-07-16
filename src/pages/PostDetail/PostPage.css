@@ -34,7 +34,7 @@
 }
 
 .post-main-content {
-  padding: 40px 0 24px 0;
+  padding: 120px 0 24px 0;
   position: relative;
   max-width: 1200px;
   margin: 0 auto;
@@ -42,7 +42,7 @@
 
 .btn-delete-floating {
   position: absolute;
-  top: -16px;
+  top: 63px;
   right: 24px;
   padding: 10px 20px;
   border-radius: 6px;

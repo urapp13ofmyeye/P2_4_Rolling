@@ -1,4 +1,6 @@
 import { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
+
 
 export default function ListSection({ title, cards, sortBy }) {
   const [startIndex, setStartIndex] = useState(0);
@@ -41,8 +43,7 @@ export default function ListSection({ title, cards, sortBy }) {
           </button>
         )}
         {visibleCards.map((card) => (
-          <div
-            key={card.id}
+          <Link to="/post" key={card.id}
             className="card"
             style={{ backgroundColor: card.backgroundColor }}
           >
@@ -80,13 +81,12 @@ export default function ListSection({ title, cards, sortBy }) {
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
         {startIndex + visibleCount < sortedCards.length && (
           <button
             onClick={handleNext}
-            className="arrow-button arrow-button-next"
-          >
+            className="arrow-button arrow-button-next">
             <img src="images/list/arrow-right.png" alt="arrow-right" />
           </button>
         )}

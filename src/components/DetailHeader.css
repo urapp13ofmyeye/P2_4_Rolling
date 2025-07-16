@@ -202,31 +202,29 @@
 
 /* 1248px 이하에서 반응형 */
 @media (max-width: 1248px) {
-  .logo-bar-content,
-  .header-content {
+  .detail-header-content {
     margin: 0 24px;
     max-width: none;
   }
 
-  .header-right {
+  .detail-header-right {
     gap: 16px;
   }
 }
 
 @media (max-width: 768px) {
-  .logo-bar-content,
-  .header-content {
+  .detail-header-content {
     margin: 0 16px;
     padding: 12px 0;
   }
 
-  .header-content {
+  .detail-header-content {
     flex-direction: column;
     gap: 16px;
     align-items: flex-start;
   }
 
-  .header-right {
+  .detail-header-right {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
