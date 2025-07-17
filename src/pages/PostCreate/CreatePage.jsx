@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
-import Header from '../../components/Header';
+import Header from "../../components/Header";
 
 const StyledLink = styled(Link)`
   display: flex;
@@ -143,12 +143,7 @@ function CreatePage() {
       <Outer>
         <Container>
           <Label>To.</Label>
-          <Input
-            type="text"
-            id="text"
-            name="text"
-            placeholder="받는 사람 이름을 입력해주세요."
-          />
+          <Input type="text" id="text" name="text" placeholder="받는 사람 이름을 입력해주세요." />
           <h2>배경화면을 선택해 주세요.</h2>
           <p>컬러를 선택하거나, 이미지를 선택할 수 있습니다.</p>
           <ButtonBox>

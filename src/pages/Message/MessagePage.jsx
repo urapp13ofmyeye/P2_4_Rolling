@@ -79,7 +79,7 @@ export default function MessagePage() {
       </section>
 
       <section className="form-section">
-        <p className="section-title">폰트 선택</p>
+        <p className="section-title">폰트 선택 </p>
         <select className="half-select">
           {fonts.map((font, idx) => (
             <option key={idx} value={font}>
