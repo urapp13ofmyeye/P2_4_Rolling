@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
-import Header from '../../components/Header';
+import Header from "../../components/Header";
 
 const StyledLink = styled(Link)`
   display: flex;
@@ -135,20 +135,11 @@ function CreatePage() {
 
   return (
     <>
-      <StyledLink to="/">
-        <img src="/logoimg.png" alt="logo" />
-        <LogoText>Rolling</LogoText>
-      </StyledLink>
-      <hr style={{ opacity: 0.5 }} />
+      <Header showPostButton={true} />
       <Outer>
         <Container>
           <Label>To.</Label>
-          <Input
-            type="text"
-            id="text"
-            name="text"
-            placeholder="받는 사람 이름을 입력해주세요."
-          />
+          <Input type="text" id="text" name="text" placeholder="받는 사람 이름을 입력해주세요." />
           <h2>배경화면을 선택해 주세요.</h2>
           <p>컬러를 선택하거나, 이미지를 선택할 수 있습니다.</p>
           <ButtonBox>
@@ -199,7 +190,7 @@ function CreatePage() {
               <img src="Img2.png" alt="이미지4" />
             </ImageBox>
           )}
-          <CreateLinkButton>생성하기</CreateLinkButton> //to 넣기
+          <CreateLinkButton>생성하기</CreateLinkButton>
         </Container>
       </Outer>
     </>

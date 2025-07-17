@@ -1,28 +1,27 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 a {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
 button {
-    background: none;
-    border: none;
-    outline: none;
-    box-shadow: none;
-    cursor: pointer;
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  cursor: pointer;
 }
 
 img {
-    vertical-align: bottom;
+  vertical-align: bottom;
 }
 
 body {
-  color: #ffffff;
   word-break: keep-all;
   font-family: "Pretendard Variable", -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
     "Noto Sans KR", sans-serif;
