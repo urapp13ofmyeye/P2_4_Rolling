@@ -135,11 +135,7 @@ function CreatePage() {
 
   return (
     <>
-      <StyledLink to="/">
-        <img src="/logoimg.png" alt="logo" />
-        <LogoText>Rolling</LogoText>
-      </StyledLink>
-      <hr style={{ opacity: 0.5 }} />
+      <Header showPostButton={true} />
       <Outer>
         <Container>
           <Label>To.</Label>
@@ -194,7 +190,7 @@ function CreatePage() {
               <img src="Img2.png" alt="이미지4" />
             </ImageBox>
           )}
-          <CreateLinkButton>생성하기</CreateLinkButton> //to 넣기
+          <CreateLinkButton>생성하기</CreateLinkButton>
         </Container>
       </Outer>
     </>
