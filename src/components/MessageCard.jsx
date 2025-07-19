@@ -1,11 +1,10 @@
 // src/components/MessageCard.jsx
-import React from "react";
-import "./MessageCard.css";
+import './MessageCard.css';
 
 const MessageCard = ({ message, onClick, isDeleteMode, onDelete }) => {
   return (
     <div
-      className={`message-card ${isDeleteMode ? "delete-mode" : ""}`}
+      className={`message-card ${isDeleteMode ? 'delete-mode' : ''}`}
       onClick={onClick}
     >
       {isDeleteMode && (
@@ -25,7 +24,9 @@ const MessageCard = ({ message, onClick, isDeleteMode, onDelete }) => {
           {message.avatar ? (
             <img src={message.avatar} alt={message.from} />
           ) : (
-            <div className="avatar-placeholder">{message.from.charAt(0)}</div>
+            <div className="avatar-placeholder">
+              {message.from?.charAt(0) ?? '?'}
+            </div>
           )}
         </div>
         <div className="message-info">

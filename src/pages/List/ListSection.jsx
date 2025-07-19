@@ -1,15 +1,15 @@
-import { useState, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function ListSection({ title, cards, sortBy }) {
   const [startIndex, setStartIndex] = useState(0);
   const visibleCount = 4;
 
   const sortedCards = useMemo(() => {
-    if (sortBy === "messageCount") {
+    if (sortBy === 'messageCount') {
       return [...cards].sort((a, b) => b.messageCount - a.messageCount);
     }
-    if (sortBy === "createdAt") {
+    if (sortBy === 'createdAt') {
       return [...cards].sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
       );
@@ -43,7 +43,7 @@ export default function ListSection({ title, cards, sortBy }) {
         )}
         {visibleCards.map((card) => (
           <Link
-            to="/post"
+            to={`/post/${card.id}`}
             key={card.id}
             className="card"
             style={{ backgroundColor: card.backgroundColor }}

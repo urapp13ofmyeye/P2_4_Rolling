@@ -1,57 +1,33 @@
 // src/components/Header.jsx
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import rollingIcon from "/images/rollingIcon.svg";
-import shareIcon from "/images/shareIcon.svg";
-import EmojiPicker from "./EmojiPicker";
-import ShareDropdown from "./ShareDropdown";
-import "./DetailHeader.css";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import rollingIcon from '/images/rollingIcon.svg';
+import shareIcon from '/images/shareIcon.svg';
+import EmojiPicker from './EmojiPicker';
+import ShareDropdown from './ShareDropdown';
+import './DetailHeader.css';
 import Header from './Header';
 
 const DetailHeader = ({
   recipientName,
   participantCount = 23,
+  reactions = [],
+  onReact,
   onShowToast,
 }) => {
-  const [reactions, setReactions] = useState([
-    { emoji: "👍", count: 24 },
-    { emoji: "❤️", count: 18 },
-    { emoji: "😊", count: 10 },
-    { emoji: "🎉", count: 8 },
-    { emoji: "👏", count: 6 },
-    { emoji: "🔥", count: 4 },
-    { emoji: "💯", count: 3 },
-    { emoji: "😍", count: 2 },
-  ]);
-
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [showShareDropdown, setShowShareDropdown] = useState(false);
   const [showAllReactions, setShowAllReactions] = useState(false);
 
-  const handleReactionClick = (emoji) => {
-    setReactions((prev) => {
-      const existing = prev.find((r) => r.emoji === emoji);
-      if (existing) {
-        return prev
-          .map((r) => (r.emoji === emoji ? { ...r, count: r.count + 1 } : r))
-          .sort((a, b) => b.count - a.count);
-      } else {
-        return [...prev, { emoji, count: 1 }]
-          .sort((a, b) => b.count - a.count)
-          .slice(0, 8);
-      }
-    });
-  };
-
   const handleAddReaction = (emoji) => {
-    console.log("Adding reaction:", emoji);
-    handleReactionClick(emoji);
+    if (onReact) {
+      onReact(emoji);
+    }
     setShowEmojiPicker(false);
   };
 
   const handleEmojiPickerToggle = () => {
-    console.log("Toggling emoji picker, current state:", showEmojiPicker);
-    setShowEmojiPicker(!showEmojiPicker);
+    setShowEmojiPicker((prev) => !prev);
     if (showShareDropdown) {
       setShowShareDropdown(false);
     }
@@ -69,9 +45,9 @@ const DetailHeader = ({
 
   return (
     <>
-     <Header />
+      <Header />
 
-     <div className="detail-header">
+      <div className="detail-header">
         <div className="detail-header-content">
           <div className="detail-header-left">
             <h1 className="recipient-name">To. {recipientName}</h1>
@@ -94,7 +70,7 @@ const DetailHeader = ({
                 <div
                   key={index}
                   className="reaction-item"
-                  onClick={() => handleReactionClick(reaction.emoji)}
+                  onClick={() => onReact(reaction.emoji)}
                 >
                   <span className="reaction-emoji">{reaction.emoji}</span>
                   <span className="reaction-count">{reaction.count}</span>
@@ -112,7 +88,7 @@ const DetailHeader = ({
                     viewBox="0 0 16 16"
                     fill="none"
                     className={`arrow-icon ${
-                      showAllReactions ? "rotated" : ""
+                      showAllReactions ? 'rotated' : ''
                     }`}
                   >
                     <path

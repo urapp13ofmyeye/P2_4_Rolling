@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
-import mockRecipients from "./mockRecipients";
-import { fetchRecipients } from "./api";
-import "./ListPage.css";
-import Header from "../../components/Header";
-import Button from "../../components/Button";
-import ListSection from "./ListSection";
+import { useEffect, useState } from 'react';
+import { fetchRecipients } from './api';
+import './ListPage.css';
+import Header from '../../components/Header';
+import Button from '../../components/Button';
+import ListSection from './ListSection';
 
 export default function ListPage() {
   const [cards, setCards] = useState([]);
@@ -15,7 +14,7 @@ export default function ListPage() {
         const data = await fetchRecipients();
         setCards(data); // API에서 받은 데이터로 상태 설정
       } catch (error) {
-        console.error("데이터 로드 실패:", error);
+        console.error('데이터 로드 실패:', error);
       }
     }
 
