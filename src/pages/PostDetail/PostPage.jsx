@@ -9,7 +9,9 @@ import Toast from "../../components/Toast";
 import "./PostPage.css";
 
 const PostDetailPage = () => {
-  const { id } = useParams();
+  // URL에서 id를 가져오되, 없으면 'test-id'를 기본값으로 사용합니다.
+  const { id: routeId } = useParams();
+  const id = routeId || "test-id";
   const navigate = useNavigate();
 
   // 상태 관리 개선
