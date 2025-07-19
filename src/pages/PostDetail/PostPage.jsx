@@ -1,7 +1,7 @@
 // src/pages/PostPage.jsx
-import React, { useState, useEffect, useCallback } from "react";
-import { useParams } from "react-router-dom";
-import { fetchMessages, deleteMessage } from "../../api/api";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { getRecipient, getMessages, deleteMessage } from "../../api/api";
 import DetailHeader from "../../components/DetailHeader";
 import MessageGrid from "../../components/MessageGrid";
 import MessageModal from "../../components/MessageModal";
@@ -10,109 +10,92 @@ import "./PostPage.css";
 
 const PostDetailPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+
+  // 상태 관리 개선
+  const [recipient, setRecipient] = useState(null);
   const [messages, setMessages] = useState([]);
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
   const [loading, setLoading] = useState(false);
-  // const [hasMore, setHasMore] = useState(true);
-  // const [page, setPage] = useState(1);
   const [toast, setToast] = useState({ show: false, message: "" });
-  // const [postData, setPostData] = useState(null);
 
-  // 추가 메시지 생성 함수
-  // const generateMoreMessages = (startId) => {
-  //   const names = [
-  //     "김소영",
-  //     "이준호",
-  //     "박민지",
-  //     "최영수",
-  //     "정하늘",
-  //     "김별이",
-  //     "이달님",
-  //   ];
-  //   const relationships = ["동료", "친구", "지인", "가족"];
-  //   const contents = [
-  //     "축하드립니다! 앞으로도 좋은 일만 가득하길 바라요.",
-  //     "항상 응원하고 있어요. 화이팅!",
-  //     "건강하시고 행복한 일만 가득하세요.",
-  //     "새로운 시작을 진심으로 축하드려요.",
-  //     "멋진 하루 보내시고 좋은 추억 많이 만드세요.",
-  //     "당신의 꿈이 모두 이루어지길 바랍니다.",
-  //     "언제나 밝은 모습 잃지 마세요!",
-  //     "소중한 사람과 함께하는 특별한 날이 되길 바라요.",
-  //   ];
+  // 무한 스크롤 상태
+  const [offset, setOffset] = useState(0);
+  const [hasNext, setHasNext] = useState(true);
+  const observerTarget = useRef(null);
 
-  //   // 현재 가장 최신 메시지의 시간을 찾기
-  //   const latestTime = Math.max(
-  //     ...messages.map((msg) => new Date(msg.createdAt).getTime())
-  //   );
-
-  //   return Array.from({ length: 6 }, (_, index) => ({
-  //     id: startId + index,
-  //     from: names[Math.floor(Math.random() * names.length)],
-  //     relationship:
-  //       relationships[Math.floor(Math.random() * relationships.length)],
-  //     content: contents[Math.floor(Math.random() * contents.length)],
-  //     timestamp: "2023.07.09",
-  //     avatar: null,
-  //     createdAt: new Date(latestTime + (index + 1) * 10 * 60 * 1000), // 10분씩 더 최신으로
-  //   }));
-  // };
-
-  // 포스트 데이터 로드
+  // 데이터 로딩 로직 최적화
   useEffect(() => {
-    async function loadMessages() {
+    // id가 바뀔 때마다 상태 초기화
+    setRecipient(null);
+    setMessages([]);
+    setOffset(0);
+    setHasNext(true);
+
+    const loadRecipient = async () => {
       try {
-        setLoading(true);
-        const res = await fetchMessages(id); // useParams의 id == recipientId
-        setMessages(res.results ?? res); // 배열이 오거나, results 배열인지 확인
+        const recipientData = await getRecipient(id);
+        setRecipient(recipientData);
       } catch (err) {
-        setToast({
-          show: true,
-          message: err.message || "메시지 불러오기 실패",
-        });
-      } finally {
-        setLoading(false);
+        console.error(err);
+        alert("롤링페이퍼를 불러올 수 없거나 존재하지 않습니다.");
+        navigate("/list");
       }
+    };
+
+    if (id) {
+      loadRecipient();
     }
-    if (id) loadMessages();
   }, [id]);
 
-  const loadMoreMessages = async () => {
-    if (loading || !hasMore) return;
+  // 메시지 로딩 함수 (useCallback으로 최적화)
+  const loadMessages = useCallback(async () => {
+    if (loading || !hasNext) return;
 
     setLoading(true);
-
-    // 추가 메시지 시뮬레이션
-    // setTimeout(() => {
-    //   const additionalMessages = generateMoreMessages(messages.length + 1);
-
-    //   setMessages((prev) => [...prev, ...additionalMessages]);
-    //   setPage((prev) => prev + 1);
-
-    //   // 5페이지 이후로는 더 이상 로드하지 않음
-    //   if (page >= 5) {
-    //     setHasMore(false);
-    //   }
-
-    //   setLoading(false);
-    // }, 1000);
-  };
-
-  const handleScroll = useCallback(() => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop >=
-      document.documentElement.offsetHeight - 1000
-    ) {
-      loadMoreMessages();
+    try {
+      const { results, next } = await getMessages(id, { limit: 8, offset });
+      setMessages((prev) => [...prev, ...results]);
+      setOffset((prev) => prev + results.length);
+      setHasNext(!!next);
+    } catch (err) {
+      showToast(err.message || "메시지를 불러오는 데 실패했습니다.");
+    } finally {
+      setLoading(false);
     }
-  }, [loading, hasMore, messages.length, page]);
+  }, [id, loading, hasNext, offset]);
+
+  // IntersectionObserver를 사용한 무한 스크롤 구현
+  useEffect(() => {
+    // recipient 정보가 로드된 후에 메시지 로딩 시작
+    if (recipient) {
+      loadMessages();
+    }
+  }, [recipient]); // recipient가 설정되면 첫 메시지 로드
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNext && !loading) {
+          loadMessages();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const target = observerTarget.current;
+    if (target) {
+      observer.observe(target);
+    }
+
+    return () => {
+      if (target) {
+        observer.unobserve(target);
+      }
+    };
+  }, [loadMessages, hasNext, loading]);
 
   const handleMessageClick = (message) => {
     if (isDeleteMode) return;
@@ -132,11 +115,16 @@ const PostDetailPage = () => {
   const handleDeleteMessage = async (messageId) => {
     if (!window.confirm("정말로 이 메시지를 삭제하시겠습니까?")) return;
     try {
-      await deleteMessage(messageId); // recipientId 없이!
+      await deleteMessage(messageId);
       setMessages((prev) => prev.filter((message) => message.id !== messageId));
-      setToast({ show: true, message: "메시지가 삭제되었습니다." });
+      // 전체 메시지 카운트도 실시간으로 업데이트
+      setRecipient((prev) => ({
+        ...prev,
+        messageCount: prev.messageCount - 1,
+      }));
+      showToast("메시지가 삭제되었습니다.");
     } catch (err) {
-      setToast({ show: true, message: err.message || "메시지 삭제 실패" });
+      showToast(err.message || "메시지 삭제 실패");
     }
   };
 
@@ -152,12 +140,7 @@ const PostDetailPage = () => {
     setToast({ show: false, message: "" });
   };
 
-  // 최신순 정렬
-  const sortedMessages = [...messages].sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-  );
-
-  if (!postData) {
+  if (!recipient) {
     return (
       <div className="post-page">
         <div className="loading-container">
@@ -171,8 +154,8 @@ const PostDetailPage = () => {
   return (
     <div className="post-page">
       <DetailHeader
-        recipientName={postData.recipientName}
-        participantCount={postData.participantCount}
+        recipientName={recipient.name}
+        participantCount={recipient.messageCount}
         onShowToast={showToast}
       />
       <div className="post-main-content">
@@ -184,12 +167,14 @@ const PostDetailPage = () => {
         </button>
 
         <MessageGrid
-          messages={sortedMessages}
+          messages={messages}
           onMessageClick={handleMessageClick}
           isDeleteMode={isDeleteMode}
           onDeleteMessage={handleDeleteMessage}
           loading={loading}
-          hasMore={hasMore}
+          hasNext={hasNext}
+          // 무한 스크롤 타겟을 MessageGrid 내부로 전달
+          observerTargetRef={observerTarget}
         />
       </div>
 
