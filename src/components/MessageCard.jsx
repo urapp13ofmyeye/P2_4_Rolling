@@ -30,7 +30,7 @@ const MessageCard = ({ message, onClick, isDeleteMode, onDelete }) => {
           )}
         </div>
         <div className="message-info">
-          <span className="sender-name">From. {message.from}</span>
+          <span className="sender-name">From. {message.sender}</span>
           <span className={`relationship ${message.relationship}`}>
             {message.relationship}
           </span>

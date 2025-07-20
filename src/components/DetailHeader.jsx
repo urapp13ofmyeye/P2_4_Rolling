@@ -66,9 +66,9 @@ const DetailHeader = ({
             </div>
 
             <div className="reactions-section">
-              {displayedReactions.map((reaction, index) => (
+              {displayedReactions.map((reaction) => (
                 <div
-                  key={index}
+                  key={reaction.id}
                   className="reaction-item"
                   onClick={() => onReact(reaction.emoji)}
                 >

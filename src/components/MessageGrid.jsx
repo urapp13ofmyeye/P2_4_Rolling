@@ -1,8 +1,8 @@
 // src/components/MessageGrid.jsx
-import React from "react";
-import MessageCard from "./MessageCard";
-import AddMessageButton from "./AddMessageButton";
-import "./MessageGrid.css";
+import React from 'react';
+import MessageCard from './MessageCard';
+import AddMessageButton from './AddMessageButton';
+import './MessageGrid.css';
 
 const MessageGrid = ({
   messages,

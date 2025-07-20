@@ -17,7 +17,7 @@ import './PostPage.css';
 const PostPage = () => {
   const { id } = useParams(); // /post/:id에서 대상 id를 추출
   const navigate = useNavigate();
-  const [recipient, setRecipient] = useState(null); // 대상 정보
+  const [recipient, setRecipient] = useState([]); // 대상 정보
   const [messages, setMessages] = useState([]); // 메시지 목록
   const [reactions, setReactions] = useState([]); // 리액션 목록
   const [selectedMessage, setSelectedMessage] = useState(null);
@@ -46,7 +46,7 @@ const PostPage = () => {
     }
 
     loadData();
-  }, [id]);
+  }, [id, navigate]);
 
   const loadMessages = useCallback(async () => {
     if (loading || !hasNext) return;
@@ -54,7 +54,13 @@ const PostPage = () => {
 
     try {
       const { results, next } = await fetchMessages(id, { limit: 8, offset });
-      setMessages((prev) => [...prev, ...results]);
+      setMessages((prev) => {
+        const merged = [...prev, ...results];
+        const unique = merged.filter(
+          (msg, index, self) => index === self.findIndex((m) => m.id === msg.id)
+        );
+        return unique;
+      });
       setOffset((prev) => prev + results.length);
       setHasNext(!!next);
     } catch (err) {
@@ -65,8 +71,8 @@ const PostPage = () => {
   }, [id, loading, hasNext, offset]);
 
   useEffect(() => {
-    if (recipient) loadMessages();
-  }, [recipient]);
+    loadMessages();
+  }, [loadMessages]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
