@@ -62,7 +62,7 @@ export default function ListSection({ title, cards, sortBy }) {
                     ></div>
                   ))}
                   <div className="card-recent-profileImg-count">
-                    +{card.recentMessages.length}
+                    +{card.messageCount - card.recentMessages.length}
                   </div>
                 </div>
                 <p className="card-message-count">
