@@ -1,0 +1,62 @@
+/* 버튼 공통 가이드 */
+/* Primary Button */
+.primaryButton,
+.primaryButton:link,
+.primaryButton:visited {
+    background-color: #9935ff;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none; /* 링크 기본 밑줄 제거 */
+}
+
+.primaryButton:hover {
+    background-color: #861dee;
+}
+
+.primaryButton:focus {
+    background-color: #6e0ad1;
+}
+
+.primaryButton:active {
+    background-color: #6e0ad1; 
+}
+
+.primaryButton:disabled {
+    background-color: #cccccc;
+    cursor: default;
+    pointer-events: none;
+}
+
+
+/* Outline Button */
+.outLinedButton,
+.outLinedButtonButton:link,
+.outLinedButton:visited  {
+    background-color: #ffffff;
+    color: #181818;
+    outline: 1px solid #cccccc;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.outLinedButton:hover {
+    background-color: #f6f6f6;
+}
+
+.outLinedButton:focus {
+    background-color: #ffffff;
+    outline: 1px solid #555555;
+}
+
+.outLinedButton:active {
+    background-color: #f6f6f6; 
+}
+
+.outLinedButton:disabled {
+    background-color: #cccccc;
+    cursor: default;
+    pointer-events: none;
+}
