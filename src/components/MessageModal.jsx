@@ -1,6 +1,5 @@
 // src/components/MessageModal.jsx
-import React from "react";
-import "./MessageModal.css";
+import './MessageModal.css';
 
 const MessageModal = ({ message, onClose }) => {
   if (!message) return null;
@@ -15,7 +14,7 @@ const MessageModal = ({ message, onClose }) => {
                 <img src={message.avatar} alt={message.from} />
               ) : (
                 <div className="avatar-placeholder">
-                  {message.from.charAt(0)}
+                  {message.sender?.charAt(0) ?? '?'}
                 </div>
               )}
             </div>
