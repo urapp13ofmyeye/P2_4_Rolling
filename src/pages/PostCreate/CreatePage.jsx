@@ -1,26 +1,7 @@
 import styled from "styled-components";
-import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
-
-const StyledLink = styled(Link)`
-  display: flex;
-  text-decoration: none;
-  margin-left: 150px;
-  position: sticky;
-`;
-
-const LogoImg = styled.img`
-  margin: 3px;
-`;
-
-const LogoText = styled.span`
-  font-weight: bold;
-  font-size: 20px;
-  text-decoration: none;
-  padding: 8px;
-  color: #4a494f;
-`;
 
 const Outer = styled.div`
   display: flex;
@@ -53,18 +34,6 @@ const Input = styled.input`
   width: 100%;
 `;
 
-const Book = styled.h2`
-  font-weight: bold;
-  font-size: 24px;
-  color: #181818;
-`;
-
-const Parah = styled.p`
-  font-weight: 400;
-  font-size: 16px;
-  color: #555555;
-`;
-
 const ButtonBox = styled.div`
   display: flex;
   gap: 10px;
@@ -79,29 +48,37 @@ const Button = styled.button`
   width: 122px;
   background-color: #f6f6f6;
   padding: 12px;
+  cursor: pointer;
   &:hover {
     border: 2px solid #9935ff;
     background-color: #ffffff;
     color: #9935ff;
     font-weight: bold;
   }
-  ${({ active }) => {
-    active &&
-      `
+  ${({ $active }) =>
+    $active &&
+    `
     border: 2px solid #9935ff;
     background-color: #ffffff;
     color: #9935ff;
     font-weight: bold;
-    `;
-  }}
+  `}
 `;
 
 const ColorBox = styled.div`
   display: flex;
   gap: 10px;
-  width: 100%
-  outline: none;
+  width: 100%;
   margin-top: 24px;
+`;
+
+const ColorItem = styled.div`
+  width: 160px;
+  height: 160px;
+  border-radius: 12px;
+  cursor: pointer;
+  border: ${({ selected }) => (selected ? "3px solid #9935ff" : "none")};
+  background-color: ${({ color }) => color};
 `;
 
 const ImageBox = styled.div`
@@ -110,27 +87,88 @@ const ImageBox = styled.div`
   margin-top: 24px;
 `;
 
-const CreateLinkButton = styled(NavLink)`
+const ImageItem = styled.div`
+  width: 160px;
+  height: 160px;
+  border-radius: 12px;
+  cursor: pointer;
+  border: ${({ selected }) => (selected ? "3px solid #9935ff" : "none")};
+  background-image: url(${({ src }) => src});
+  background-size: cover;
+  background-position: center;
+`;
+
+const CreateLinkButton = styled.button`
   width: 100%;
   padding: 14px 24px;
-  background-color: #9935ff;
-  color: #ffffff
+  background-color: ${({ disabled }) => (disabled ? "#ccc" : "#9935ff")};
+  color: #ffffff;
   font-weight: bold;
   font-size: 18px;
   text-align: center;
-  border: 1px solid #9935ff;
+  border: 1px solid ${({ disabled }) => (disabled ? "#ccc" : "#9935ff")};
   border-radius: 12px;
   outline: none;
   margin-top: 48px;
   display: block;
-  text-decoration: none;
+  cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
+  pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
 `;
 
+const BASE_URL = "https://rolling-api.vercel.app/17-4";
+
 function CreatePage() {
-  const [mode, setMode] = useState(null);
+  const [mode, setMode] = useState(null); // "color" or "image"
+  const [name, setName] = useState("");
+  const [bgColor, setBgColor] = useState(null);
+  const [bgImage, setBgImage] = useState(null);
+  const navigate = useNavigate();
 
   const handleClick = (type) => {
-    setMode(type); //color , image
+    setMode(type);
+    setBgColor(null);
+    setBgImage(null);
+  };
+
+  const handleCreate = async () => {
+    if (!name) {
+      alert("받는 사람 이름을 입력해주세요.");
+      return;
+    }
+
+    if (mode === "color" && !bgColor) {
+      alert("배경 컬러를 선택해주세요.");
+      return;
+    }
+
+    if (mode === "image" && !bgImage) {
+      alert("배경 이미지를 선택해주세요.");
+      return;
+    }
+
+    try {
+      const body = {
+        name,
+        backgroundColor: mode === "color" ? bgColor : null,
+        backgroundImageURL: mode === "image" ? bgImage : null,
+      };
+
+      const res = await fetch(`${BASE_URL}/recipients/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (!res.ok) throw new Error("생성 실패");
+
+      const data = await res.json();
+      navigate(`/post/${data.id}`);
+    } catch (error) {
+      alert("롤링페이퍼 생성에 실패했습니다.");
+      console.error(error);
+    }
   };
 
   return (
@@ -139,58 +177,65 @@ function CreatePage() {
       <Outer>
         <Container>
           <Label>To.</Label>
-          <Input type="text" id="text" name="text" placeholder="받는 사람 이름을 입력해주세요." />
+          <Input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="받는 사람 이름을 입력해주세요."
+          />
           <h2>배경화면을 선택해 주세요.</h2>
           <p>컬러를 선택하거나, 이미지를 선택할 수 있습니다.</p>
           <ButtonBox>
-            <Button onClick={() => handleClick("color")}>컬러</Button>
-            <Button onClick={() => handleClick("image")}>이미지</Button>
+            <Button onClick={() => handleClick("color")} active={mode === "color"}>
+              컬러
+            </Button>
+            <Button onClick={() => handleClick("image")} active={mode === "image"}>
+              이미지
+            </Button>
           </ButtonBox>
+
           {mode === "color" && (
             <ColorBox>
-              <div
-                style={{
-                  backgroundColor: "#FFF2AD",
-                  width: "160px",
-                  height: "160px",
-                  borderRadius: "12px",
-                }}
-              />
-              <div
-                style={{
-                  backgroundColor: "#ECD9FF",
-                  width: "160px",
-                  height: "160px",
-                  borderRadius: "12px",
-                }}
-              />
-              <div
-                style={{
-                  backgroundColor: "#B1E4FF",
-                  width: "160px",
-                  height: "160px",
-                  borderRadius: "12px",
-                }}
-              />
-              <div
-                style={{
-                  backgroundColor: "#D0F5C3",
-                  width: "160px",
-                  height: "160px",
-                  borderRadius: "12px",
-                }}
-              />
+              <ColorItem color="#FFE2AD" selected={bgColor === "beige"} onClick={() => setBgColor("beige")} />
+              <ColorItem color="#ECD9FF" selected={bgColor === "purple"} onClick={() => setBgColor("purple")} />
+              <ColorItem color="#B1E4FF" selected={bgColor === "blue"} onClick={() => setBgColor("blue")} />
+              <ColorItem color="#D0F5C3" selected={bgColor === "green"} onClick={() => setBgColor("green")} />
             </ColorBox>
           )}
+
           {mode === "image" && (
             <ImageBox>
-              <img src="Img1.png" alt="이미지1" />
-              <img src="Img2.png" alt="이미지2" />
-              <img src="Img1.png" alt="이미지3" />
-              <img src="Img2.png" alt="이미지4" />
+              <ImageItem
+                src="/images/Background1.jpg"
+                selected={bgImage === "/images/Background1.jpg"}
+                onClick={() => setBgImage("/images/Background1.jpg")}
+              />
+              <ImageItem
+                src="/images/Background2.jpg"
+                selected={bgImage === "/images/Background2.jpg"}
+                onClick={() => setBgImage("/images/Background2.jpg")}
+              />
+              <ImageItem
+                src="/images/Background3.jpg"
+                selected={bgImage === "/images/Background3.jpg"}
+                onClick={() => setBgImage("/images/Background3.jpg")}
+              />
+              <ImageItem
+                src="/images/Background4.jpg"
+                selected={bgImage === "/images/Background4.jpg"}
+                onClick={() => setBgImage("/images/Background4.jpg")}
+              />
             </ImageBox>
           )}
-          <CreateLinkButton>생성하기</CreateLinkButton>
+
+
+          <CreateLinkButton
+            disabled={!name || (mode === "color" && !bgColor) || (mode === "image" && !bgImage)}
+            onClick={handleCreate}
+          >
+            생성하기
+          </CreateLinkButton>
+
         </Container>
       </Outer>
     </>
