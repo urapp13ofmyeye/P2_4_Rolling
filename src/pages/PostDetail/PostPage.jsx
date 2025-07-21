@@ -155,14 +155,20 @@ const PostDetailPage = () => {
 
   return (
     <div className="post-page">
-      <DetailHeader recipientName={recipient.name} participantCount={recipient.messageCount} onShowToast={showToast} />
+      <DetailHeader
+        recipientName={recipient.name}
+        participantCount={recipient.messageCount}
+        onShowToast={showToast}
+      />
       <div className="post-main-content">
-        <button className={`btn-delete-floating ${isDeleteMode ? "active" : ""}`} onClick={handleDeleteMode}>
+        <button
+          className={`btn-delete-floating ${isDeleteMode ? "active" : ""}`}
+          onClick={handleDeleteMode}
+        >
           삭제하기
         </button>
 
         <MessageGrid
-          recipientId={recipient?.id}
           messages={messages}
           onMessageClick={handleMessageClick}
           isDeleteMode={isDeleteMode}
@@ -174,9 +180,15 @@ const PostDetailPage = () => {
         />
       </div>
 
-      {isModalOpen && <MessageModal message={selectedMessage} onClose={handleCloseModal} />}
+      {isModalOpen && (
+        <MessageModal message={selectedMessage} onClose={handleCloseModal} />
+      )}
 
-      <Toast show={toast.show} message={toast.message} onClose={handleToastClose} />
+      <Toast
+        show={toast.show}
+        message={toast.message}
+        onClose={handleToastClose}
+      />
     </div>
   );
 };

@@ -130,7 +130,11 @@ const EmojiPicker = ({ onEmojiSelect, onClose }) => {
       </div>
       <div className="emoji-grid">
         {emojis.map((emoji, index) => (
-          <button key={index} className="emoji-btn" onClick={() => handleEmojiClick(emoji)}>
+          <button
+            key={index}
+            className="emoji-btn"
+            onClick={() => handleEmojiClick(emoji)}
+          >
             {emoji}
           </button>
         ))}

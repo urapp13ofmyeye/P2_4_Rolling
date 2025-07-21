@@ -1,9 +1,9 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 
+
 export default function ListSection({ title, cards, sortBy }) {
   const [startIndex, setStartIndex] = useState(0);
-
   const visibleCount = 4;
 
   const sortedCards = useMemo(() => {
@@ -11,7 +11,9 @@ export default function ListSection({ title, cards, sortBy }) {
       return [...cards].sort((a, b) => b.messageCount - a.messageCount);
     }
     if (sortBy === "createdAt") {
-      return [...cards].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      return [...cards].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
     }
     return cards;
   }, [cards, sortBy]);
@@ -33,14 +35,15 @@ export default function ListSection({ title, cards, sortBy }) {
       <h1 className="card-list-title">{title}</h1>
       <div className="card-list">
         {startIndex > 0 && (
-          <button onClick={handlePrev} className="arrow-button arrow-button-prev">
+          <button
+            onClick={handlePrev}
+            className="arrow-button arrow-button-prev"
+          >
             <img src="images/list/arrow-left.png" alt="arrow-left" />
           </button>
         )}
         {visibleCards.map((card) => (
-          <Link
-            to={`/post/${card.id}`}
-            key={card.id}
+          <Link to="/post" key={card.id}
             className="card"
             style={{ backgroundColor: card.backgroundColor }}
           >
@@ -57,7 +60,9 @@ export default function ListSection({ title, cards, sortBy }) {
                       }}
                     ></div>
                   ))}
-                  <div className="card-recent-profileImg-count">+{card.recentMessages.length}</div>
+                  <div className="card-recent-profileImg-count">
+                    +{card.recentMessages.length}
+                  </div>
                 </div>
                 <p className="card-message-count">
                   <span>{card.messageCount}명</span>이 작성했어요
@@ -79,7 +84,9 @@ export default function ListSection({ title, cards, sortBy }) {
           </Link>
         ))}
         {startIndex + visibleCount < sortedCards.length && (
-          <button onClick={handleNext} className="arrow-button arrow-button-next">
+          <button
+            onClick={handleNext}
+            className="arrow-button arrow-button-next">
             <img src="images/list/arrow-right.png" alt="arrow-right" />
           </button>
         )}
