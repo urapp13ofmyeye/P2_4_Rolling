@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { Link, NavLink } from "react-router-dom";
-import { useState } from "react";
-import Header from "../../components/Header";
+import styled from 'styled-components';
+import { Link, NavLink } from 'react-router-dom';
+import { useState } from 'react';
+import Header from '../../components/Header';
 
 const StyledLink = styled(Link)`
   display: flex;
@@ -139,50 +139,55 @@ function CreatePage() {
       <Outer>
         <Container>
           <Label>To.</Label>
-          <Input type="text" id="text" name="text" placeholder="받는 사람 이름을 입력해주세요." />
+          <Input
+            type="text"
+            id="text"
+            name="text"
+            placeholder="받는 사람 이름을 입력해주세요."
+          />
           <h2>배경화면을 선택해 주세요.</h2>
           <p>컬러를 선택하거나, 이미지를 선택할 수 있습니다.</p>
           <ButtonBox>
-            <Button onClick={() => handleClick("color")}>컬러</Button>
-            <Button onClick={() => handleClick("image")}>이미지</Button>
+            <Button onClick={() => handleClick('color')}>컬러</Button>
+            <Button onClick={() => handleClick('image')}>이미지</Button>
           </ButtonBox>
-          {mode === "color" && (
+          {mode === 'color' && (
             <ColorBox>
               <div
                 style={{
-                  backgroundColor: "#FFF2AD",
-                  width: "160px",
-                  height: "160px",
-                  borderRadius: "12px",
+                  backgroundColor: '#FFF2AD',
+                  width: '160px',
+                  height: '160px',
+                  borderRadius: '12px',
                 }}
               />
               <div
                 style={{
-                  backgroundColor: "#ECD9FF",
-                  width: "160px",
-                  height: "160px",
-                  borderRadius: "12px",
+                  backgroundColor: '#ECD9FF',
+                  width: '160px',
+                  height: '160px',
+                  borderRadius: '12px',
                 }}
               />
               <div
                 style={{
-                  backgroundColor: "#B1E4FF",
-                  width: "160px",
-                  height: "160px",
-                  borderRadius: "12px",
+                  backgroundColor: '#B1E4FF',
+                  width: '160px',
+                  height: '160px',
+                  borderRadius: '12px',
                 }}
               />
               <div
                 style={{
-                  backgroundColor: "#D0F5C3",
-                  width: "160px",
-                  height: "160px",
-                  borderRadius: "12px",
+                  backgroundColor: '#D0F5C3',
+                  width: '160px',
+                  height: '160px',
+                  borderRadius: '12px',
                 }}
               />
             </ColorBox>
           )}
-          {mode === "image" && (
+          {mode === 'image' && (
             <ImageBox>
               <img src="Img1.png" alt="이미지1" />
               <img src="Img2.png" alt="이미지2" />

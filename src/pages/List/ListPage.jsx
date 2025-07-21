@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchRecipients } from './api';
+import { fetchRecipients } from '../../api/api';
 import './ListPage.css';
 import Header from '../../components/Header';
 import Button from '../../components/Button';

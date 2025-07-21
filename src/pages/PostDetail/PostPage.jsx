@@ -11,7 +11,7 @@ import {
   fetchReactions,
   updateReaction,
   deleteMessage,
-} from '../List/api';
+} from '../../api/api';
 import './PostPage.css';
 
 const PostPage = () => {
