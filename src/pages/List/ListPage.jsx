@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
+<<<<<<< HEAD
 import mockRecipients from "./mockRecipients";
 import { Link } from "react-router-dom";
+=======
+import { fetchRecipients } from "../../api/api";
+>>>>>>> 5a93d717a732749d656db048a291aeb319b0dc30
 import "./ListPage.css";
 import Header from "../../components/Header";
 import Button from "../../components/Button";
@@ -10,7 +14,16 @@ export default function ListPage() {
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    setCards(mockRecipients);
+    async function loadData() {
+      try {
+        const data = await fetchRecipients();
+        setCards(data); // API에서 받은 데이터로 상태 설정
+      } catch (error) {
+        console.error("데이터 로드 실패:", error);
+      }
+    }
+
+    loadData();
   }, []);
 
   return (

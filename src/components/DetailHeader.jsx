@@ -6,52 +6,22 @@ import shareIcon from "/images/shareIcon.svg";
 import EmojiPicker from "./EmojiPicker";
 import ShareDropdown from "./ShareDropdown";
 import "./DetailHeader.css";
-import Header from './Header';
+import Header from "./Header";
 
-const DetailHeader = ({
-  recipientName,
-  participantCount = 23,
-  onShowToast,
-}) => {
-  const [reactions, setReactions] = useState([
-    { emoji: "👍", count: 24 },
-    { emoji: "❤️", count: 18 },
-    { emoji: "😊", count: 10 },
-    { emoji: "🎉", count: 8 },
-    { emoji: "👏", count: 6 },
-    { emoji: "🔥", count: 4 },
-    { emoji: "💯", count: 3 },
-    { emoji: "😍", count: 2 },
-  ]);
-
+const DetailHeader = ({ recipientName, participantCount = 23, reactions = [], onReact, onShowToast }) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [showShareDropdown, setShowShareDropdown] = useState(false);
   const [showAllReactions, setShowAllReactions] = useState(false);
 
-  const handleReactionClick = (emoji) => {
-    setReactions((prev) => {
-      const existing = prev.find((r) => r.emoji === emoji);
-      if (existing) {
-        return prev
-          .map((r) => (r.emoji === emoji ? { ...r, count: r.count + 1 } : r))
-          .sort((a, b) => b.count - a.count);
-      } else {
-        return [...prev, { emoji, count: 1 }]
-          .sort((a, b) => b.count - a.count)
-          .slice(0, 8);
-      }
-    });
-  };
-
   const handleAddReaction = (emoji) => {
-    console.log("Adding reaction:", emoji);
-    handleReactionClick(emoji);
+    if (onReact) {
+      onReact(emoji);
+    }
     setShowEmojiPicker(false);
   };
 
   const handleEmojiPickerToggle = () => {
-    console.log("Toggling emoji picker, current state:", showEmojiPicker);
-    setShowEmojiPicker(!showEmojiPicker);
+    setShowEmojiPicker((prev) => !prev);
     if (showShareDropdown) {
       setShowShareDropdown(false);
     }
@@ -62,16 +32,14 @@ const DetailHeader = ({
   };
 
   // 표시할 리액션 결정
-  const displayedReactions = showAllReactions
-    ? reactions
-    : reactions.slice(0, 3);
+  const displayedReactions = showAllReactions ? reactions : reactions.slice(0, 3);
   const hasMoreReactions = reactions.length > 3;
 
   return (
     <>
-     <Header />
+      <Header />
 
-     <div className="detail-header">
+      <div className="detail-header">
         <div className="detail-header-content">
           <div className="detail-header-left">
             <h1 className="recipient-name">To. {recipientName}</h1>
@@ -84,36 +52,25 @@ const DetailHeader = ({
                 <div className="profile-avatar avatar-2"></div>
                 <div className="profile-avatar avatar-3"></div>
               </div>
-              <span className="participant-count">
-                {participantCount}명이 작성했어요!
-              </span>
+              <span className="participant-count">{participantCount}명이 작성했어요!</span>
             </div>
 
             <div className="reactions-section">
-              {displayedReactions.map((reaction, index) => (
-                <div
-                  key={index}
-                  className="reaction-item"
-                  onClick={() => handleReactionClick(reaction.emoji)}
-                >
+              {displayedReactions.map((reaction) => (
+                <div key={reaction.id} className="reaction-item" onClick={() => onReact(reaction.emoji)}>
                   <span className="reaction-emoji">{reaction.emoji}</span>
                   <span className="reaction-count">{reaction.count}</span>
                 </div>
               ))}
 
               {hasMoreReactions && (
-                <button
-                  className="toggle-reactions-btn"
-                  onClick={handleToggleReactions}
-                >
+                <button className="toggle-reactions-btn" onClick={handleToggleReactions}>
                   <svg
                     width="16"
                     height="16"
                     viewBox="0 0 16 16"
                     fill="none"
-                    className={`arrow-icon ${
-                      showAllReactions ? "rotated" : ""
-                    }`}
+                    className={`arrow-icon ${showAllReactions ? "rotated" : ""}`}
                   >
                     <path
                       d="M4 6L8 10L12 6"
@@ -127,18 +84,12 @@ const DetailHeader = ({
               )}
 
               <div className="add-reaction-container">
-                <button
-                  className="add-reaction-btn"
-                  onClick={handleEmojiPickerToggle}
-                >
+                <button className="add-reaction-btn" onClick={handleEmojiPickerToggle}>
                   <span>+</span>
                 </button>
 
                 {showEmojiPicker && (
-                  <EmojiPicker
-                    onEmojiSelect={handleAddReaction}
-                    onClose={() => setShowEmojiPicker(false)}
-                  />
+                  <EmojiPicker onEmojiSelect={handleAddReaction} onClose={() => setShowEmojiPicker(false)} />
                 )}
               </div>
             </div>
@@ -157,10 +108,7 @@ const DetailHeader = ({
               </button>
 
               {showShareDropdown && (
-                <ShareDropdown
-                  onClose={() => setShowShareDropdown(false)}
-                  onShowToast={onShowToast}
-                />
+                <ShareDropdown onClose={() => setShowShareDropdown(false)} onShowToast={onShowToast} />
               )}
             </div>
           </div>

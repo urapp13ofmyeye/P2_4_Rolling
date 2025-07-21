@@ -1,17 +1,33 @@
+body,
+.message-page {
+  min-width: 360px;
+}
+
 .message-page {
   padding-bottom: 80px;
+<<<<<<< HEAD
   margin: 0 auto;
 }
 
 .message-content {
   max-width: 700px;
+=======
+>>>>>>> 5a93d717a732749d656db048a291aeb319b0dc30
   margin: 0 auto;
   margin-top: 30px;
   padding: 0 16px;
 }
 
+.message-content-page {
+  max-width: 700px;
+  margin: 30px auto 0;
+  padding: 0 15px;
+  overflow: visible;
+}
+
 .form-section {
   margin-bottom: 30px;
+  padding: 0;
   display: flex;
   flex-direction: column;
 }
@@ -27,8 +43,18 @@ select {
   width: 100%;
   padding: 15px;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1.5px solid #ccc;
   font-size: 16px;
+}
+
+.text-input.error {
+  border-color: #dc3a3a;
+}
+
+.error-text {
+  color: #dc3a3a;
+  margin-top: 6px;
+  font-size: 14px;
 }
 
 .half-select {
@@ -42,18 +68,28 @@ select {
 }
 
 .profile-area {
+  width: 100%;
   display: flex;
-  gap: 16px;
-  align-items: flex-start;
+  align-items: center;
+  gap: 12px;
 }
 
+/* selected-profile은 최대 너비 제한과 기본 비율 지정 */
+.selected-profile {
+  flex-shrink: 0; /* 작아지지 않도록 */
+  width: 10%; /* 화면 너비의 20% 차지 */
+  max-width: 120px; /* 최대 120px */
+}
+
+/* selected-profile img는 100% 너비 유지, 원형 유지 */
 .selected-profile img {
-  width: 70px;
-  height: 70px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
   display: block;
 }
 
+/* profile-right는 나머지 공간 모두 차지 */
 .profile-right {
   flex: 1;
   display: flex;
@@ -76,11 +112,13 @@ select {
 .profile-img {
   width: 48px;
   height: 48px;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
   border: 2px solid transparent;
   cursor: pointer;
   object-fit: cover;
   box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 .profile-img.selected {
@@ -91,6 +129,7 @@ select {
   border: 1px solid #ccc;
   border-radius: 6px;
   overflow: hidden;
+  width: 100%;
 }
 
 .editor-box .ql-container {
@@ -116,3 +155,89 @@ select {
   border-radius: 8px;
   cursor: pointer;
 }
+<<<<<<< HEAD
+=======
+
+.submit-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.noto-sans {
+  font-family: "Noto Sans", sans-serif;
+}
+
+.pretendard {
+  font-family: "Pretendard", sans-serif;
+}
+
+.nanum-myeongjo {
+  font-family: "NanumMyeongjo", serif;
+}
+
+.nanum-handwriting {
+  font-family: "NanumSongeulssiSonpyeonji", cursive;
+}
+
+/* 태블릿 (768px 이상 ~ 1023px 이하) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .submit-button {
+    width: 100%;
+  }
+}
+
+/* 모바일 (767px 이하) */
+@media (max-width: 767px) {
+  .message-content {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+
+  .profile-list {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5개씩 고정 */
+    gap: 10px;
+  }
+
+  .profile-list > * {
+    aspect-ratio: 1 / 1;
+  }
+
+  .profile-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid transparent;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+
+  .profile-area {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .selected-profile {
+    width: 20%;
+  }
+
+  .selected-profile img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+  }
+
+  .profile-guide {
+    font-size: 12px;
+  }
+
+  .half-select {
+    width: 100%;
+  }
+}
+>>>>>>> 5a93d717a732749d656db048a291aeb319b0dc30
