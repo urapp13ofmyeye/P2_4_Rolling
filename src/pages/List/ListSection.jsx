@@ -1,5 +1,5 @@
-import { useState, useMemo, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useMemo, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function ListSection({ title, cards, sortBy }) {
   const [startIndex, setStartIndex] = useState(0);
@@ -11,18 +11,16 @@ export default function ListSection({ title, cards, sortBy }) {
       setIsMobileScroll(window.innerWidth <= 768);
     };
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   const sortedCards = useMemo(() => {
-    if (sortBy === 'messageCount') {
+    if (sortBy === "messageCount") {
       return [...cards].sort((a, b) => b.messageCount - a.messageCount);
     }
-    if (sortBy === 'createdAt') {
-      return [...cards].sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-      );
+    if (sortBy === "createdAt") {
+      return [...cards].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     }
     return cards;
   }, [cards, sortBy]);
@@ -39,16 +37,20 @@ export default function ListSection({ title, cards, sortBy }) {
     }
   };
 
+  const colorMap = {
+    beige: "#FFE2AD",
+    purple: "#ECD9FF",
+    blue: "#B1E4FF",
+    green: "#D0F5C3",
+  };
+
   return (
     <section>
       <div className="card-wrapper">
         <h1 className="card-list-title">{title}</h1>
         <div className="card-list-container">
           {!isMobileScroll && startIndex > 0 && (
-            <button
-              onClick={handlePrev}
-              className="arrow-button arrow-button-prev"
-            >
+            <button onClick={handlePrev} className="arrow-button arrow-button-prev">
               <img src="images/list/arrow-left.png" alt="arrow-left" />
             </button>
           )}
@@ -60,7 +62,11 @@ export default function ListSection({ title, cards, sortBy }) {
                 to={`/post/${card.id}`}
                 key={card.id}
                 className="card"
-                style={{ backgroundColor: card.backgroundColor }}
+                style={{
+                  backgroundColor: colorMap[card.backgroundColor] || card.backgroundColor,
+                  position: "relative",
+                  overflow: "hidden",
+                }}
               >
                 <div className="card-container">
                   <div>
@@ -96,18 +102,15 @@ export default function ListSection({ title, cards, sortBy }) {
                     </div>
                   </div>
                 </div>
+                <img className="card-cover-image" src={`images/list/card-cover-${card.backgroundColor}.png`} />
               </Link>
             ))}
           </div>
-          {!isMobileScroll &&
-            startIndex + visibleCount < sortedCards.length && (
-              <button
-                onClick={handleNext}
-                className="arrow-button arrow-button-next"
-              >
-                <img src="images/list/arrow-right.png" alt="arrow-right" />
-              </button>
-            )}
+          {!isMobileScroll && startIndex + visibleCount < sortedCards.length && (
+            <button onClick={handleNext} className="arrow-button arrow-button-next">
+              <img src="images/list/arrow-right.png" alt="arrow-right" />
+            </button>
+          )}
         </div>
       </div>
     </section>
