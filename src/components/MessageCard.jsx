@@ -16,7 +16,7 @@ const MessageCard = ({ message, onClick, isDeleteMode, onDelete }) => {
             onDelete();
           }}
         >
-          <img src="../public/images/trashIcon.svg" alt="trash" />
+          <img src="../images/trashIcon.svg" alt="trash" />
         </button>
       )}
 
