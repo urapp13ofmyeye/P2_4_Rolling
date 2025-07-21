@@ -1,14 +1,21 @@
-import { useEffect, useState } from 'react';
-import { fetchRecipients } from './api';
-import './ListPage.css';
-import Header from '../../components/Header';
-import Button from '../../components/Button';
-import ListSection from './ListSection';
+
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { fetchRecipients } from "../../api/api";
+import "./ListPage.css";
+import Header from "../../components/Header";
+import Button from "../../components/Button";
+import ListSection from "./ListSection";
+
+const BASE_URL = "https://rolling-api.vercel.app/17-4";
+
 
 export default function ListPage() {
-  const [cards, setCards] = useState([]);
+  const [popularCards, setPopularCards] = useState([]);
+  const [recentCards, setRecentCards] = useState([]);
 
   useEffect(() => {
+
     async function loadData() {
       try {
         const data = await fetchRecipients();
@@ -19,6 +26,23 @@ export default function ListPage() {
     }
 
     loadData();
+
+    async function fetchData() {
+      try {
+        const [popularRes, recentRes] = await Promise.all([
+          fetch(`${BASE_URL}/recipients/?limit=100&sort=like`),
+          fetch(`${BASE_URL}/recipients/?limit=100`),
+        ]);
+        const popularData = await popularRes.json();
+        const recentData = await recentRes.json();
+        setPopularCards(popularData.results);
+        setRecentCards(recentData.results);
+      } catch (e) {
+        console.error("리스트 불러오기 실패:", e);
+      }
+    }
+    fetchData();
+
   }, []);
 
   return (

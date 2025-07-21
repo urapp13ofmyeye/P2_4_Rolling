@@ -10,12 +10,15 @@ const MessageGrid = ({
   isDeleteMode,
   onDeleteMessage,
   loading,
-  hasMore,
+  hasNext,
+  observerTargetRef,
+  recipientId,
 }) => {
   return (
     <div className="message-grid-container">
       <div className="message-grid">
-        <AddMessageButton />
+        {/* 메시지 추가 버튼을 항상 첫 번째에 표시 */}
+        <AddMessageButton recipientId={recipientId} />
         {messages.map((message) => (
           <MessageCard
             key={message.id}
@@ -34,9 +37,10 @@ const MessageGrid = ({
         </div>
       )}
 
-      {!hasMore && messages.length > 0 && (
-        <div className="end-message">모든 메시지를 불러왔습니다.</div>
-      )}
+      {!hasNext && messages.length > 0 && <div className="end-message">모든 메시지를 불러왔습니다.</div>}
+
+      {/* 이 보이지 않는 요소가 화면에 나타나면 다음 페이지를 로드합니다. */}
+      <div ref={observerTargetRef} style={{ height: "1px" }} />
     </div>
   );
 };

@@ -15,14 +15,14 @@ const MessageCard = ({ message, onClick, isDeleteMode, onDelete }) => {
             onDelete();
           }}
         >
-          🗑️
+          <img src="/images/trashIcon.svg" alt="trash" />
         </button>
       )}
 
       <div className="message-header">
         <div className="avatar">
-          {message.avatar ? (
-            <img src={message.avatar} alt={message.from} />
+          {message.profileImageURL ? (
+            <img src={message.profileImageURL} alt={message.sender || "unknown"} />
           ) : (
             <div className="avatar-placeholder">
               {message.from?.charAt(0) ?? '?'}
@@ -40,10 +40,10 @@ const MessageCard = ({ message, onClick, isDeleteMode, onDelete }) => {
       <div className="message-divider"></div>
 
       <div className="message-content">
-        <p>{message.content}</p>
+        <div dangerouslySetInnerHTML={{ __html: message.content }} />
       </div>
 
-      <div className="message-date">{message.timestamp}</div>
+      <div className="message-date">{message.createdAt ? new Date(message.createdAt).toLocaleString("ko-KR") : ""}</div>
     </div>
   );
 };

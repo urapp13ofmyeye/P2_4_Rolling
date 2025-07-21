@@ -1,10 +1,13 @@
 // src/pages/PostPage.jsx
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import DetailHeader from '../../components/DetailHeader';
-import MessageGrid from '../../components/MessageGrid';
-import MessageModal from '../../components/MessageModal';
-import Toast from '../../components/Toast';
+
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { getRecipient, getMessages, deleteMessage } from "../../api/api";
+import DetailHeader from "../../components/DetailHeader";
+import MessageGrid from "../../components/MessageGrid";
+import MessageModal from "../../components/MessageModal";
+import Toast from "../../components/Toast";
+import "./PostPage.css";
 import {
   fetchRecipientById,
   fetchMessages,
@@ -167,30 +170,26 @@ const PostPage = () => {
         <button
           className={`btn-delete-floating ${isDeleteMode ? 'active' : ''}`}
           onClick={handleDeleteMode}
-        >
-          삭제하기
+        >삭제하기
         </button>
 
-        <MessageGrid
+        <MessageGrid                     
+          recipientId={recipient?.id}
           messages={messages}
           onMessageClick={handleMessageClick}
           isDeleteMode={isDeleteMode}
           onDeleteMessage={handleDeleteMessage}
           loading={loading}
           hasNext={hasNext}
+
+          // 무한 스크롤 타겟을 MessageGrid 내부로 전달
           observerTargetRef={observerTarget}
         />
       </div>
 
-      {isModalOpen && (
-        <MessageModal message={selectedMessage} onClose={handleCloseModal} />
-      )}
+      {isModalOpen && <MessageModal message={selectedMessage} onClose={handleCloseModal} />}
 
-      <Toast
-        show={toast.show}
-        message={toast.message}
-        onClose={handleToastClose}
-      />
+      <Toast show={toast.show} message={toast.message} onClose={handleToastClose} />
     </div>
   );
 };
