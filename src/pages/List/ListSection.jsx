@@ -30,12 +30,12 @@ export default function ListSection({ title, cards, sortBy }) {
   const visibleCards = sortedCards.slice(startIndex, startIndex + visibleCount);
 
   const handlePrev = () => {
-    if (startIndex > 0) setStartIndex((prev) => prev - 4);
+    if (startIndex > 0) setStartIndex((prev) => prev - visibleCount);
   };
 
   const handleNext = () => {
     if (startIndex + visibleCount < sortedCards.length) {
-      setStartIndex((prev) => prev + 4);
+      setStartIndex((prev) => prev + visibleCount);
     }
   };
 
