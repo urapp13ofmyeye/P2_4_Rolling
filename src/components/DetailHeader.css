@@ -25,7 +25,7 @@
   font-weight: 700;
   color: #2d3436;
   margin: 0;
-  font-family: "Pretendard", sans-serif;
+  font-family: 'Pretendard', sans-serif;
 }
 
 .detail-header-right {
@@ -58,23 +58,11 @@
   margin-left: 0;
 }
 
-.avatar-1 {
-  background: #ff6b6b;
-}
-
-.avatar-2 {
-  background: #4ecdc4;
-}
-
-.avatar-3 {
-  background: #45b7d1;
-}
-
 .participant-count {
   color: #636e72;
   font-size: 14px;
   font-weight: 500;
-  font-family: "Pretendard", sans-serif;
+  font-family: 'Pretendard', sans-serif;
   background: none;
   padding: 0;
   border: none;
@@ -112,7 +100,7 @@
   font-size: 14px;
   font-weight: 500;
   color: #495057;
-  font-family: "Pretendard", sans-serif;
+  font-family: 'Pretendard', sans-serif;
 }
 
 .toggle-reactions-btn {
@@ -161,7 +149,7 @@
   font-size: 16px;
   color: #6c757d;
   transition: all 0.2s;
-  font-family: "Pretendard", sans-serif;
+  font-family: 'Pretendard', sans-serif;
 }
 
 .add-reaction-btn:hover {

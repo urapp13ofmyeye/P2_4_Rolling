@@ -13,6 +13,7 @@ const DetailHeader = ({
   reactions = [],
   onReact,
   onShowToast,
+  recentMessages,
 }) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [showShareDropdown, setShowShareDropdown] = useState(false);
@@ -55,9 +56,15 @@ const DetailHeader = ({
           <div className="detail-header-right">
             <div className="participants-section">
               <div className="profile-avatars">
-                <div className="profile-avatar avatar-1"></div>
-                <div className="profile-avatar avatar-2"></div>
-                <div className="profile-avatar avatar-3"></div>
+                {recentMessages?.map((recent) => (
+                  <div
+                    key={recent.id}
+                    className="profile-avatar"
+                    style={{
+                      backgroundImage: `url(${recent.profileImageURL})`,
+                    }}
+                  ></div>
+                ))}
               </div>
               <span className="participant-count">
                 {participantCount}명이 작성했어요!

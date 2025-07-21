@@ -176,6 +176,7 @@ const PostPage = () => {
         onShowToast={showToast}
         reactions={reactions} // 🆕 리액션 전달
         onReact={handleReaction} // 🆕 리액션 처리 함수 전달
+        recentMessages={recipient.recentMessages}
       />
       <div className="post-main-content">
         <div className="btn-wrapper">
