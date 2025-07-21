@@ -33,9 +33,14 @@ export async function deleteRecipient(recipientId) {
 }
 
 // 메시지 목록 조회
-export async function fetchMessages(recipientId, { limit = 8, offset = 0 } = {}) {
+export async function fetchMessages(
+  recipientId,
+  { limit = 8, offset = 0 } = {}
+) {
   const params = new URLSearchParams({ limit, offset });
-  const res = await fetch(`${BASE_URL}/recipients/${recipientId}/messages/?${params.toString()}`);
+  const res = await fetch(
+    `${BASE_URL}/recipients/${recipientId}/messages/?${params.toString()}`
+  );
   if (!res.ok) throw new Error("메시지 목록 조회 실패");
   return await res.json(); // { count, next, previous, results }
 }
@@ -60,9 +65,14 @@ export async function deleteMessage(messageId) {
 }
 
 // 리액션 목록 조회
-export async function fetchReactions(recipientId, { limit = 8, offset = 0 } = {}) {
+export async function fetchReactions(
+  recipientId,
+  { limit = 8, offset = 0 } = {}
+) {
   const params = new URLSearchParams({ limit, offset });
-  const res = await fetch(`${BASE_URL}/recipients/${recipientId}/reactions/?${params.toString()}`);
+  const res = await fetch(
+    `${BASE_URL}/recipients/${recipientId}/reactions/?${params.toString()}`
+  );
   if (!res.ok) throw new Error("리액션 목록 조회 실패");
   return await res.json(); // { count, next, previous, results }
 }

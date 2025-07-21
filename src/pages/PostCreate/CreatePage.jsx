@@ -1,30 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
-<<<<<<< HEAD
-import Header from "../../components/Header";
-
-const StyledLink = styled(Link)`
-  display: flex;
-  text-decoration: none;
-  margin-left: 150px;
-  position: sticky;
-`;
-
-const LogoImg = styled.img`
-  margin: 3px;
-`;
-
-const LogoText = styled.span`
-  font-weight: bold;
-  font-size: 20px;
-  text-decoration: none;
-  padding: 8px;
-  color: #4a494f;
-`;
-=======
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
->>>>>>> 5a93d717a732749d656db048a291aeb319b0dc30
 
 const Outer = styled.div`
   display: flex;
@@ -200,33 +177,51 @@ function CreatePage() {
       <Outer>
         <Container>
           <Label>To.</Label>
-<<<<<<< HEAD
-          <Input type="text" id="text" name="text" placeholder="받는 사람 이름을 입력해주세요." />
-=======
           <Input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="받는 사람 이름을 입력해주세요."
           />
->>>>>>> 5a93d717a732749d656db048a291aeb319b0dc30
           <h2>배경화면을 선택해 주세요.</h2>
           <p>컬러를 선택하거나, 이미지를 선택할 수 있습니다.</p>
           <ButtonBox>
-            <Button onClick={() => handleClick("color")} active={mode === "color"}>
+            <Button
+              onClick={() => handleClick("color")}
+              active={mode === "color"}
+            >
               컬러
             </Button>
-            <Button onClick={() => handleClick("image")} active={mode === "image"}>
+            <Button
+              onClick={() => handleClick("image")}
+              active={mode === "image"}
+            >
               이미지
             </Button>
           </ButtonBox>
 
           {mode === "color" && (
             <ColorBox>
-              <ColorItem color="#FFE2AD" selected={bgColor === "beige"} onClick={() => setBgColor("beige")} />
-              <ColorItem color="#ECD9FF" selected={bgColor === "purple"} onClick={() => setBgColor("purple")} />
-              <ColorItem color="#B1E4FF" selected={bgColor === "blue"} onClick={() => setBgColor("blue")} />
-              <ColorItem color="#D0F5C3" selected={bgColor === "green"} onClick={() => setBgColor("green")} />
+              <ColorItem
+                color="#FFE2AD"
+                selected={bgColor === "beige"}
+                onClick={() => setBgColor("beige")}
+              />
+              <ColorItem
+                color="#ECD9FF"
+                selected={bgColor === "purple"}
+                onClick={() => setBgColor("purple")}
+              />
+              <ColorItem
+                color="#B1E4FF"
+                selected={bgColor === "blue"}
+                onClick={() => setBgColor("blue")}
+              />
+              <ColorItem
+                color="#D0F5C3"
+                selected={bgColor === "green"}
+                onClick={() => setBgColor("green")}
+              />
             </ColorBox>
           )}
 
@@ -254,17 +249,17 @@ function CreatePage() {
               />
             </ImageBox>
           )}
-<<<<<<< HEAD
-          <CreateLinkButton>생성하기</CreateLinkButton>
-=======
 
           <CreateLinkButton
-            disabled={!name || (mode === "color" && !bgColor) || (mode === "image" && !bgImage)}
+            disabled={
+              !name ||
+              (mode === "color" && !bgColor) ||
+              (mode === "image" && !bgImage)
+            }
             onClick={handleCreate}
           >
             생성하기
           </CreateLinkButton>
->>>>>>> 5a93d717a732749d656db048a291aeb319b0dc30
         </Container>
       </Outer>
     </>
