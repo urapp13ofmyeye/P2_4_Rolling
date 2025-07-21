@@ -1,5 +1,5 @@
-import { useState, useMemo, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState, useMemo, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function ListSection({ title, cards, sortBy }) {
   const [startIndex, setStartIndex] = useState(0);
@@ -11,16 +11,18 @@ export default function ListSection({ title, cards, sortBy }) {
       setIsMobileScroll(window.innerWidth <= 768);
     };
     checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   const sortedCards = useMemo(() => {
-    if (sortBy === "messageCount") {
+    if (sortBy === 'messageCount') {
       return [...cards].sort((a, b) => b.messageCount - a.messageCount);
     }
-    if (sortBy === "createdAt") {
-      return [...cards].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    if (sortBy === 'createdAt') {
+      return [...cards].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
     }
     return cards;
   }, [cards, sortBy]);
@@ -43,7 +45,10 @@ export default function ListSection({ title, cards, sortBy }) {
         <h1 className="card-list-title">{title}</h1>
         <div className="card-list-container">
           {!isMobileScroll && startIndex > 0 && (
-            <button onClick={handlePrev} className="arrow-button arrow-button-prev">
+            <button
+              onClick={handlePrev}
+              className="arrow-button arrow-button-prev"
+            >
               <img src="images/list/arrow-left.png" alt="arrow-left" />
             </button>
           )}
@@ -94,11 +99,15 @@ export default function ListSection({ title, cards, sortBy }) {
               </Link>
             ))}
           </div>
-          {!isMobileScroll && startIndex + visibleCount < sortedCards.length && (
-            <button onClick={handleNext} className="arrow-button arrow-button-next">
-              <img src="images/list/arrow-right.png" alt="arrow-right" />
-            </button>
-          )}
+          {!isMobileScroll &&
+            startIndex + visibleCount < sortedCards.length && (
+              <button
+                onClick={handleNext}
+                className="arrow-button arrow-button-next"
+              >
+                <img src="images/list/arrow-right.png" alt="arrow-right" />
+              </button>
+            )}
         </div>
       </div>
     </section>

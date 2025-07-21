@@ -11,7 +11,8 @@ import {
   fetchReactions,
   updateReaction,
   deleteMessage,
-} from "../../api/api.jsx";
+  deleteRecipient,
+} from "../../api/api";
 import "./PostPage.css";
 
 const PostPage = () => {
@@ -117,6 +118,19 @@ const PostPage = () => {
     setIsDeleteMode(!isDeleteMode);
   };
 
+  const handleDelteRecipient = async () => {
+    if (!window.confirm("정말로 이 롤링페이퍼 페이지를 삭제하시겠습니까?"))
+      return;
+    try {
+      await deleteRecipient(id);
+      showToast("롤링페이퍼가 삭제되었습니다.");
+      navigate("/list"); // 삭제 후 목록 페이지로 이동
+    } catch (err) {
+      console.error("페이지 삭제 실패:", err);
+      showToast(err.message || "페이지 삭제에 실패했습니다.");
+    }
+  };
+
   const handleDeleteMessage = async (messageId) => {
     if (!window.confirm("정말로 이 메시지를 삭제하시겠습니까?")) return;
     try {
@@ -162,14 +176,23 @@ const PostPage = () => {
         onShowToast={showToast}
         reactions={reactions} // 🆕 리액션 전달
         onReact={handleReaction} // 🆕 리액션 처리 함수 전달
+        recentMessages={recipient.recentMessages}
       />
       <div className="post-main-content">
-        <button
-          className={`btn-delete-floating ${isDeleteMode ? "active" : ""}`}
-          onClick={handleDeleteMode}
-        >
-          삭제하기
-        </button>
+        <div className="btn-wrapper">
+          <button
+            className="btn-delete-floating"
+            onClick={handleDelteRecipient}
+          >
+            페이지 삭제하기
+          </button>
+          <button
+            className={`btn-delete-floating ${isDeleteMode ? "active" : ""}`}
+            onClick={handleDeleteMode}
+          >
+            삭제하기
+          </button>
+        </div>
 
         <MessageGrid
           messages={messages}

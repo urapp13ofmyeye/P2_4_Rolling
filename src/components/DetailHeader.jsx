@@ -1,7 +1,6 @@
 // src/components/Header.jsx
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import rollingIcon from "/images/rollingIcon.svg";
 import shareIcon from "/images/shareIcon.svg";
 import EmojiPicker from "./EmojiPicker";
 import ShareDropdown from "./ShareDropdown";
@@ -14,6 +13,7 @@ const DetailHeader = ({
   reactions = [],
   onReact,
   onShowToast,
+  recentMessages,
 }) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [showShareDropdown, setShowShareDropdown] = useState(false);
@@ -56,9 +56,15 @@ const DetailHeader = ({
           <div className="detail-header-right">
             <div className="participants-section">
               <div className="profile-avatars">
-                <div className="profile-avatar avatar-1"></div>
-                <div className="profile-avatar avatar-2"></div>
-                <div className="profile-avatar avatar-3"></div>
+                {recentMessages?.map((recent) => (
+                  <div
+                    key={recent.id}
+                    className="profile-avatar"
+                    style={{
+                      backgroundImage: `url(${recent.profileImageURL})`,
+                    }}
+                  ></div>
+                ))}
               </div>
               <span className="participant-count">
                 {participantCount}명이 작성했어요!
@@ -134,7 +140,6 @@ const DetailHeader = ({
 
               {showShareDropdown && (
                 <ShareDropdown
-                  recipientName={recipientName}
                   onClose={() => setShowShareDropdown(false)}
                   onShowToast={onShowToast}
                 />
