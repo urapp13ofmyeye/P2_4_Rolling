@@ -1,14 +1,19 @@
 // src/components/Header.jsx
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import rollingIcon from "/images/rollingIcon.svg";
-import shareIcon from "/images/shareIcon.svg";
-import EmojiPicker from "./EmojiPicker";
-import ShareDropdown from "./ShareDropdown";
-import "./DetailHeader.css";
-import Header from "./Header";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import shareIcon from '/images/shareIcon.svg';
+import EmojiPicker from './EmojiPicker';
+import ShareDropdown from './ShareDropdown';
+import './DetailHeader.css';
+import Header from './Header';
 
-const DetailHeader = ({ recipientName, participantCount = 23, reactions = [], onReact, onShowToast }) => {
+const DetailHeader = ({
+  recipientName,
+  participantCount = 23,
+  reactions = [],
+  onReact,
+  onShowToast,
+}) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [showShareDropdown, setShowShareDropdown] = useState(false);
   const [showAllReactions, setShowAllReactions] = useState(false);
@@ -32,7 +37,9 @@ const DetailHeader = ({ recipientName, participantCount = 23, reactions = [], on
   };
 
   // 표시할 리액션 결정
-  const displayedReactions = showAllReactions ? reactions : reactions.slice(0, 3);
+  const displayedReactions = showAllReactions
+    ? reactions
+    : reactions.slice(0, 3);
   const hasMoreReactions = reactions.length > 3;
 
   return (
@@ -52,25 +59,36 @@ const DetailHeader = ({ recipientName, participantCount = 23, reactions = [], on
                 <div className="profile-avatar avatar-2"></div>
                 <div className="profile-avatar avatar-3"></div>
               </div>
-              <span className="participant-count">{participantCount}명이 작성했어요!</span>
+              <span className="participant-count">
+                {participantCount}명이 작성했어요!
+              </span>
             </div>
 
             <div className="reactions-section">
               {displayedReactions.map((reaction) => (
-                <div key={reaction.id} className="reaction-item" onClick={() => onReact(reaction.emoji)}>
+                <div
+                  key={reaction.id}
+                  className="reaction-item"
+                  onClick={() => onReact(reaction.emoji)}
+                >
                   <span className="reaction-emoji">{reaction.emoji}</span>
                   <span className="reaction-count">{reaction.count}</span>
                 </div>
               ))}
 
               {hasMoreReactions && (
-                <button className="toggle-reactions-btn" onClick={handleToggleReactions}>
+                <button
+                  className="toggle-reactions-btn"
+                  onClick={handleToggleReactions}
+                >
                   <svg
                     width="16"
                     height="16"
                     viewBox="0 0 16 16"
                     fill="none"
-                    className={`arrow-icon ${showAllReactions ? "rotated" : ""}`}
+                    className={`arrow-icon ${
+                      showAllReactions ? 'rotated' : ''
+                    }`}
                   >
                     <path
                       d="M4 6L8 10L12 6"
@@ -84,12 +102,18 @@ const DetailHeader = ({ recipientName, participantCount = 23, reactions = [], on
               )}
 
               <div className="add-reaction-container">
-                <button className="add-reaction-btn" onClick={handleEmojiPickerToggle}>
+                <button
+                  className="add-reaction-btn"
+                  onClick={handleEmojiPickerToggle}
+                >
                   <span>+</span>
                 </button>
 
                 {showEmojiPicker && (
-                  <EmojiPicker onEmojiSelect={handleAddReaction} onClose={() => setShowEmojiPicker(false)} />
+                  <EmojiPicker
+                    onEmojiSelect={handleAddReaction}
+                    onClose={() => setShowEmojiPicker(false)}
+                  />
                 )}
               </div>
             </div>
@@ -108,7 +132,10 @@ const DetailHeader = ({ recipientName, participantCount = 23, reactions = [], on
               </button>
 
               {showShareDropdown && (
-                <ShareDropdown onClose={() => setShowShareDropdown(false)} onShowToast={onShowToast} />
+                <ShareDropdown
+                  onClose={() => setShowShareDropdown(false)}
+                  onShowToast={onShowToast}
+                />
               )}
             </div>
           </div>
