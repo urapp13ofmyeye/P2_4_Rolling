@@ -1,6 +1,7 @@
 // src/pages/PostPage.jsx
-import React, { useState, useEffect, useCallback } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { getRecipient, getMessages, deleteMessage } from "../../api/api";
 import DetailHeader from "../../components/DetailHeader";
 import MessageGrid from "../../components/MessageGrid";
 import MessageModal from "../../components/MessageModal";
@@ -8,231 +9,95 @@ import Toast from "../../components/Toast";
 import "./PostPage.css";
 
 const PostDetailPage = () => {
-  const { id } = useParams();
+  // URL에서 id를 가져오되, 없으면 'test-id'를 기본값으로 사용합니다.
+  const { id: routeId } = useParams();
+  const id = routeId || "test-id";
+  const navigate = useNavigate();
+
+  // 상태 관리 개선
+  const [recipient, setRecipient] = useState(null);
   const [messages, setMessages] = useState([]);
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(1);
   const [toast, setToast] = useState({ show: false, message: "" });
-  const [postData, setPostData] = useState(null);
 
-  // 임시 데이터 - 항상 동일한 데이터 표시
-  const generateInitialMessages = () => {
-    return [
-      {
-        id: 1,
-        from: "최민수",
-        relationship: "친구",
-        content:
-          "14살의 연년 생일 잔치 속에서 보니다. 생각기념 물 링 제어버튼 준비 정식으로 신청 친구들의 축하 도전니다 이번은 예쁘니다이 우연정보니다😊",
-        timestamp: "2023.07.08",
-        avatar: null,
-        createdAt: new Date("2023-07-08T10:00:00"),
-      },
-      {
-        id: 2,
-        from: "이정수",
-        relationship: "친구",
-        content:
-          "14살의 연년 생일 잔치 속에서 보니다. 생각기념 물 링 제어버튼 준비 정식으로 신청 친구들의 축하",
-        timestamp: "2023.07.08",
-        avatar: null,
-        createdAt: new Date("2023-07-08T09:30:00"),
-      },
-      {
-        id: 3,
-        from: "김미나",
-        relationship: "동료",
-        content: "좋은 소식이 있어서 연락드려요. 함께 축하해주세요!",
-        timestamp: "2023.07.08",
-        avatar: null,
-        createdAt: new Date("2023-07-08T09:00:00"),
-      },
-      {
-        id: 4,
-        from: "최민수",
-        relationship: "동료",
-        content:
-          "일교차가 큰 시기입니다. 새벽에는 지금, 한낮에는 더위를, 어찌저찌오늘은 가을을 느끼네요 잠도 좋을 것 같아요.",
-        timestamp: "2023.07.08",
-        avatar: null,
-        createdAt: new Date("2023-07-08T08:30:00"),
-      },
-      {
-        id: 5,
-        from: "최민수",
-        relationship: "친구",
-        content:
-          "일교차가 큰 시기입니다. 새벽에는 지금, 한낮에는 더위를, 어찌저찌오늘은 가을을 느끼네요 잠도 좋을 것 같아요.",
-        timestamp: "2023.07.08",
-        avatar: null,
-        createdAt: new Date("2023-07-08T08:00:00"),
-      },
-      {
-        id: 6,
-        from: "최민수",
-        relationship: "동료",
-        content:
-          "오늘 하루도 수고 많으셨습니다. 항상 건강하시고 행복한 일만 가득하길 바랍니다.",
-        timestamp: "2023.07.08",
-        avatar: null,
-        createdAt: new Date("2023-07-08T07:30:00"),
-      },
-      {
-        id: 7,
-        from: "박영희",
-        relationship: "친구",
-        content:
-          "일교차가 큰 시기입니다. 새벽에는 지금, 한낮에는 더위를, 어찌저찌오늘은 가을을 느끼네요 잠도 좋을 것 같아요.",
-        timestamp: "2023.07.08",
-        avatar: null,
-        createdAt: new Date("2023-07-08T07:00:00"),
-      },
-      {
-        id: 8,
-        from: "박영희",
-        relationship: "가족",
-        content:
-          "코로나가 또다시 기승을 부리는 요즘이에요. 건강, 체력 모두 조심 또 하세요!",
-        timestamp: "2023.07.08",
-        avatar: null,
-        createdAt: new Date("2023-07-08T06:30:00"),
-      },
-      {
-        id: 9,
-        from: "김동훈",
-        relationship: "지인",
-        content:
-          "항상 밝은 모습으로 지내시는 모습이 보기 좋아요. 앞으로도 좋은 일만 가득하길 바랍니다.",
-        timestamp: "2023.07.08",
-        avatar: null,
-        createdAt: new Date("2023-07-08T06:00:00"),
-      },
-      {
-        id: 10,
-        from: "이철수",
-        relationship: "동료",
-        content: "새로운 시작을 응원합니다. 항상 건강하시고 행복하세요!",
-        timestamp: "2023.07.08",
-        avatar: null,
-        createdAt: new Date("2023-07-08T05:30:00"),
-      },
-      {
-        id: 11,
-        from: "김하나",
-        relationship: "친구",
-        content:
-          "생일 축하해요! 맛있는 케이크 많이 드시고 행복한 하루 보내세요.",
-        timestamp: "2023.07.08",
-        avatar: null,
-        createdAt: new Date("2023-07-08T05:00:00"),
-      },
-      {
-        id: 12,
-        from: "박지민",
-        relationship: "가족",
-        content: "가족들 모두 당신을 사랑하고 응원하고 있어요. 힘내세요!",
-        timestamp: "2023.07.08",
-        avatar: null,
-        createdAt: new Date("2023-07-08T04:30:00"),
-      },
-    ];
-  };
+  // 무한 스크롤 상태
+  const [offset, setOffset] = useState(0);
+  const [hasNext, setHasNext] = useState(true);
+  const observerTarget = useRef(null);
 
-  // 추가 메시지 생성 함수
-  const generateMoreMessages = (startId) => {
-    const names = [
-      "김소영",
-      "이준호",
-      "박민지",
-      "최영수",
-      "정하늘",
-      "김별이",
-      "이달님",
-    ];
-    const relationships = ["동료", "친구", "지인", "가족"];
-    const contents = [
-      "축하드립니다! 앞으로도 좋은 일만 가득하길 바라요.",
-      "항상 응원하고 있어요. 화이팅!",
-      "건강하시고 행복한 일만 가득하세요.",
-      "새로운 시작을 진심으로 축하드려요.",
-      "멋진 하루 보내시고 좋은 추억 많이 만드세요.",
-      "당신의 꿈이 모두 이루어지길 바랍니다.",
-      "언제나 밝은 모습 잃지 마세요!",
-      "소중한 사람과 함께하는 특별한 날이 되길 바라요.",
-    ];
-
-    // 현재 가장 최신 메시지의 시간을 찾기
-    const latestTime = Math.max(
-      ...messages.map((msg) => new Date(msg.createdAt).getTime())
-    );
-
-    return Array.from({ length: 6 }, (_, index) => ({
-      id: startId + index,
-      from: names[Math.floor(Math.random() * names.length)],
-      relationship:
-        relationships[Math.floor(Math.random() * relationships.length)],
-      content: contents[Math.floor(Math.random() * contents.length)],
-      timestamp: "2023.07.09",
-      avatar: null,
-      createdAt: new Date(latestTime + (index + 1) * 10 * 60 * 1000), // 10분씩 더 최신으로
-    }));
-  };
-
-  // 포스트 데이터 로드
+  // 데이터 로딩 로직 최적화
   useEffect(() => {
-    // 임시 데이터 - 항상 Ashley Kim으로 설정
-    const mockPostData = {
-      id: parseInt(id) || 1,
-      recipientName: "Ashley Kim",
-      participantCount: 23,
+    // id가 바뀔 때마다 상태 초기화
+    setRecipient(null);
+    setMessages([]);
+    setOffset(0);
+    setHasNext(true);
+
+    const loadRecipient = async () => {
+      try {
+        const recipientData = await getRecipient(id);
+        setRecipient(recipientData);
+      } catch (err) {
+        console.error(err);
+        alert("롤링페이퍼를 불러올 수 없거나 존재하지 않습니다.");
+        navigate("/list");
+      }
     };
 
-    setPostData(mockPostData);
-
-    // 초기 메시지 로드
-    const initialMessages = generateInitialMessages();
-    setMessages(initialMessages);
-    setLoading(false);
+    if (id) {
+      loadRecipient();
+    }
   }, [id]);
 
-  const loadMoreMessages = async () => {
-    if (loading || !hasMore) return;
+  // 메시지 로딩 함수 (useCallback으로 최적화)
+  const loadMessages = useCallback(async () => {
+    if (loading || !hasNext) return;
 
     setLoading(true);
-
-    // 추가 메시지 시뮬레이션
-    setTimeout(() => {
-      const additionalMessages = generateMoreMessages(messages.length + 1);
-
-      setMessages((prev) => [...prev, ...additionalMessages]);
-      setPage((prev) => prev + 1);
-
-      // 5페이지 이후로는 더 이상 로드하지 않음
-      if (page >= 5) {
-        setHasMore(false);
-      }
-
+    try {
+      const { results, next } = await getMessages(id, { limit: 8, offset });
+      setMessages((prev) => [...prev, ...results]);
+      setOffset((prev) => prev + results.length);
+      setHasNext(!!next);
+    } catch (err) {
+      showToast(err.message || "메시지를 불러오는 데 실패했습니다.");
+    } finally {
       setLoading(false);
-    }, 1000);
-  };
-
-  const handleScroll = useCallback(() => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop >=
-      document.documentElement.offsetHeight - 1000
-    ) {
-      loadMoreMessages();
     }
-  }, [loading, hasMore, messages.length, page]);
+  }, [id, loading, hasNext, offset]);
+
+  // IntersectionObserver를 사용한 무한 스크롤 구현
+  useEffect(() => {
+    // recipient 정보가 로드된 후에 메시지 로딩 시작
+    if (recipient) {
+      loadMessages();
+    }
+  }, [recipient]); // recipient가 설정되면 첫 메시지 로드
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNext && !loading) {
+          loadMessages();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const target = observerTarget.current;
+    if (target) {
+      observer.observe(target);
+    }
+
+    return () => {
+      if (target) {
+        observer.unobserve(target);
+      }
+    };
+  }, [loadMessages, hasNext, loading]);
 
   const handleMessageClick = (message) => {
     if (isDeleteMode) return;
@@ -249,9 +114,19 @@ const PostDetailPage = () => {
     setIsDeleteMode(!isDeleteMode);
   };
 
-  const handleDeleteMessage = (messageId) => {
-    if (window.confirm("정말로 이 메시지를 삭제하시겠습니까?")) {
-      setMessages(messages.filter((message) => message.id !== messageId));
+  const handleDeleteMessage = async (messageId) => {
+    if (!window.confirm("정말로 이 메시지를 삭제하시겠습니까?")) return;
+    try {
+      await deleteMessage(messageId);
+      setMessages((prev) => prev.filter((message) => message.id !== messageId));
+      // 전체 메시지 카운트도 실시간으로 업데이트
+      setRecipient((prev) => ({
+        ...prev,
+        messageCount: prev.messageCount - 1,
+      }));
+      showToast("메시지가 삭제되었습니다.");
+    } catch (err) {
+      showToast(err.message || "메시지 삭제 실패");
     }
   };
 
@@ -267,12 +142,7 @@ const PostDetailPage = () => {
     setToast({ show: false, message: "" });
   };
 
-  // 최신순 정렬
-  const sortedMessages = [...messages].sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-  );
-
-  if (!postData) {
+  if (!recipient) {
     return (
       <div className="post-page">
         <div className="loading-container">
@@ -285,38 +155,27 @@ const PostDetailPage = () => {
 
   return (
     <div className="post-page">
-      <DetailHeader
-        recipientName={postData.recipientName}
-        participantCount={postData.participantCount}
-        onShowToast={showToast}
-      />
+      <DetailHeader recipientName={recipient.name} participantCount={recipient.messageCount} onShowToast={showToast} />
       <div className="post-main-content">
-        <button
-          className={`btn-delete-floating ${isDeleteMode ? "active" : ""}`}
-          onClick={handleDeleteMode}
-        >
+        <button className={`btn-delete-floating ${isDeleteMode ? "active" : ""}`} onClick={handleDeleteMode}>
           삭제하기
         </button>
 
         <MessageGrid
-          messages={sortedMessages}
+          messages={messages}
           onMessageClick={handleMessageClick}
           isDeleteMode={isDeleteMode}
           onDeleteMessage={handleDeleteMessage}
           loading={loading}
-          hasMore={hasMore}
+          hasNext={hasNext}
+          // 무한 스크롤 타겟을 MessageGrid 내부로 전달
+          observerTargetRef={observerTarget}
         />
       </div>
 
-      {isModalOpen && (
-        <MessageModal message={selectedMessage} onClose={handleCloseModal} />
-      )}
+      {isModalOpen && <MessageModal message={selectedMessage} onClose={handleCloseModal} />}
 
-      <Toast
-        show={toast.show}
-        message={toast.message}
-        onClose={handleToastClose}
-      />
+      <Toast show={toast.show} message={toast.message} onClose={handleToastClose} />
     </div>
   );
 };

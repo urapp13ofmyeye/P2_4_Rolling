@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import "./MessagePage.css";
 import Header from "../../components/Header";
-import Button from "../../components/Button";
 
 const profileImages = [
   "/images/message/messagepage_profile1.png",
@@ -21,21 +21,44 @@ const profileImages = [
 const relations = ["지인", "친구", "동료", "가족"];
 const fonts = ["Noto Sans", "Pretendard", "나눔명조", "나눔손글씨 손편지체"];
 
+const TEAM_ID = "17-4";
+
 export default function MessagePage() {
+  const navigate = useNavigate();
+  const { recipientId } = useParams(); // URL 파라미터로 recipientId 받기
+
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [content, setContent] = useState("");
   const [sender, setSender] = useState("");
-  const [relationship, setRelationship] = useState("친구");
+  const [relationship, setRelationship] = useState("지인"); // 기본값 '지인'
   const [font, setFont] = useState("Noto Sans");
+  const [senderError, setSenderError] = useState(false);
+  const [contentError, setContentError] = useState(false);
 
   const selectedSrc =
     selectedIndex === null ? "/images/message/messagepage_nonselect_icon.png" : profileImages[selectedIndex];
 
-  const selectedImageURL = selectedIndex !== null ? window.location.origin + profileImages[selectedIndex] : "";
+  const selectedImageURL =
+    selectedIndex !== null
+      ? window.location.origin + profileImages[selectedIndex]
+      : window.location.origin + "/images/message/messagepage_nonselect_icon.png";
+
+  const getPlainText = (html) => {
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    return div.textContent || div.innerText || "";
+  };
 
   const handleSubmit = async () => {
-    if (!sender || !content || selectedIndex === null) {
-      alert("모든 항목을 입력해주세요!");
+    const plainText = getPlainText(content).trim();
+
+    const isSenderEmpty = !sender.trim();
+    const isContentEmpty = plainText.length === 0;
+
+    setSenderError(isSenderEmpty);
+    setContentError(isContentEmpty);
+
+    if (isSenderEmpty || isContentEmpty) {
       return;
     }
 
@@ -48,7 +71,7 @@ export default function MessagePage() {
     };
 
     try {
-      const response = await fetch(`https://rolling-api.vercel.app/0-3/recipients/2/messages/`, {
+      const response = await fetch(`https://rolling-api.vercel.app/${TEAM_ID}/recipients/${recipientId}/messages/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -59,11 +82,11 @@ export default function MessagePage() {
       if (!response.ok) throw new Error("전송 실패");
 
       const result = await response.json();
-      console.log("✅ 성공:", result);
-      alert("메세지가 전송되었습니다!");
+      alert("메시지가 전송되었습니다!");
+      navigate(`/post/${recipientId}`);
     } catch (error) {
       console.error("❌ 에러:", error);
-      alert("메세지 전송에 실패했습니다.");
+      alert("메시지 전송에 실패했습니다.");
     }
   };
 
@@ -76,10 +99,15 @@ export default function MessagePage() {
           <input
             type="text"
             placeholder="이름을 입력해 주세요."
-            className="text-input"
+            className={`text-input ${senderError ? "error" : ""}`}
             value={sender}
-            onChange={(e) => setSender(e.target.value)}
+            onBlur={() => setSenderError(!sender.trim())}
+            onChange={(e) => {
+              setSender(e.target.value);
+              if (senderError) setSenderError(false);
+            }}
           />
+          {senderError && <p className="error-text">값을 입력해 주세요.</p>}
         </section>
 
         <section className="form-section profile-container">
@@ -96,7 +124,13 @@ export default function MessagePage() {
                     key={idx}
                     src={src}
                     alt={`profile-${idx + 1}`}
-                    onClick={() => setSelectedIndex(idx)}
+                    onClick={() => {
+                      if (selectedIndex === idx) {
+                        setSelectedIndex(null);
+                      } else {
+                        setSelectedIndex(idx);
+                      }
+                    }}
                     className={`profile-img ${selectedIndex === idx ? "selected" : ""}`}
                   />
                 ))}
@@ -118,9 +152,16 @@ export default function MessagePage() {
 
         <section className="form-section">
           <p className="section-title">내용을 입력해 주세요</p>
-          <div className="editor-box">
-            <ReactQuill theme="snow" value={content} onChange={setContent} placeholder="I am your rich text editor." />
+          <div
+            className="editor-box"
+            onBlur={() => {
+              const plainText = getPlainText(content).trim();
+              setContentError(plainText.length === 0);
+            }}
+          >
+            <ReactQuill theme="snow" value={content} onChange={setContent} placeholder="내용을 입력해 주세요." />
           </div>
+          {contentError && <p className="error-text">메시지 내용을 입력해 주세요.</p>}
         </section>
 
         <section className="form-section">
@@ -134,7 +175,11 @@ export default function MessagePage() {
           </select>
         </section>
 
-        <button className="submit-button" onClick={handleSubmit}>
+        <button
+          className="submit-button"
+          onClick={handleSubmit}
+          disabled={!sender.trim() || getPlainText(content).trim().length === 0}
+        >
           생성하기
         </button>
       </div>
