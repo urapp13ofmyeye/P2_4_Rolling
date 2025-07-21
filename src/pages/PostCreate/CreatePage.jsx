@@ -228,12 +228,14 @@ function CreatePage() {
             </ImageBox>
           )}
 
+
           <CreateLinkButton
             disabled={!name || (mode === "color" && !bgColor) || (mode === "image" && !bgImage)}
             onClick={handleCreate}
           >
             생성하기
           </CreateLinkButton>
+
         </Container>
       </Outer>
     </>

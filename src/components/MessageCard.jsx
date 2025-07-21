@@ -37,7 +37,9 @@ const MessageCard = ({ message, onClick, isDeleteMode, onDelete }) => {
         <div dangerouslySetInnerHTML={{ __html: message.content }} />
       </div>
 
+
       <div className="message-date">{message.createdAt ? new Date(message.createdAt).toLocaleString("ko-KR") : ""}</div>
+
     </div>
   );
 };

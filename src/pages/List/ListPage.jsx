@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import mockRecipients from "./mockRecipients";
 import { Link } from "react-router-dom";
 import "./ListPage.css";
 import Header from "../../components/Header";
