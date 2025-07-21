@@ -34,7 +34,7 @@ const CheckMark = styled.div`
 
 function SelectBox({ type, options, selected, onSelect }) {
   const isSelected = (item) => {
-    if (type === "color") return selected === item;
+    if (type === "color") return selected.name === item.name;
     if (type === "image") return selected?.id === item.id;
     return false;
   };
@@ -51,7 +51,7 @@ function SelectBox({ type, options, selected, onSelect }) {
           {type === "color" ? (
             <div
               style={{
-                backgroundColor: item,
+                backgroundColor: item.colorCode,
                 width: "100%",
                 height: "100%",
                 display: "flex",

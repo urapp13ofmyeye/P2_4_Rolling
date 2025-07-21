@@ -71,30 +71,51 @@ const Button = styled.button`
 `;
 
 function CreatePage() {
-  const [recipientName, setRecipientName] = useState(""); //Input 정보
+  const [recipientName, setRecipientName] = useState("");
 
   const isDisabled = recipientName === "";
 
-  const colorOptions = ["#FFF2AD", "#ECD9FF", "#B1E4FF", "#D0F5C3"];
+  const colorOptions = [
+    { name: "beige", colorCode: "#FFF2AD" },
+    { name: "purple", colorCode: "#ECD9FF" },
+    { name: "blue", colorCode: "#B1E4FF" },
+    { name: "green", colorCode: "#D0F5C3" },
+  ];
   const imageOptions = [
-    { id: 1, src: "/images/Img1.png" },
-    { id: 2, src: "/images/Img2.png" },
-    { id: 3, src: "/images/Img1.png" },
-    { id: 4, src: "/images/Img2.png" },
+    {
+      id: 1,
+      url: "https://rolling-api.vercel.app/static/Img1.png",
+      src: "/Img1.png",
+    },
+    {
+      id: 2,
+      url: "https://rolling-api.vercel.app/static/Img2.png",
+      src: "/Img2.png",
+    },
+    {
+      id: 3,
+      url: "https://rolling-api.vercel.app/static/Img1.png",
+      src: "/Img1.png",
+    },
+    {
+      id: 4,
+      url: "https://rolling-api.vercel.app/static/Img2.png",
+      src: "/Img2.png",
+    },
   ];
 
-  const [mode, setMode] = useState("color"); // color, image 선택
-  const [selectedItem, setSelectedItem] = useState(colorOptions[0]); // color, image 값
+  const [mode, setMode] = useState("color");
+  const [selectedItem, setSelectedItem] = useState(colorOptions[0]);
 
   const handleClick = (type) => {
-    setMode(type);
+    setMode(type); //color , image
     if (type === "color") {
       setSelectedItem(colorOptions[0]);
     } else if (type === "image") {
       setSelectedItem(imageOptions[0]);
     }
   };
-
+  console.log(selectedItem);
   return (
     <>
       <Header />
@@ -133,7 +154,12 @@ function CreatePage() {
               onSelect={setSelectedItem}
             />
           )}
-          <SubmitButton to={"/post/{id}"} disabled={isDisabled} />
+          <SubmitButton
+            disabled={isDisabled}
+            recipientName={recipientName}
+            selectedItem={selectedItem}
+            mode={mode}
+          />
         </Container>
       </Outer>
     </>
