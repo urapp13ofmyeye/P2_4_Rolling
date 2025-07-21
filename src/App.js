@@ -1,15 +1,16 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import Header from "./components/Header";
-import Button from "./components/Button";
-import TextField from "./components/TextField";
-import Modal from "./components/Modal";
-import Toast from "./components/Toast";
-import Badge from "./components/Badge";
-import CardList from "./components/CardList";
-import Card from "./components/Card";
-import Option from "./components/Option";
+import Header from './components/Header';
+import Button from './components/Button';
+import TextField from './components/TextField';
+import Modal from './components/Modal';
+import Toast from './components/Toast';
+import Badge from './components/Badge';
+import CardList from './components/CardList';
+import Card from './components/Card';
+import Option from './components/Option';
+import ListPage from './pages/List/ListPage';
 
 const HomePage = () => (
   <>
@@ -17,14 +18,6 @@ const HomePage = () => (
     <h1>메인 페이지 (Home)</h1>
     <Button>롤링페이퍼 만들기</Button>
     <Button>구경해보기</Button>
-  </>
-);
-
-const ListPage = () => (
-  <>
-    <Header />
-    <h1>롤링페이퍼 목록 페이지 (/list)</h1>
-    <CardList />
   </>
 );
 
@@ -67,8 +60,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/list" element={<ListPage />} />
+        <Route path="/list" element={<HomePage />} />
+        <Route path="/" element={<ListPage />} />
         <Route path="/post" element={<PostPage />} />
         <Route path="/post/:id" element={<PostDetailPage />} />
         <Route path="/post/:id/edit" element={<PostEditPage />} />

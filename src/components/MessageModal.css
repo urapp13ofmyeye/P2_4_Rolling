@@ -1,0 +1,190 @@
+/* src/components/MessageModal.css */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  background: white;
+  border-radius: 16px;
+  padding: 0;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 24px 24px 20px 24px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.modal-user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  background: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #666;
+  font-size: 20px;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sender-name {
+  font-weight: 600;
+  color: #2d3436;
+  font-size: 18px;
+  font-family: "Pretendard", sans-serif;
+}
+
+.relationship {
+  font-size: 14px;
+  color: #636e72;
+  background: #f8f9fa;
+  padding: 4px 12px;
+  border-radius: 12px;
+  display: inline-block;
+  width: fit-content;
+  font-family: "Pretendard", sans-serif;
+}
+
+.modal-date {
+  font-size: 14px;
+  color: #9ca3af;
+  font-weight: 400;
+  font-family: "Pretendard", sans-serif;
+}
+
+.modal-body {
+  padding: 24px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.modal-body p {
+  line-height: 1.6;
+  color: #2d3436;
+  font-size: 16px;
+  margin: 0;
+  white-space: pre-wrap;
+  font-family: "Pretendard", sans-serif;
+}
+
+.modal-footer {
+  padding: 20px 24px 24px 24px;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid #e9ecef;
+}
+
+.btn-confirm {
+  background: #6c5ce7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-family: "Pretendard", sans-serif;
+}
+
+.btn-confirm:hover {
+  background: #5a4fcf;
+}
+
+/* 관계별 색상 */
+.modal-content .relationship.가족 {
+  background: #e8f5e8;
+  color: #2d5a2d;
+}
+
+.modal-content .relationship.동료 {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.modal-content .relationship.친구 {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.modal-content .relationship.지인 {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    max-height: 90vh;
+  }
+
+  .modal-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .modal-date {
+    align-self: flex-end;
+  }
+}
