@@ -1,65 +1,58 @@
 // src/pages/PostPage.jsx
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getRecipient, getMessages, deleteMessage } from "../../api/api";
 import DetailHeader from "../../components/DetailHeader";
 import MessageGrid from "../../components/MessageGrid";
 import MessageModal from "../../components/MessageModal";
 import Toast from "../../components/Toast";
+import { fetchRecipientById, fetchMessages, fetchReactions, updateReaction, deleteMessage } from "../../api/api";
 import "./PostPage.css";
 
-const PostDetailPage = () => {
-  // URL에서 id를 가져오되, 없으면 'test-id'를 기본값으로 사용합니다.
-  const { id: routeId } = useParams();
-  const id = routeId || "test-id";
+const PostPage = () => {
+  const { id } = useParams(); // /post/:id에서 대상 id를 추출
   const navigate = useNavigate();
-
-  // 상태 관리 개선
-  const [recipient, setRecipient] = useState(null);
-  const [messages, setMessages] = useState([]);
+  const [recipient, setRecipient] = useState([]); // 대상 정보
+  const [messages, setMessages] = useState([]); // 메시지 목록
+  const [reactions, setReactions] = useState([]); // 리액션 목록
   const [selectedMessage, setSelectedMessage] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState({ show: false, message: "" });
-
-  // 무한 스크롤 상태
   const [offset, setOffset] = useState(0);
   const [hasNext, setHasNext] = useState(true);
   const observerTarget = useRef(null);
 
-  // 데이터 로딩 로직 최적화
+  // 데이터 로딩
   useEffect(() => {
-    // id가 바뀔 때마다 상태 초기화
-    setRecipient(null);
-    setMessages([]);
-    setOffset(0);
-    setHasNext(true);
-
-    const loadRecipient = async () => {
+    async function loadData() {
       try {
-        const recipientData = await getRecipient(id);
+        const recipientData = await fetchRecipientById(id);
+        const reactionData = await fetchReactions(id, { limit: 10 });
+
         setRecipient(recipientData);
+        setReactions(reactionData.results);
       } catch (err) {
-        console.error(err);
+        console.error("데이터 로딩 실패", err);
         alert("롤링페이퍼를 불러올 수 없거나 존재하지 않습니다.");
         navigate("/list");
       }
-    };
-
-    if (id) {
-      loadRecipient();
     }
-  }, [id]);
 
-  // 메시지 로딩 함수 (useCallback으로 최적화)
+    loadData();
+  }, [id, navigate]);
+
   const loadMessages = useCallback(async () => {
     if (loading || !hasNext) return;
-
     setLoading(true);
+
     try {
-      const { results, next } = await getMessages(id, { limit: 8, offset });
-      setMessages((prev) => [...prev, ...results]);
+      const { results, next } = await fetchMessages(id, { limit: 8, offset });
+      setMessages((prev) => {
+        const merged = [...prev, ...results];
+        const unique = merged.filter((msg, index, self) => index === self.findIndex((m) => m.id === msg.id));
+        return unique;
+      });
       setOffset((prev) => prev + results.length);
       setHasNext(!!next);
     } catch (err) {
@@ -69,13 +62,9 @@ const PostDetailPage = () => {
     }
   }, [id, loading, hasNext, offset]);
 
-  // IntersectionObserver를 사용한 무한 스크롤 구현
   useEffect(() => {
-    // recipient 정보가 로드된 후에 메시지 로딩 시작
-    if (recipient) {
-      loadMessages();
-    }
-  }, [recipient]); // recipient가 설정되면 첫 메시지 로드
+    loadMessages();
+  }, [loadMessages]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -88,16 +77,22 @@ const PostDetailPage = () => {
     );
 
     const target = observerTarget.current;
-    if (target) {
-      observer.observe(target);
-    }
-
+    if (target) observer.observe(target);
     return () => {
-      if (target) {
-        observer.unobserve(target);
-      }
+      if (target) observer.unobserve(target);
     };
   }, [loadMessages, hasNext, loading]);
+
+  // 리액션 클릭 시 처리
+  const handleReaction = async (emoji) => {
+    try {
+      await updateReaction(id, emoji, "increase");
+      const updated = await fetchReactions(id);
+      setReactions(updated.results);
+    } catch (err) {
+      console.error("리액션 실패", err);
+    }
+  };
 
   const handleMessageClick = (message) => {
     if (isDeleteMode) return;
@@ -119,7 +114,6 @@ const PostDetailPage = () => {
     try {
       await deleteMessage(messageId);
       setMessages((prev) => prev.filter((message) => message.id !== messageId));
-      // 전체 메시지 카운트도 실시간으로 업데이트
       setRecipient((prev) => ({
         ...prev,
         messageCount: prev.messageCount - 1,
@@ -132,7 +126,6 @@ const PostDetailPage = () => {
 
   const showToast = (message) => {
     setToast({ show: true, message });
-    // 자동으로 5초 후 사라지는 타이머
     setTimeout(() => {
       setToast({ show: false, message: "" });
     }, 5000);
@@ -146,7 +139,7 @@ const PostDetailPage = () => {
     return (
       <div className="post-page">
         <div className="loading-container">
-          <div className="spinner"></div>
+          <div className="spinner" />
           <span>로딩 중...</span>
         </div>
       </div>
@@ -155,21 +148,25 @@ const PostDetailPage = () => {
 
   return (
     <div className="post-page">
-      <DetailHeader recipientName={recipient.name} participantCount={recipient.messageCount} onShowToast={showToast} />
+      <DetailHeader
+        recipientName={recipient.name} // To. 이름
+        participantCount={recipient.messageCount}
+        onShowToast={showToast}
+        reactions={reactions} // 🆕 리액션 전달
+        onReact={handleReaction} // 🆕 리액션 처리 함수 전달
+      />
       <div className="post-main-content">
         <button className={`btn-delete-floating ${isDeleteMode ? "active" : ""}`} onClick={handleDeleteMode}>
           삭제하기
         </button>
 
         <MessageGrid
-          recipientId={recipient?.id}
           messages={messages}
           onMessageClick={handleMessageClick}
           isDeleteMode={isDeleteMode}
           onDeleteMessage={handleDeleteMessage}
           loading={loading}
           hasNext={hasNext}
-          // 무한 스크롤 타겟을 MessageGrid 내부로 전달
           observerTargetRef={observerTarget}
         />
       </div>
@@ -181,4 +178,4 @@ const PostDetailPage = () => {
   );
 };
 
-export default PostDetailPage;
+export default PostPage;

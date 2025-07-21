@@ -1,8 +1,8 @@
-/* src/components/Header.css */
+/* src/components/DetailHeader.css */
 .detail-header {
   position: sticky;
-  top: 64px; 
-  background-color: #ffffff; 
+  top: 64px;
+  background-color: #ffffff;
   z-index: 900;
   border-bottom: 1px solid #ededed;
 }
