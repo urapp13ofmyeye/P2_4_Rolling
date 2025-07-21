@@ -20,14 +20,11 @@ const ItemWrapper = styled.div`
 `;
 
 const CheckMark = styled.div`
-  position: absolute;
-  top: 50%;
-  right: 50%;
   background-color: #555555;
   color: white;
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
+  width: 44px;
+  height: 44px;
   font-weight: bold;
   display: flex;
   justify-content: center;
@@ -44,7 +41,7 @@ function SelectBox({ type, options, selected, onSelect }) {
 
   return (
     <BoxContainer>
-      {options.map((item, index) => (
+      {options.map((item) => (
         <ItemWrapper
           key={type === "color" ? item : item.id}
           selected={isSelected(item)}
@@ -57,16 +54,27 @@ function SelectBox({ type, options, selected, onSelect }) {
                 backgroundColor: item,
                 width: "100%",
                 height: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
-            />
+            >
+              {isSelected(item) && <CheckMark>✔</CheckMark>}
+            </div>
           ) : (
-            <img
-              src={item.src}
-              alt={`이미지${item.id}`}
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
+            <div
+              style={{
+                backgroundImage: `url(${item.src})`,
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {isSelected(item) && <CheckMark>✔</CheckMark>}
+            </div>
           )}
-          {isSelected(item) && <CheckMark>✔</CheckMark>}
         </ItemWrapper>
       ))}
     </BoxContainer>

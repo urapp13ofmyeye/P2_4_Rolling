@@ -1,6 +1,12 @@
 import { useState } from "react";
 import styled from "styled-components";
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
 const Label = styled.label`
   font-weight: 700;
   font-size: 24px;
@@ -10,7 +16,6 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-  margin: 10px;
   padding: 12px 16px;
   font-weight: 400;
   font-size: 16px;
@@ -18,7 +23,7 @@ const Input = styled.input`
   border-radius: 8px;
   color: #555555;
   display: block;
-  width: 100%;
+  width: 85%;
 
   &::placeholder {
     color: ${({ error }) => (error ? "red" : "#aaa")};
@@ -42,7 +47,7 @@ const InputBox = ({ value, onChange }) => {
   };
 
   return (
-    <>
+    <Wrapper>
       <Label>To.</Label>
       <Input
         type="text"
@@ -57,7 +62,7 @@ const InputBox = ({ value, onChange }) => {
         className={error ? "input-error" : ""}
         error={error}
       />
-    </>
+    </Wrapper>
   );
 };
 
