@@ -4,25 +4,7 @@ import { useState } from "react";
 import InputBox from "./InputBox";
 import SelectBox from "./SelectBox";
 import SubmitButton from "./SubmitButton";
-
-const StyledLink = styled(Link)`
-  display: flex;
-  text-decoration: none;
-  margin-left: 150px;
-  position: sticky;
-`;
-
-const LogoImg = styled.img`
-  margin: 3px;
-`;
-
-const LogoText = styled.span`
-  font-weight: bold;
-  font-size: 20px;
-  text-decoration: none;
-  padding: 8px;
-  color: #4a494f;
-`;
+import Header from "../../components/Header";
 
 const Outer = styled.div`
   display: flex;
@@ -89,7 +71,7 @@ const Button = styled.button`
 `;
 
 function CreatePage() {
-  const [recipientName, setRecipientName] = useState("");
+  const [recipientName, setRecipientName] = useState(""); //Input 정보
 
   const isDisabled = recipientName === "";
 
@@ -101,11 +83,11 @@ function CreatePage() {
     { id: 4, src: "/images/Img2.png" },
   ];
 
-  const [mode, setMode] = useState("color");
-  const [selectedItem, setSelectedItem] = useState(colorOptions[0]);
+  const [mode, setMode] = useState("color"); // color, image 선택
+  const [selectedItem, setSelectedItem] = useState(colorOptions[0]); // color, image 값
 
   const handleClick = (type) => {
-    setMode(type); //color , image
+    setMode(type);
     if (type === "color") {
       setSelectedItem(colorOptions[0]);
     } else if (type === "image") {
@@ -115,11 +97,7 @@ function CreatePage() {
 
   return (
     <>
-      <StyledLink to="/">
-        <img src="/logoimg.png" alt="logo" />
-        <LogoText>Rolling</LogoText>
-      </StyledLink>
-      <hr style={{ opacity: 0.5 }} />
+      <Header />
       <Outer>
         <Container>
           <InputBox value={recipientName} onChange={setRecipientName} />
