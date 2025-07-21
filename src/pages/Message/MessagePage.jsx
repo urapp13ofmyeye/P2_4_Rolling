@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import "./MessagePage.css";
+import Dropdown from "../../components/Dropdown.jsx";
 import Header from "../../components/Header";
 
 const profileImages = [
@@ -20,17 +21,22 @@ const profileImages = [
 
 const relations = ["지인", "친구", "동료", "가족"];
 const fonts = ["Noto Sans", "Pretendard", "나눔명조", "나눔손글씨 손편지체"];
+const fontMap = {
+  "Noto Sans": "Noto Sans, sans-serif",
+  Pretendard: "Pretendard Variable, sans-serif",
+  나눔명조: "Nanum Myeongjo, serif",
+  "나눔손글씨 손편지체": "Nanum Brush Script, cursive",
+};
 
 const TEAM_ID = "17-4";
 
 export default function MessagePage() {
   const navigate = useNavigate();
-  const { recipientId } = useParams(); // URL 파라미터로 recipientId 받기
-
+  const { recipientId } = useParams();
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [content, setContent] = useState("");
   const [sender, setSender] = useState("");
-  const [relationship, setRelationship] = useState("지인"); // 기본값 '지인'
+  const [relationship, setRelationship] = useState("지인");
   const [font, setFont] = useState("Noto Sans");
   const [senderError, setSenderError] = useState(false);
   const [contentError, setContentError] = useState(false);
@@ -81,7 +87,6 @@ export default function MessagePage() {
 
       if (!response.ok) throw new Error("전송 실패");
 
-      const result = await response.json();
       alert("메시지가 전송되었습니다!");
       navigate(`/post/${recipientId}`);
     } catch (error) {
@@ -93,7 +98,7 @@ export default function MessagePage() {
   return (
     <div className="message-page">
       <Header showPostButton={true} />
-      <div className="message-content">
+      <div className="message-content-page">
         <section className="form-section">
           <p className="section-title">From.</p>
           <input
@@ -141,19 +146,14 @@ export default function MessagePage() {
 
         <section className="form-section">
           <p className="section-title">상대와의 관계</p>
-          <select className="half-select" value={relationship} onChange={(e) => setRelationship(e.target.value)}>
-            {relations.map((relation, idx) => (
-              <option key={idx} value={relation}>
-                {relation}
-              </option>
-            ))}
-          </select>
+          <Dropdown options={relations} value={relationship} onChange={(val) => setRelationship(val)} />
         </section>
 
         <section className="form-section">
           <p className="section-title">내용을 입력해 주세요</p>
           <div
             className="editor-box"
+            style={{ fontFamily: fontMap[font] }}
             onBlur={() => {
               const plainText = getPlainText(content).trim();
               setContentError(plainText.length === 0);
@@ -166,13 +166,7 @@ export default function MessagePage() {
 
         <section className="form-section">
           <p className="section-title">폰트 선택</p>
-          <select className="half-select" value={font} onChange={(e) => setFont(e.target.value)}>
-            {fonts.map((font, idx) => (
-              <option key={idx} value={font}>
-                {font}
-              </option>
-            ))}
-          </select>
+          <Dropdown options={fonts} value={font} onChange={(val) => setFont(val)} />
         </section>
 
         <button

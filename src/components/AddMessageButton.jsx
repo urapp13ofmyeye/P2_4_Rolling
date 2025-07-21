@@ -1,18 +1,24 @@
-// src/components/AddMessageButton.jsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./AddMessageButton.css";
-import { Link } from "react-router-dom";
 
-const AddMessageButton = () => {
+const AddMessageButton = ({ recipientId }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (!recipientId) {
+      alert("대상 정보가 없습니다.");
+      return;
+    }
+    navigate(`/message/${recipientId}/`);
+  };
+
   return (
-    <Link to="/Message">
-      <div className="add-message-card">
-        <button className="add-button">
-          <span className="plus-icon">+</span>
-        </button>
-      </div>
-    </Link>
+    <div className="add-message-card" onClick={handleClick} style={{ cursor: "pointer" }}>
+      <button className="add-button">
+        <span className="plus-icon">+</span>
+      </button>
+    </div>
   );
 };
 

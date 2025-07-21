@@ -162,6 +162,7 @@ const PostDetailPage = () => {
         </button>
 
         <MessageGrid
+          recipientId={recipient?.id}
           messages={messages}
           onMessageClick={handleMessageClick}
           isDeleteMode={isDeleteMode}
