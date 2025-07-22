@@ -133,7 +133,9 @@ function CreatePage() {
     setMode(type); //color , image
     if (type === "color") {
       setSelectedItem(colorOptions[0]);
-    } else if (type === "image") {
+      return;
+    }
+    if (type === "image") {
       setSelectedItem(imageOptions[0]);
     }
   };
