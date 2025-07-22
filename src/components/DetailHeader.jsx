@@ -1,4 +1,4 @@
-// src/components/DetailHeader.jsx
+// src/components/Header.jsx
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import shareIcon from "/images/shareIcon.svg";
@@ -33,7 +33,9 @@ const DetailHeader = ({
 
   const handleEmojiPickerToggle = () => {
     setShowEmojiPicker((prev) => !prev);
-    setShowShareDropdown(false);
+    if (showShareDropdown) {
+      setShowShareDropdown(false);
+    }
   };
 
   const handleToggleReactionPopup = () => {
@@ -71,7 +73,6 @@ const DetailHeader = ({
           </div>
 
           <div className="detail-header-right">
-
             <div className="participants-section">
               <div className="profile-avatars">
                 {recentMessages?.map((recent) => (
@@ -130,6 +131,7 @@ const DetailHeader = ({
                 </button>
               )}
 
+
               {showReactionPopup && (
                 <ReactionPopup
                   ref={popupRef}
@@ -139,24 +141,30 @@ const DetailHeader = ({
                 />
               )}
 
-              <div className="add-reaction-container" ref={toggleRef}>
-  <button className="add-reaction-btn" onClick={handleEmojiPickerToggle}>
-    <span>
-      <img src={addemojiIcon} alt="addemoji" />
-      추가
-    </span>
-  </button>
+              <div className="add-reaction-container">
+                <button
+                  className="add-reaction-btn"
+                  onClick={handleEmojiPickerToggle}
+                >
+                  <span>
+                    <img src={addemojiIcon} alt="addemoji" />
+                    추가
+                  </span>
+                </button>
 
-  <div className={`emoji-picker-wrapper ${showEmojiPicker ? "open" : ""}`}>
-    <EmojiPicker
-      onEmojiClick={handleAddReaction}
-      lazyLoadEmojis
-      suggestedEmojisMode="recent"
-    />
-  </div>
-</div>
+                <div className={`emoji-picker-wrapper ${showEmojiPicker ? "open" : ""}`}>
+                  <EmojiPicker
+                    onEmojiClick={(emojiData) => {
+                      const emoji = emojiData.emoji;
+                      onReact(emoji);
+                      setShowEmojiPicker(false);
+                    }}
+                    lazyLoadEmojis
+                    suggestedEmojisMode="recent"
+                  />
+                </div>
 
-
+              </div>
             </div>
 
             <div className="action-buttons">
@@ -164,7 +172,9 @@ const DetailHeader = ({
                 className="btn-share"
                 onClick={() => {
                   setShowShareDropdown(!showShareDropdown);
-                  setShowEmojiPicker(false);
+                  if (showEmojiPicker) {
+                    setShowEmojiPicker(false);
+                  }
                 }}
               >
                 <img src={shareIcon} alt="공유하기" className="share-icon" />

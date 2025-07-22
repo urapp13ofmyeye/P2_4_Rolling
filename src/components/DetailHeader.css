@@ -150,28 +150,6 @@
   font-family: "Pretendard", sans-serif;
 }
 
-
-.emoji-picker-wrapper {
-  position: absolute;
-  top: 42px;
-  right: 0;
-  z-index: 999;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-12px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
-  pointer-events: none;
-}
-
-.emoji-picker-wrapper.open {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-
-
 .toggle-reactions-btn {
   width: 32px;
   height: 32px;
