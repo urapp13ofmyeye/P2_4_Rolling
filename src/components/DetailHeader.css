@@ -85,6 +85,25 @@
   line-height: 18px;
 }
 
+.emoji-picker-wrapper {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  z-index: 1000;
+
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none; /* 클릭 안 되도록 */
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.emoji-picker-wrapper.open {
+  max-height: 450px; /* 충분한 높이, 필요시 조정 */
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .participant-count {
   color: #636e72;
   font-size: 14px;
