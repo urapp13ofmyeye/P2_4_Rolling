@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-import React from "react";
-
-const Toast = () => {
-  return <toast>Toast</toast>;
-=======
+//
 // src/components/Toast.jsx
 import React from "react";
 import "./Toast.css";
@@ -40,7 +35,7 @@ const Toast = ({ show, message, onClose }) => {
       </button>
     </div>
   );
->>>>>>> dev#3
+  //
 };
 
 export default Toast;
