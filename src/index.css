@@ -4,11 +4,12 @@
 /* Noto Sans */
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
 
-/* 나눔명조 */
-@import url("https://cdn.jsdelivr.net/gh/webfontworld/NanumMyeongjo@latest/NanumMyeongjo.css");
+/* 나눔명조 (Google Fonts) */
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap");
 
-/* 나눔손글씨 손편지체 */
-@import url("https://cdn.jsdelivr.net/gh/webfontworld/NanumBrushScript@latest/NanumBrushScript.css");
+/* 나눔손글씨 손편지체 (Google Fonts) */
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap");
+
 
 * {
   margin: 0;
