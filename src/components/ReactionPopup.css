@@ -1,0 +1,70 @@
+/* 팝업 컨테이너 스타일 */
+.reaction-popup {
+  position: absolute;
+  top: calc(100% + 8px); /* 버튼 바로 아래에 위치 */
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  padding: 16px;
+  width: 320px;
+}
+
+/* 이모지를 담을 그리드 */
+.reaction-popup-grid {
+  display: grid;
+  gap: 8px;
+  /* 기본 4열 */
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* 개별 이모지 아이템 */
+.reaction-popup-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 32px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  /* 요청하신 배경 스타일: #000000 색상에 54% 투명도 */
+  background-color: rgba(0, 0, 0, 0.54);
+  color: white; /* 텍스트가 잘 보이도록 흰색으로 설정 */
+}
+
+.reaction-popup-item:hover {
+  transform: scale(1.1);
+}
+
+.reaction-popup-emoji {
+  font-size: 16px;
+}
+
+.reaction-popup-count {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* 반응형 레이아웃: 화면 너비에 따라 열 개수 조정 */
+@media (max-width: 768px) {
+  .reaction-popup {
+    width: 280px;
+  }
+  .reaction-popup-grid {
+    /* 3열 */
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .reaction-popup {
+    width: 240px;
+  }
+  .reaction-popup-grid {
+    /* 2열 */
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
