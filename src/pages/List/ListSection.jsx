@@ -60,7 +60,10 @@ export default function ListSection({ title, cards, sortBy }) {
                 to={`/post/${card.id}`}
                 key={card.id}
                 className="card"
-                style={{ backgroundColor: card.backgroundColor }}
+                style={{
+                  backgroundColor: card.backgroundColor,
+                  backgroundImage: card.backgroundImage,
+                }}
               >
                 <div className="card-container">
                   <div>
