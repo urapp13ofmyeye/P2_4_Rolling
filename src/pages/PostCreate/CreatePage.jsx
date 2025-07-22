@@ -7,7 +7,7 @@ import SubmitButton from "../../components/SubmitButton";
 import Header from "../../components/Header";
 
 const Outer = styled.div`
-  max-width: 700px;
+  max-width: 750px;
   margin: 30px auto 0;
   padding: 0 15px;
   overflow: visible;
@@ -25,8 +25,21 @@ const Container = styled.div`
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  width: 660px;
+  width: 100%;
   background-color: #ffffff;
+
+  // 태블릿 //
+  @media (min-width: 768px) {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 4px;
+  }
+
+  // 데스크탑 //
+  @media (min-width: 1024px) {
+    max-width: 960px;
+    padding: 8px;
+  }
 `;
 
 const Book = styled.h2`
@@ -78,40 +91,40 @@ const Button = styled.button`
   `}
 `;
 
+const colorOptions = [
+  { name: "beige", colorCode: "#FFE2AD" },
+  { name: "purple", colorCode: "#ECD9FF" },
+  { name: "blue", colorCode: "#B1E4FF" },
+  { name: "green", colorCode: "#D0F5C3" },
+];
+const imageOptions = [
+  {
+    id: 1,
+    url: "https://rolling-api.vercel.app/static/Background1.jpg",
+    src: "../images/Background1.jpg",
+  },
+  {
+    id: 2,
+    url: "https://rolling-api.vercel.app/static/Background2.jpg",
+    src: "../images/Background2.jpg",
+  },
+  {
+    id: 3,
+    url: "https://rolling-api.vercel.app/static/Background3.jpg",
+    src: "../images/Background3.jpg",
+  },
+  {
+    id: 4,
+    url: "https://rolling-api.vercel.app/static/Background4.jpg",
+    src: "../images/Background4.jpg",
+  },
+];
+
 function CreatePage() {
   const [recipientName, setRecipientName] = useState("");
   const [recipientNameError, setRecipientNameError] = useState(false);
 
   const isDisabled = recipientName === "";
-
-  const colorOptions = [
-    { name: "beige", colorCode: "#FFE2AD" },
-    { name: "purple", colorCode: "#ECD9FF" },
-    { name: "blue", colorCode: "#B1E4FF" },
-    { name: "green", colorCode: "#D0F5C3" },
-  ];
-  const imageOptions = [
-    {
-      id: 1,
-      url: "https://rolling-api.vercel.app/static/Background1.jpg",
-      src: "../images/Background1.jpg",
-    },
-    {
-      id: 2,
-      url: "https://rolling-api.vercel.app/static/Background2.jpg",
-      src: "../images/Background2.jpg",
-    },
-    {
-      id: 3,
-      url: "https://rolling-api.vercel.app/static/Background3.jpg",
-      src: "../images/Background3.jpg",
-    },
-    {
-      id: 4,
-      url: "https://rolling-api.vercel.app/static/Background4.jpg",
-      src: "../images/Background4.jpg",
-    },
-  ];
 
   const [mode, setMode] = useState("color");
   const [selectedItem, setSelectedItem] = useState(colorOptions[0]);

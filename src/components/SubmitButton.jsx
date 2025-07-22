@@ -21,7 +21,20 @@ const StyledButton = styled.button`
   margin-top: 64px;
   cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
   pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
+
+  // 태블릿 (버튼 아래로)
+  @media (min-width: 768px) {
+    max-width: 720px;
+    margin-top: 240px;
+  }
+
+  // 데스크탑
+  @media (min-width: 1024px) {
+    max-width: 960px;
+    margin-top: 64px;
+  }
 `;
+
 //  포스트 요청에 보낼 데이터 분기처리 해주기
 //  포스트 요청에 대한 에러핸들링 해주기
 //  롤링페이퍼 post/${id}
@@ -30,15 +43,18 @@ const SubmitButton = ({ disabled, recipientName, selectedItem, mode }) => {
 
   const handleEventClick = async () => {
     try {
-      const res = await fetch("https://rolling-api.vercel.app/17-4/recipients/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json;charset=utf-8" },
-        body: JSON.stringify({
-          name: recipientName,
-          backgroundColor: mode === "color" ? selectedItem.name : "beige",
-          backgroundImageURL: mode === "image" ? selectedItem.url : null,
-        }),
-      });
+      const res = await fetch(
+        "https://rolling-api.vercel.app/17-4/recipients/",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json;charset=utf-8" },
+          body: JSON.stringify({
+            name: recipientName,
+            backgroundColor: mode === "color" ? selectedItem.name : "beige",
+            backgroundImageURL: mode === "image" ? selectedItem.url : null,
+          }),
+        }
+      );
       if (!res.ok) {
         const errorData = await res.json();
         throw new Error(errorData.message || "API 요청 실패");
