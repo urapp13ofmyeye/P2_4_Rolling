@@ -8,7 +8,7 @@ export async function fetchRecipients({ limit = 100, offset = 0 } = {}) {
   return data.results;
 }
 
-export async function createRecipient(name, backgroundColor) {
+export async function createRecipient(data) {
   const res = await fetch(`${BASE_URL}/recipients/`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -42,7 +42,7 @@ export async function fetchMessages(
   const res = await fetch(
     `${BASE_URL}/recipients/${recipientId}/messages/?${params.toString()}`
   );
-  if (!res.ok) throw new Error('메시지 목록 조회 실패');
+  if (!res.ok) throw new Error("메시지 목록 조회 실패");
   return await res.json(); // { count, next, previous, results }
 }
 
@@ -74,7 +74,7 @@ export async function fetchReactions(
   const res = await fetch(
     `${BASE_URL}/recipients/${recipientId}/reactions/?${params.toString()}`
   );
-  if (!res.ok) throw new Error('리액션 목록 조회 실패');
+  if (!res.ok) throw new Error("리액션 목록 조회 실패");
   return await res.json(); // { count, next, previous, results }
 }
 

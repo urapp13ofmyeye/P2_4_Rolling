@@ -22,9 +22,7 @@ const StyledButton = styled.button`
   cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
   pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
 `;
-//  포스트 요청에 보낼 데이터 분기처리 해주기
-//  포스트 요청에 대한 에러핸들링 해주기
-//  롤링페이퍼 post/${id}
+
 const SubmitButton = ({ disabled, recipientName, selectedItem, mode }) => {
   const navigate = useNavigate();
 
