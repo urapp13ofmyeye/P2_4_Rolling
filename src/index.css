@@ -36,7 +36,8 @@ img {
 
 body {
   word-break: keep-all;
-  font-family: "Pretendard Variable", "Pretendard", "Noto Sans", "Nanum Myeongjo", "Nanum Brush Script", sans-serif;
+  font-family: "Pretendard Variable", "Pretendard", "Noto Sans",
+    "Nanum Myeongjo", "Nanum Brush Script", sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;

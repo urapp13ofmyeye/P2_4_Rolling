@@ -1,3 +1,4 @@
+//
 // src/components/Toast.jsx
 import React from "react";
 import "./Toast.css";
@@ -34,6 +35,7 @@ const Toast = ({ show, message, onClose }) => {
       </button>
     </div>
   );
+  //
 };
 
 export default Toast;
