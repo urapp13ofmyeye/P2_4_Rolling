@@ -175,15 +175,17 @@ const PostPage = () => {
     );
   }
 
-  const pageStyle = recipient
+  const pageStyle = recipient?.backgroundImageURL
     ? {
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${recipient.backgroundImageURL})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      } // 배경 이미지 그라디언트
+    : {
         backgroundColor:
           colorMap[recipient.backgroundColor] || recipient.backgroundColor,
-        ...(recipient.backgroundImageURL && {
-          backgroundImage: `url(${recipient.backgroundImageURL})`,
-        }),
-      }
-    : {};
+      };
 
   return (
     <div className="post-page" style={pageStyle}>

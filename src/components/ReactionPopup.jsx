@@ -16,8 +16,7 @@ const ReactionPopup = React.forwardRef(
             <div
               key={reaction.id}
               className="reaction-popup-item"
-              onClick={() => handleReactionClick(reaction.emoji)}
-            >
+              onClick={() => handleReactionClick(reaction.emoji)}>
               <span className="reaction-popup-emoji">{reaction.emoji}</span>
               <span className="reaction-popup-count">{reaction.count}</span>
             </div>

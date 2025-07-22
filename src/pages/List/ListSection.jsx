@@ -1,5 +1,5 @@
-import { useState, useMemo, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useMemo, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function ListSection({ title, cards, sortBy }) {
   const [startIndex, setStartIndex] = useState(0);
@@ -11,15 +11,15 @@ export default function ListSection({ title, cards, sortBy }) {
       setIsMobileScroll(window.innerWidth <= 768);
     };
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   const sortedCards = useMemo(() => {
-    if (sortBy === 'messageCount') {
+    if (sortBy === "messageCount") {
       return [...cards].sort((a, b) => b.messageCount - a.messageCount);
     }
-    if (sortBy === 'createdAt') {
+    if (sortBy === "createdAt") {
       return [...cards].sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
       );
@@ -45,10 +45,10 @@ export default function ListSection({ title, cards, sortBy }) {
   };
 
   const colorMap = {
-    beige: '#FFE2AD',
-    purple: '#ECD9FF',
-    blue: '#B1E4FF',
-    green: '#D0F5C3',
+    beige: "#FFE2AD",
+    purple: "#ECD9FF",
+    blue: "#B1E4FF",
+    green: "#D0F5C3",
   };
 
   return (
@@ -59,8 +59,7 @@ export default function ListSection({ title, cards, sortBy }) {
           {!isMobileScroll && startIndex > 0 && (
             <button
               onClick={handlePrev}
-              className="arrow-button arrow-button-prev"
-            >
+              className="arrow-button arrow-button-prev">
               <img src="images/list/arrow-left.png" alt="arrow-left" />
             </button>
           )}
@@ -71,12 +70,12 @@ export default function ListSection({ title, cards, sortBy }) {
               <Link
                 to={`/post/${card.id}`}
                 key={card.id}
-                className={`card ${card.backgroundImageURL ? 'has-image' : ''}`}
+                className={`card ${card.backgroundImageURL ? "has-image" : ""}`}
                 style={{
                   backgroundColor:
                     colorMap[card.backgroundColor] || card.backgroundColor,
-                  position: 'relative',
-                  overflow: 'hidden',
+                  position: "relative",
+                  overflow: "hidden",
                   backgroundImage: card.backgroundImageURL
                     ? `linear-gradient(rgba(0,0,0,0.6)), url(${card.backgroundImageURL})`
                     : 'none',
@@ -94,13 +93,12 @@ export default function ListSection({ title, cards, sortBy }) {
                           className="card-profile"
                           style={{
                             backgroundImage: `url(${recent.profileImageURL})`,
-                          }}
-                        ></div>
+                          }}></div>
                       ))}
                       <div className="card-recent-profileImg-count">
                         {card.messageCount - card.recentMessages.length > 0
                           ? `+${card.messageCount - card.recentMessages.length}`
-                          : '0'}
+                          : "0"}
                       </div>
                     </div>
                     <p className="card-message-count">
@@ -124,7 +122,7 @@ export default function ListSection({ title, cards, sortBy }) {
                   className="card-cover-image"
                   src={`images/list/card-cover-${card.backgroundColor}.png`}
                   style={{
-                    display: card.backgroundImageURL ? 'none' : 'block',
+                    display: card.backgroundImageURL ? "none" : "block",
                   }}
                 />
               </Link>
@@ -134,8 +132,7 @@ export default function ListSection({ title, cards, sortBy }) {
             startIndex + visibleCount < sortedCards.length && (
               <button
                 onClick={handleNext}
-                className="arrow-button arrow-button-next"
-              >
+                className="arrow-button arrow-button-next">
                 <img src="images/list/arrow-right.png" alt="arrow-right" />
               </button>
             )}

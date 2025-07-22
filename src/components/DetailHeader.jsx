@@ -85,8 +85,7 @@ const DetailHeader = ({
                     className="profile-avatar"
                     style={{
                       backgroundImage: `url(${recent.profileImageURL})`,
-                    }}
-                  ></div>
+                    }}></div>
                 ))}
                 <div className="card-recent-profileImg-count">
                   +{participantCount - (recentMessages?.length || 0)}
@@ -102,8 +101,7 @@ const DetailHeader = ({
                 <div
                   key={reaction.id}
                   className="reaction-item"
-                  onClick={() => onReact(reaction.emoji)}
-                >
+                  onClick={() => onReact(reaction.emoji)}>
                   <span className="reaction-emoji">{reaction.emoji}</span>
                   <span className="reaction-count">{reaction.count}</span>
                 </div>
@@ -113,8 +111,7 @@ const DetailHeader = ({
                 <button
                   className="toggle-reactions-btn"
                   onClick={handleToggleReactionPopup}
-                  ref={toggleRef}
-                >
+                  ref={toggleRef}>
                   <svg
                     width="16"
                     height="16"
@@ -147,8 +144,7 @@ const DetailHeader = ({
               <div className="add-reaction-container">
                 <button
                   className="add-reaction-btn"
-                  onClick={handleEmojiPickerToggle}
-                >
+                  onClick={handleEmojiPickerToggle}>
                   <span>
                     <img src={addemojiIcon} alt="addemoji" />
                     추가
@@ -181,8 +177,7 @@ const DetailHeader = ({
                   if (showEmojiPicker) {
                     setShowEmojiPicker(false);
                   }
-                }}
-              >
+                }}>
                 <img src={shareIcon} alt="공유하기" className="share-icon" />
               </button>
 

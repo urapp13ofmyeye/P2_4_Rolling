@@ -5,17 +5,7 @@ body,
 
 .message-page {
   padding-bottom: 80px;
-<<<<<<< HEAD
   margin: 0 auto;
-}
-
-.message-content {
-  max-width: 700px;
-=======
->>>>>>> 5a93d717a732749d656db048a291aeb319b0dc30
-  margin: 0 auto;
-  margin-top: 30px;
-  padding: 0 16px;
 }
 
 .message-content-page {
@@ -155,8 +145,6 @@ select {
   border-radius: 8px;
   cursor: pointer;
 }
-<<<<<<< HEAD
-=======
 
 .submit-button:disabled {
   background-color: #ccc;
@@ -240,4 +228,3 @@ select {
     width: 100%;
   }
 }
->>>>>>> 5a93d717a732749d656db048a291aeb319b0dc30
