@@ -184,19 +184,20 @@
 }
 
 .add-reaction-btn {
-  width: 75px;
-  height: 32px;
-  border-radius: 90.91px;
-  background: #f8f9fa;
-  border: 1px solid #e9ecef;
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  height: 32px;
+  padding: 6px 12px;
+  border: 1px solid #e9ecef;
+  border-radius: 20px;
+  background: #f8f9fa;
   color: #6c757d;
-  transition: all 0.2s;
+  font-size: 16px;
   font-family: "Pretendard", sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+  
 }
 
 .add-reaction-btn:hover {
