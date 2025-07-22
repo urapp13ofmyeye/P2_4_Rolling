@@ -46,6 +46,18 @@ section {
   border: 1px solid rgba(0, 0, 0, 0.1);
   flex: 0 0 275px; /* 고정 너비 */
   scroll-snap-align: start;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.card.has-image .card-name,
+.card.has-image .card-message-count,
+.card.has-image {
+  color: white;
+}
+
+.card.has-image .toReaction-icons {
+  color: white;
 }
 
 .card-cover-image {
@@ -144,8 +156,7 @@ section {
   height: 36px;
   padding: 8px 12px;
   border-radius: 32px;
-  background-color: #000000;
-  opacity: 54%;
+  background-color: rgba(0, 0, 0, 0.54);
 
   color: #ffffff;
   font-size: 16px;
@@ -156,8 +167,11 @@ section {
 .toReaction-icons {
   display: flex;
   align-items: center;
-  gap: 4px;
+  justify-content: space-between;
+  gap: 2px;
+}
 
+.emotion {
   width: 20px;
   height: 20px;
 }

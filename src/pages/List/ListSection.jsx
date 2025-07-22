@@ -71,15 +71,17 @@ export default function ListSection({ title, cards, sortBy }) {
               <Link
                 to={`/post/${card.id}`}
                 key={card.id}
-                className="card"
+                className={`card ${card.backgroundImageURL ? 'has-image' : ''}`}
                 style={{
                   backgroundColor:
                     colorMap[card.backgroundColor] || card.backgroundColor,
                   position: 'relative',
                   overflow: 'hidden',
                   backgroundImage: card.backgroundImageURL
-                    ? `url(${card.backgroundImageURL})`
+                    ? `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${card.backgroundImageURL})`
                     : 'none',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
                 }}
               >
                 <div className="card-container">
@@ -96,7 +98,9 @@ export default function ListSection({ title, cards, sortBy }) {
                         ></div>
                       ))}
                       <div className="card-recent-profileImg-count">
-                        +{card.messageCount - card.recentMessages.length || 0}
+                        {card.messageCount - card.recentMessages.length > 0
+                          ? `+${card.messageCount - card.recentMessages.length}`
+                          : '0'}
                       </div>
                     </div>
                     <p className="card-message-count">
@@ -108,7 +112,7 @@ export default function ListSection({ title, cards, sortBy }) {
                       {card.topReactions?.slice(0, 3).map((r) => (
                         <div className="toReaction" key={r.id}>
                           <span className="toReaction-icons">
-                            <div>{r.emoji}</div>
+                            <div className="emotion">{r.emoji}</div>
                             <div>{r.count}</div>
                           </span>
                         </div>
@@ -119,6 +123,9 @@ export default function ListSection({ title, cards, sortBy }) {
                 <img
                   className="card-cover-image"
                   src={`images/list/card-cover-${card.backgroundColor}.png`}
+                  style={{
+                    display: card.backgroundImageURL ? 'none' : 'block',
+                  }}
                 />
               </Link>
             ))}

@@ -1,5 +1,5 @@
-import { NavLink, useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import { NavLink, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 // 1.사용자 이름 받아오기
 // 2.사용자가 선택한 배경, 컬러 값 가져오기
@@ -12,15 +12,15 @@ const StyledButton = styled.button`
   display: block;
   width: 100%;
   border: none;
-  background-color: ${({ disabled }) => (disabled ? "#ccc" : "#9935FF")};
+  background-color: ${({ disabled }) => (disabled ? '#ccc' : '#9935FF')};
   border-radius: 12px;
   text-decoration: none;
   color: #ffffff;
   padding: 14px 24px;
   text-align: center;
   margin-top: 64px;
-  cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
-  pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
+  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
 `;
 //  포스트 요청에 보낼 데이터 분기처리 해주기
 //  포스트 요청에 대한 에러핸들링 해주기
@@ -30,26 +30,29 @@ const SubmitButton = ({ disabled, recipientName, selectedItem, mode }) => {
 
   const handleEventClick = async () => {
     try {
-      const res = await fetch("https://rolling-api.vercel.app/17-4/recipients/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json;charset=utf-8" },
-        body: JSON.stringify({
-          name: recipientName,
-          backgroundColor: mode === "color" ? selectedItem.name : "beige",
-          backgroundImageURL: mode === "image" ? selectedItem.url : null,
-        }),
-      });
+      const res = await fetch(
+        'https://rolling-api.vercel.app/17-4/recipients/',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json;charset=utf-8' },
+          body: JSON.stringify({
+            name: recipientName,
+            backgroundColor: mode === 'color' ? selectedItem.name : 'beige',
+            backgroundImageURL: mode === 'image' ? selectedItem.url : null,
+          }),
+        }
+      );
       if (!res.ok) {
         const errorData = await res.json();
-        throw new Error(errorData.message || "API 요청 실패");
+        throw new Error(errorData.message || 'API 요청 실패');
       }
 
       const data = await res.json();
-      console.log("요청 성공", data);
+      console.log('요청 성공', data);
 
       navigate(`/post/${data.id}`);
     } catch (error) {
-      console.error("Error!", error);
+      console.error('Error!', error);
     }
   };
   return (
