@@ -57,7 +57,9 @@ const PostPage = () => {
       const { results, next } = await fetchMessages(id, { limit: 8, offset });
       setMessages((prev) => {
         const merged = [...prev, ...results];
-        const unique = merged.filter((msg, index, self) => index === self.findIndex((m) => m.id === msg.id));
+        const unique = merged.filter(
+          (msg, index, self) => index === self.findIndex((m) => m.id === msg.id)
+        );
         return unique;
       });
       setOffset((prev) => prev + results.length);
@@ -117,12 +119,8 @@ const PostPage = () => {
   };
 
   const handleDelteRecipient = async () => {
-<<<<<<< HEAD
     if (!window.confirm("정말로 이 롤링페이퍼 페이지를 삭제하시겠습니까?"))
       return;
-=======
-    if (!window.confirm("정말로 이 롤링페이퍼 페이지를 삭제하시겠습니까?")) return;
->>>>>>> c298f59081b167a7995f5db27ba9efa0e4d16830
     try {
       await deleteRecipient(id);
       showToast("롤링페이퍼가 삭제되었습니다.");
@@ -182,17 +180,16 @@ const PostPage = () => {
       />
       <div className="post-main-content">
         <div className="btn-wrapper">
-          <button className="btn-delete-floating" onClick={handleDelteRecipient}>
+          <button
+            className="btn-delete-floating"
+            onClick={handleDelteRecipient}
+          >
             페이지 삭제하기
           </button>
-<<<<<<< HEAD
           <button
             className={`btn-delete-floating ${isDeleteMode ? "active" : ""}`}
             onClick={handleDeleteMode}
           >
-=======
-          <button className={`btn-delete-floating ${isDeleteMode ? "active" : ""}`} onClick={handleDeleteMode}>
->>>>>>> c298f59081b167a7995f5db27ba9efa0e4d16830
             삭제하기
           </button>
         </div>
@@ -209,9 +206,15 @@ const PostPage = () => {
         />
       </div>
 
-      {isModalOpen && <MessageModal message={selectedMessage} onClose={handleCloseModal} />}
+      {isModalOpen && (
+        <MessageModal message={selectedMessage} onClose={handleCloseModal} />
+      )}
 
-      <Toast show={toast.show} message={toast.message} onClose={handleToastClose} />
+      <Toast
+        show={toast.show}
+        message={toast.message}
+        onClose={handleToastClose}
+      />
     </div>
   );
 };

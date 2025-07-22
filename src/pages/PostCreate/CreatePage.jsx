@@ -130,92 +130,6 @@ function CreatePage() {
       <Header />
       <Outer>
         <Container>
-<<<<<<< HEAD
-          <Label>To.</Label>
-          <Input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="받는 사람 이름을 입력해주세요."
-          />
-          <h2>배경화면을 선택해 주세요.</h2>
-          <p>컬러를 선택하거나, 이미지를 선택할 수 있습니다.</p>
-          <ButtonBox>
-            <Button
-              onClick={() => handleClick("color")}
-              active={mode === "color"}
-            >
-              컬러
-            </Button>
-            <Button
-              onClick={() => handleClick("image")}
-              active={mode === "image"}
-            >
-              이미지
-            </Button>
-          </ButtonBox>
-
-          {mode === "color" && (
-            <ColorBox>
-              <ColorItem
-                color="#FFE2AD"
-                selected={bgColor === "beige"}
-                onClick={() => setBgColor("beige")}
-              />
-              <ColorItem
-                color="#ECD9FF"
-                selected={bgColor === "purple"}
-                onClick={() => setBgColor("purple")}
-              />
-              <ColorItem
-                color="#B1E4FF"
-                selected={bgColor === "blue"}
-                onClick={() => setBgColor("blue")}
-              />
-              <ColorItem
-                color="#D0F5C3"
-                selected={bgColor === "green"}
-                onClick={() => setBgColor("green")}
-              />
-            </ColorBox>
-          )}
-
-          {mode === "image" && (
-            <ImageBox>
-              <ImageItem
-                src="/images/Background1.jpg"
-                selected={bgImage === "/images/Background1.jpg"}
-                onClick={() => setBgImage("/images/Background1.jpg")}
-              />
-              <ImageItem
-                src="/images/Background2.jpg"
-                selected={bgImage === "/images/Background2.jpg"}
-                onClick={() => setBgImage("/images/Background2.jpg")}
-              />
-              <ImageItem
-                src="/images/Background3.jpg"
-                selected={bgImage === "/images/Background3.jpg"}
-                onClick={() => setBgImage("/images/Background3.jpg")}
-              />
-              <ImageItem
-                src="/images/Background4.jpg"
-                selected={bgImage === "/images/Background4.jpg"}
-                onClick={() => setBgImage("/images/Background4.jpg")}
-              />
-            </ImageBox>
-          )}
-
-          <CreateLinkButton
-            disabled={
-              !name ||
-              (mode === "color" && !bgColor) ||
-              (mode === "image" && !bgImage)
-            }
-            onClick={handleCreate}
-          >
-            생성하기
-          </CreateLinkButton>
-=======
           <Section>
             <Book>To.</Book>
             <InputBox
@@ -234,22 +148,42 @@ function CreatePage() {
             <Book>배경화면을 선택해 주세요.</Book>
             <Parah>컬러를 선택하거나, 이미지를 선택할 수 있습니다.</Parah>
             <ButtonBox>
-              <Button onClick={() => handleClick("color")} active={mode === "color"}>
+              <Button
+                onClick={() => handleClick("color")}
+                active={mode === "color"}
+              >
                 컬러
               </Button>
-              <Button onClick={() => handleClick("image")} active={mode === "image"}>
+              <Button
+                onClick={() => handleClick("image")}
+                active={mode === "image"}
+              >
                 이미지
               </Button>
             </ButtonBox>
             {mode === "color" && (
-              <SelectBox type="color" options={colorOptions} selected={selectedItem} onSelect={setSelectedItem} />
+              <SelectBox
+                type="color"
+                options={colorOptions}
+                selected={selectedItem}
+                onSelect={setSelectedItem}
+              />
             )}
             {mode === "image" && (
-              <SelectBox type="image" options={imageOptions} selected={selectedItem} onSelect={setSelectedItem} />
+              <SelectBox
+                type="image"
+                options={imageOptions}
+                selected={selectedItem}
+                onSelect={setSelectedItem}
+              />
             )}
-            <SubmitButton disabled={isDisabled} recipientName={recipientName} selectedItem={selectedItem} mode={mode} />
+            <SubmitButton
+              disabled={isDisabled}
+              recipientName={recipientName}
+              selectedItem={selectedItem}
+              mode={mode}
+            />
           </Section>
->>>>>>> c298f59081b167a7995f5db27ba9efa0e4d16830
         </Container>
       </Outer>
     </>
