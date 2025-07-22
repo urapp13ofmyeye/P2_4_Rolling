@@ -30,18 +30,15 @@ const SubmitButton = ({ disabled, recipientName, selectedItem, mode }) => {
 
   const handleEventClick = async () => {
     try {
-      const res = await fetch(
-        "https://rolling-api.vercel.app/17-4/recipients/",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json;charset=utf-8" },
-          body: JSON.stringify({
-            name: recipientName,
-            backgroundColor: mode === "color" ? selectedItem.name : "beige",
-            backgroundImageURL: mode === "image" ? selectedItem.url : null,
-          }),
-        }
-      );
+      const res = await fetch("https://rolling-api.vercel.app/17-4/recipients/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json;charset=utf-8" },
+        body: JSON.stringify({
+          name: recipientName,
+          backgroundColor: mode === "color" ? selectedItem.name : "beige",
+          backgroundImageURL: mode === "image" ? selectedItem.url : null,
+        }),
+      });
       if (!res.ok) {
         const errorData = await res.json();
         throw new Error(errorData.message || "API 요청 실패");

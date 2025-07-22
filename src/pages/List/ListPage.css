@@ -1,0 +1,267 @@
+section {
+  width: 100%;
+  max-width: 1300px; /* 최대 너비 제한 */
+  padding: 0 24px;
+  margin: 0 auto; /* 기본은 가운데 정렬 */
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* 요소들을 왼쪽 정렬 */
+}
+
+.card-list-title {
+  color: #000000;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 36px;
+  margin: 50px 0px 20px 0px;
+}
+
+.card-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1160px;
+  margin: auto;
+  box-sizing: border-box;
+}
+
+.card-list-container {
+  position: relative;
+}
+
+.card-list {
+  display: flex;
+  gap: 20px;
+  box-sizing: border-box; /* 추가 */
+  transition: transform 0.3s ease;
+  will-change: transform;
+  overflow-x: hidden;
+  scroll-snap-type: x mandatory;
+}
+
+.card {
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  flex: 0 0 275px; /* 고정 너비 */
+  scroll-snap-align: start;
+}
+
+.card-cover-image {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 140px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card-container,
+.card-toReactions {
+  position: relative;
+  z-index: 1;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 43px;
+}
+
+.card-name {
+  color: #181818;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 36px;
+}
+
+.card-profile {
+  background-color: #ffffff;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  margin-left: -12px;
+  border: 1.5px solid #ffffff;
+  box-sizing: border-box;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.card-profile:first-child {
+  margin-left: 0;
+}
+
+.card-recent-profileImg {
+  margin: 12px 0;
+  display: flex;
+  align-items: center;
+}
+
+.card-recent-profileImg-count {
+  background-color: #ffffff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-left: -12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #555555;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+.card-message-count {
+  color: #3a3a3a;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+}
+
+.card-message-count span {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 26px;
+}
+
+.card-toReactions {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  padding-top: 16px;
+}
+
+.card-toReaction {
+  display: flex;
+  gap: 8px;
+}
+
+.toReaction {
+  width: 65px;
+  height: 36px;
+  padding: 8px 12px;
+  border-radius: 32px;
+  background-color: #000000;
+  opacity: 54%;
+
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.toReaction-icons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  width: 20px;
+  height: 20px;
+}
+
+.arrow-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #dadcdf;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
+  z-index: 10;
+}
+
+/* 왼쪽 화살표 버튼 */
+.arrow-button-prev {
+  left: -20px;
+}
+
+/* 오른쪽 화살표 버튼 */
+.arrow-button-next {
+  right: -20px;
+}
+
+.arrow-button img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+/* 나도 만들어보기 버튼 */
+.buttonBox {
+  width: 100%;
+  padding: 24px 0px;
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+#createLinkButton {
+  width: 280px;
+  height: 56px;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 12px;
+  padding: 14px 24px;
+}
+
+/* Tablet(max-width: 768px) 스타일 */
+@media (max-width: 768px) {
+  section {
+    padding: 0 24px;
+    align-items: flex-start;
+    overflow-x: hidden;
+  }
+
+  .card-wrapper {
+    max-width: 100%; /* 화면 너비에 딱 맞게 */
+  }
+
+  .card-list {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    box-sizing: border-box;
+    width: 100%;
+    scroll-snap-type: x mandatory;
+  }
+
+  .card {
+    flex: 0 0 auto;
+    min-width: 240px;
+    scroll-snap-align: start;
+  }
+
+  #createLinkButton {
+    width: 720px;
+    height: 56px;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 12px;
+    padding: 14px 24px;
+  }
+}
+
+/* Mobile(max-width: 360px) 스타일 */
+@media (max-width: 360px) {
+  #createLinkButton {
+    width: 320px;
+    height: 56px;
+    font-size: 18px;
+    font-weight: 400;
+    border-radius: 12px;
+    padding: 14px 24px;
+  }
+}
