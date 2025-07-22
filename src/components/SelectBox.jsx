@@ -18,7 +18,7 @@ const ItemWrapper = styled.div`
 `;
 
 const ImageItem = styled.div`
-  background-image: url(${({ src }) => src});
+  background-image: url("${({ $src }) => $src}");
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -91,23 +91,32 @@ function SelectBox({ type, options, selected, onSelect }) {
       {options.map((item) => {
         const selectedFlag = isSelected(item);
         return (
-          <ItemWrapper key={type === "color" ? item.name : item.id} onClick={() => onSelect(item)}>
+          <ItemWrapper
+            key={type === "color" ? item.name : item.id}
+            onClick={() => onSelect(item)}
+          >
             {type === "color" ? (
               <>
                 <ColorItem color={item.colorCode}>
                   {selectedFlag && (
                     <CheckMark>
-                      <CheckImage src="/images/selected_button.png" alt="selected" />
+                      <CheckImage
+                        src="/images/selected_button.png"
+                        alt="selected"
+                      />
                     </CheckMark>
                   )}
                 </ColorItem>
               </>
             ) : (
               <>
-                <ImageItem src={item.src} dim={selectedFlag} />
+                <ImageItem $src={item.src} dim={selectedFlag} />
                 {selectedFlag && (
                   <CheckMark>
-                    <CheckImage src="/images/selected_button.png" alt="selected" />
+                    <CheckImage
+                      src="/images/selected_button.png"
+                      alt="selected"
+                    />
                   </CheckMark>
                 )}
               </>

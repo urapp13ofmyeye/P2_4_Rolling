@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchRecipients } from "../../api/api";
+import { fetchRecipients } from "../../api/api.jsx";
 import "./ListPage.css";
 import Header from "../../components/Header";
 import Button from "../../components/Button";
@@ -26,8 +26,16 @@ export default function ListPage() {
       <Header showPostButton={true} />
 
       <main>
-        <ListSection title="인기 롤링 페이퍼 🔥" cards={cards} sortBy="messageCount" />
-        <ListSection title="최근에 만든 롤링 페이퍼 ⭐️" cards={cards} sortBy="createdAt" />
+        <ListSection
+          title="인기 롤링 페이퍼 🔥"
+          cards={cards}
+          sortBy="messageCount"
+        />
+        <ListSection
+          title="최근에 만든 롤링 페이퍼 ⭐️"
+          cards={cards}
+          sortBy="createdAt"
+        />
 
         <div className="buttonBox">
           <Button id="createLinkButton" type="primary" to="/PostCreate">

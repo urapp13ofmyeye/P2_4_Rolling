@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import shareIcon from "/images/shareIcon.svg";
 import addemojiIcon from "/images/addemojiIcon.png";
-import EmojiPicker from "emoji-picker-react";
+import EmojiPicker, { EmojiStyle } from "emoji-picker-react";
 import ShareDropdown from "./ShareDropdown";
 import ReactionPopup from "./ReactionPopup";
 import "./DetailHeader.css";
@@ -23,9 +23,11 @@ const DetailHeader = ({
   const popupRef = useRef(null);
   const toggleRef = useRef(null);
 
-  const handleAddReaction = (emojiData) => {
-    const emoji = emojiData.emoji || emojiData.native;
-    onReact?.(emoji);
+  const handleAddReaction = (emojiObject) => {
+    const emoji = emojiObject.emoji || emojiObject.native; // 어떤 필드에 들어오는지 확인
+    if (onReact) {
+      onReact(emoji); // 문자열 이모지만 전달
+    }
     setShowEmojiPicker(false);
   };
 
@@ -50,7 +52,9 @@ const DetailHeader = ({
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, [showReactionPopup]);
 
   const displayedReactions = reactions.slice(0, 3);

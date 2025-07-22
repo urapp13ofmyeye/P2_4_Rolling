@@ -43,12 +43,15 @@ export default function MessagePage() {
   const [contentError, setContentError] = useState(false);
 
   const selectedSrc =
-    selectedIndex === null ? "/images/message/messagepage_nonselect_icon.png" : profileImages[selectedIndex];
+    selectedIndex === null
+      ? "/images/message/messagepage_nonselect_icon.png"
+      : profileImages[selectedIndex];
 
   const selectedImageURL =
     selectedIndex !== null
       ? window.location.origin + profileImages[selectedIndex]
-      : window.location.origin + "/images/message/messagepage_nonselect_icon.png";
+      : window.location.origin +
+        "/images/message/messagepage_nonselect_icon.png";
 
   const getPlainText = (html) => {
     const div = document.createElement("div");
@@ -78,13 +81,16 @@ export default function MessagePage() {
     };
 
     try {
-      const response = await fetch(`https://rolling-api.vercel.app/${TEAM_ID}/recipients/${recipientId}/messages/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        `https://rolling-api.vercel.app/${TEAM_ID}/recipients/${recipientId}/messages/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
 
       if (!response.ok) throw new Error("전송 실패");
 
@@ -135,7 +141,9 @@ export default function MessagePage() {
                         setSelectedIndex(idx);
                       }
                     }}
-                    className={`profile-img ${selectedIndex === idx ? "selected" : ""}`}
+                    className={`profile-img ${
+                      selectedIndex === idx ? "selected" : ""
+                    }`}
                   />
                 ))}
               </div>
@@ -145,7 +153,11 @@ export default function MessagePage() {
 
         <section className="form-section">
           <p className="section-title">상대와의 관계</p>
-          <Dropdown options={relations} value={relationship} onChange={(val) => setRelationship(val)} />
+          <Dropdown
+            options={relations}
+            value={relationship}
+            onChange={(val) => setRelationship(val)}
+          />
         </section>
 
         <section className="form-section">
@@ -158,14 +170,25 @@ export default function MessagePage() {
               setContentError(plainText.length === 0);
             }}
           >
-            <ReactQuill theme="snow" value={content} onChange={setContent} placeholder="내용을 입력해 주세요." />
+            <ReactQuill
+              theme="snow"
+              value={content}
+              onChange={setContent}
+              placeholder="내용을 입력해 주세요."
+            />
           </div>
-          {contentError && <p className="error-text">메시지 내용을 입력해 주세요.</p>}
+          {contentError && (
+            <p className="error-text">메시지 내용을 입력해 주세요.</p>
+          )}
         </section>
 
         <section className="form-section">
           <p className="section-title">폰트 선택</p>
-          <Dropdown options={fonts} value={font} onChange={(val) => setFont(val)} />
+          <Dropdown
+            options={fonts}
+            value={font}
+            onChange={(val) => setFont(val)}
+          />
         </section>
 
         <button

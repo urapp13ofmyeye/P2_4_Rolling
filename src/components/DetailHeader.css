@@ -85,6 +85,25 @@
   line-height: 18px;
 }
 
+.emoji-picker-wrapper {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  z-index: 1000;
+
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none; /* 클릭 안 되도록 */
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.emoji-picker-wrapper.open {
+  max-height: 450px; /* 충분한 높이, 필요시 조정 */
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .participant-count {
   color: #636e72;
   font-size: 14px;
@@ -100,13 +119,14 @@
   align-items: center;
   gap: 4px;
   flex-wrap: wrap;
+  position: relative; /* 팝업의 기준점이 되도록 설정 */
 }
 
 .reaction-item {
   display: flex;
   align-items: center;
   gap: 4px;
-  background: #f8f9fa;
+  background-color: rgba(0, 0, 0, 0.54);
   border: 1px solid #e9ecef;
   border-radius: 20px;
   padding: 6px 12px;
@@ -115,8 +135,8 @@
 }
 
 .reaction-item:hover {
-  background: #e9ecef;
-  border-color: #dee2e6;
+  transition: transform 0.2s ease;
+  transform: scale(1.05);
 }
 
 .reaction-emoji {
@@ -126,7 +146,7 @@
 .reaction-count {
   font-size: 14px;
   font-weight: 500;
-  color: #495057;
+  color: #f8f9fa;
   font-family: "Pretendard", sans-serif;
 }
 
@@ -188,7 +208,7 @@
 .add-reaction-btn {
   width: 75px;
   height: 32px;
-  border-radius: 20px;
+  border-radius: 90.91px;
   background: #f8f9fa;
   border: 1px solid #e9ecef;
   cursor: pointer;

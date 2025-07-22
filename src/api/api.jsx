@@ -7,13 +7,18 @@ export async function fetchRecipients() {
   return data.results;
 }
 
-export async function createRecipient(name, backgroundColor) {
+export async function createRecipient(data) {
   const res = await fetch(`${BASE_URL}/recipients/`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, backgroundColor }),
+    body: JSON.stringify(data),
   });
-  if (!res.ok) throw new Error("대상 생성 실패");
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(
+      Object.values(errorData).join(", ") || "대상 생성에 실패했습니다."
+    );
+  }
   return await res.json();
 }
 
@@ -33,9 +38,14 @@ export async function deleteRecipient(recipientId) {
 }
 
 // 메시지 목록 조회
-export async function fetchMessages(recipientId, { limit = 8, offset = 0 } = {}) {
+export async function fetchMessages(
+  recipientId,
+  { limit = 8, offset = 0 } = {}
+) {
   const params = new URLSearchParams({ limit, offset });
-  const res = await fetch(`${BASE_URL}/recipients/${recipientId}/messages/?${params.toString()}`);
+  const res = await fetch(
+    `${BASE_URL}/recipients/${recipientId}/messages/?${params.toString()}`
+  );
   if (!res.ok) throw new Error("메시지 목록 조회 실패");
   return await res.json(); // { count, next, previous, results }
 }
@@ -60,9 +70,14 @@ export async function deleteMessage(messageId) {
 }
 
 // 리액션 목록 조회
-export async function fetchReactions(recipientId, { limit = 8, offset = 0 } = {}) {
+export async function fetchReactions(
+  recipientId,
+  { limit = 8, offset = 0 } = {}
+) {
   const params = new URLSearchParams({ limit, offset });
-  const res = await fetch(`${BASE_URL}/recipients/${recipientId}/reactions/?${params.toString()}`);
+  const res = await fetch(
+    `${BASE_URL}/recipients/${recipientId}/reactions/?${params.toString()}`
+  );
   if (!res.ok) throw new Error("리액션 목록 조회 실패");
   return await res.json(); // { count, next, previous, results }
 }
