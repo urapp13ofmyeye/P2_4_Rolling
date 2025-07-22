@@ -3,6 +3,16 @@ import React from "react";
 import "./MessageCard.css";
 
 const MessageCard = ({ message, onClick, isDeleteMode, onDelete }) => {
+  // 폰트 맵핑
+  const fontMap = {
+    "Noto Sans": "'Noto Sans', sans-serif",
+    Pretendard: "'Pretendard', sans-serif",
+    나눔명조: "'Nanum Myeongjo', serif",
+    "나눔손글씨 손편지체": "'Nanum Pen Script', cursive",
+  };
+
+  const fontFamily = fontMap[message.font] || "inherit";
+
   return (
     <div className={`message-card ${isDeleteMode ? "delete-mode" : ""}`} onClick={onClick}>
       {isDeleteMode && (
@@ -34,7 +44,7 @@ const MessageCard = ({ message, onClick, isDeleteMode, onDelete }) => {
       <div className="message-divider"></div>
 
       <div className="message-content">
-        <div dangerouslySetInnerHTML={{ __html: message.content }} />
+        <div style={{ fontFamily }} dangerouslySetInnerHTML={{ __html: message.content }} />
       </div>
 
       <div className="message-date">{message.createdAt ? new Date(message.createdAt).toLocaleString("ko-KR") : ""}</div>

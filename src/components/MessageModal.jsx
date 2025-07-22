@@ -35,7 +35,11 @@ const MessageModal = ({ message, onClose }) => {
           <div className="modal-date">{new Date(message.createdAt).toLocaleString()}</div>
         </div>
 
-        <div className="modal-body" style={{ fontFamily }} dangerouslySetInnerHTML={{ __html: message.content }} />
+        <div
+          className="modal-body"
+          style={{ "--custom-font": fontFamily }}
+          dangerouslySetInnerHTML={{ __html: message.content }}
+        />
 
         <div className="modal-footer">
           <button className="btn-confirm" onClick={onClose}>

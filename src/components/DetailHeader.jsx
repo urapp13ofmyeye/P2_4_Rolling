@@ -38,9 +38,7 @@ const DetailHeader = ({
   };
 
   // 표시할 리액션 결정
-  const displayedReactions = showAllReactions
-    ? reactions
-    : reactions.slice(0, 3);
+  const displayedReactions = showAllReactions ? reactions : reactions.slice(0, 3);
   const hasMoreReactions = reactions.length > 3;
 
   return (
@@ -65,37 +63,33 @@ const DetailHeader = ({
                     }}
                   ></div>
                 ))}
+                <div className="card-recent-profileImg-count">+{participantCount - (recentMessages?.length || 0)}</div>
               </div>
-              <span className="participant-count">
-                {participantCount}명이 작성했어요!
-              </span>
+              <span className="participant-count">{participantCount}명이 작성했어요!</span>
             </div>
 
             <div className="reactions-section">
               {displayedReactions.map((reaction) => (
-                <div
-                  key={reaction.id}
-                  className="reaction-item"
-                  onClick={() => onReact(reaction.emoji)}
-                >
+                <div key={reaction.id} className="reaction-item" onClick={() => onReact(reaction.emoji)}>
                   <span className="reaction-emoji">{reaction.emoji}</span>
                   <span className="reaction-count">{reaction.count}</span>
                 </div>
               ))}
 
               {hasMoreReactions && (
-                <button
-                  className="toggle-reactions-btn"
-                  onClick={handleToggleReactions}
-                >
+                <button className="toggle-reactions-btn" onClick={handleToggleReactions}>
                   <svg
                     width="16"
                     height="16"
                     viewBox="0 0 16 16"
                     fill="none"
+<<<<<<< HEAD
                     className={`arrow-icon ${
                       showAllReactions ? "rotated" : ""
                     }`}
+=======
+                    className={`arrow-icon ${showAllReactions ? "rotated" : ""}`}
+>>>>>>> c298f59081b167a7995f5db27ba9efa0e4d16830
                   >
                     <path
                       d="M4 6L8 10L12 6"
@@ -109,18 +103,12 @@ const DetailHeader = ({
               )}
 
               <div className="add-reaction-container">
-                <button
-                  className="add-reaction-btn"
-                  onClick={handleEmojiPickerToggle}
-                >
+                <button className="add-reaction-btn" onClick={handleEmojiPickerToggle}>
                   <span>+</span>
                 </button>
 
                 {showEmojiPicker && (
-                  <EmojiPicker
-                    onEmojiSelect={handleAddReaction}
-                    onClose={() => setShowEmojiPicker(false)}
-                  />
+                  <EmojiPicker onEmojiSelect={handleAddReaction} onClose={() => setShowEmojiPicker(false)} />
                 )}
               </div>
             </div>
@@ -139,10 +127,7 @@ const DetailHeader = ({
               </button>
 
               {showShareDropdown && (
-                <ShareDropdown
-                  onClose={() => setShowShareDropdown(false)}
-                  onShowToast={onShowToast}
-                />
+                <ShareDropdown onClose={() => setShowShareDropdown(false)} onShowToast={onShowToast} />
               )}
             </div>
           </div>

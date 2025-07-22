@@ -5,6 +5,7 @@ import "react-quill-new/dist/quill.snow.css";
 import "./MessagePage.css";
 import Dropdown from "../../components/Dropdown.jsx";
 import Header from "../../components/Header";
+import InputBox from "../../components/InputBox";
 
 const profileImages = [
   "/images/message/messagepage_profile1.png",
@@ -107,18 +108,16 @@ export default function MessagePage() {
       <div className="message-content-page">
         <section className="form-section">
           <p className="section-title">From.</p>
-          <input
-            type="text"
-            placeholder="이름을 입력해 주세요."
-            className={`text-input ${senderError ? "error" : ""}`}
+          <InputBox
             value={sender}
-            onBlur={() => setSenderError(!sender.trim())}
             onChange={(e) => {
               setSender(e.target.value);
               if (senderError) setSenderError(false);
             }}
+            onBlur={() => setSenderError(!sender.trim())}
+            error={senderError}
+            placeholder="이름을 입력해 주세요."
           />
-          {senderError && <p className="error-text">값을 입력해 주세요.</p>}
         </section>
 
         <section className="form-section profile-container">
