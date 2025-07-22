@@ -1,9 +1,11 @@
 // src/components/Header.jsx
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import shareIcon from "/images/shareIcon.svg";
+import addemojiIcon from "/images/addemojiIcon.png";
 import EmojiPicker, { EmojiStyle } from "emoji-picker-react";
 import ShareDropdown from "./ShareDropdown";
+import ReactionPopup from "./ReactionPopup";
 import "./DetailHeader.css";
 import Header from "./Header";
 
@@ -17,7 +19,9 @@ const DetailHeader = ({
 }) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [showShareDropdown, setShowShareDropdown] = useState(false);
-  const [showAllReactions, setShowAllReactions] = useState(false);
+  const [showReactionPopup, setShowReactionPopup] = useState(false);
+  const popupRef = useRef(null);
+  const toggleRef = useRef(null);
 
   const handleAddReaction = (emojiObject) => {
     const emoji = emojiObject.emoji || emojiObject.native; // 어떤 필드에 들어오는지 확인
@@ -34,12 +38,28 @@ const DetailHeader = ({
     }
   };
 
-  const handleToggleReactions = () => {
-    setShowAllReactions(!showAllReactions);
+  const handleToggleReactionPopup = () => {
+    setShowReactionPopup((prev) => !prev);
   };
 
-  // 표시할 리액션 결정
-  const displayedReactions = showAllReactions ? reactions : reactions.slice(0, 3);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        popupRef.current &&
+        !popupRef.current.contains(event.target) &&
+        toggleRef.current &&
+        !toggleRef.current.contains(event.target)
+      ) {
+        setShowReactionPopup(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showReactionPopup]);
+
+  const displayedReactions = reactions.slice(0, 3);
   const hasMoreReactions = reactions.length > 3;
 
   return (
@@ -64,27 +84,41 @@ const DetailHeader = ({
                     }}
                   ></div>
                 ))}
-                <div className="card-recent-profileImg-count">+{participantCount - (recentMessages?.length || 0)}</div>
+                <div className="card-recent-profileImg-count">
+                  +{participantCount - (recentMessages?.length || 0)}
+                </div>
               </div>
-              <span className="participant-count">{participantCount}명이 작성했어요!</span>
+              <span className="participant-count">
+                {participantCount}명이 작성했어요!
+              </span>
             </div>
 
             <div className="reactions-section">
               {displayedReactions.map((reaction) => (
-                <div key={reaction.id} className="reaction-item" onClick={() => onReact(reaction.emoji)}>
+                <div
+                  key={reaction.id}
+                  className="reaction-item"
+                  onClick={() => onReact(reaction.emoji)}
+                >
                   <span className="reaction-emoji">{reaction.emoji}</span>
                   <span className="reaction-count">{reaction.count}</span>
                 </div>
               ))}
 
               {hasMoreReactions && (
-                <button className="toggle-reactions-btn" onClick={handleToggleReactions}>
+                <button
+                  className="toggle-reactions-btn"
+                  onClick={handleToggleReactionPopup}
+                  ref={toggleRef}
+                >
                   <svg
                     width="16"
                     height="16"
                     viewBox="0 0 16 16"
                     fill="none"
-                    className={`arrow-icon ${showAllReactions ? "rotated" : ""}`}
+                    className={`arrow-icon ${
+                      showReactionPopup ? "rotated" : ""
+                    }`}
                   >
                     <path
                       d="M4 6L8 10L12 6"
@@ -97,9 +131,25 @@ const DetailHeader = ({
                 </button>
               )}
 
-              <div className="add-reaction-container" style={{ position: "relative" }}>
-                <button className="add-reaction-btn" onClick={handleEmojiPickerToggle}>
-                  <span>+</span>
+
+              {showReactionPopup && (
+                <ReactionPopup
+                  ref={popupRef}
+                  reactions={reactions}
+                  onClose={() => setShowReactionPopup(false)}
+                  onReact={onReact}
+                />
+              )}
+
+              <div className="add-reaction-container">
+                <button
+                  className="add-reaction-btn"
+                  onClick={handleEmojiPickerToggle}
+                >
+                  <span>
+                    <img src={addemojiIcon} alt="addemoji" />
+                    추가
+                  </span>
                 </button>
 
                 <div className={`emoji-picker-wrapper ${showEmojiPicker ? "open" : ""}`}>
@@ -113,6 +163,7 @@ const DetailHeader = ({
                     suggestedEmojisMode="recent"
                   />
                 </div>
+
               </div>
             </div>
 
@@ -130,7 +181,10 @@ const DetailHeader = ({
               </button>
 
               {showShareDropdown && (
-                <ShareDropdown onClose={() => setShowShareDropdown(false)} onShowToast={onShowToast} />
+                <ShareDropdown
+                  onClose={() => setShowShareDropdown(false)}
+                  onShowToast={onShowToast}
+                />
               )}
             </div>
           </div>

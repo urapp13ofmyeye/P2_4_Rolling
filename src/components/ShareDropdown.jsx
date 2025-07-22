@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import "./ShareDropdown.css";
 
-const ShareDropdown = ({ onClose, onShowToast }) => {
+const ShareDropdown = ({ onClose, onShowToast, recipientName = "친구" }) => {
   const dropdownRef = useRef(null);
   const location = useLocation();
 
@@ -25,31 +25,39 @@ const ShareDropdown = ({ onClose, onShowToast }) => {
   const handleKakaoShare = () => {
     const currentUrl = getCurrentUrl();
 
-    if (window.Kakao) {
-      window.Kakao.Share.sendDefault({
-        objectType: "feed",
-        content: {
-          title: "롤링페이퍼에 참여해보세요!",
-          description: "따뜻한 메시지를 남겨주세요.",
-          imageUrl: window.location.origin + "/rolling-thumbnail.jpg",
-          link: {
-            mobileWebUrl: currentUrl,
-            webUrl: currentUrl,
-          },
-        },
-        buttons: [
-          {
-            title: "롤링페이퍼 보기",
-            link: {
-              mobileWebUrl: currentUrl,
-              webUrl: currentUrl,
-            },
-          },
-        ],
-      });
-    } else {
-      onShowToast("카카오톡 공유 기능을 사용할 수 없습니다.");
+    if (!window.Kakao) {
+      onShowToast("카카오 SDK 로딩에 실패했습니다. 잠시 후 다시 시도해주세요.");
+      onClose();
+      return;
     }
+
+    if (!window.Kakao.isInitialized()) {
+      onShowToast(
+        "카카오 SDK 초기화에 실패했습니다. 도메인 등록을 확인해주세요."
+      );
+      console.error(
+        "Kakao.isInitialized() is false. Check your JS key and registered domains in Kakao Developers."
+      );
+      onClose();
+      return;
+    }
+
+    window.Kakao.Share.sendDefault({
+      objectType: "feed",
+      content: {
+        title: `${recipientName}님에게 롤링페이퍼가 도착했어요!`,
+        description: "친구들이 남긴 따뜻한 메시지를 확인해보세요.",
+        imageUrl: `${window.location.origin}/images/logo/meta-image.png`,
+        link: { mobileWebUrl: currentUrl, webUrl: currentUrl },
+      },
+      buttons: [
+        {
+          title: "메시지 남기러 가기",
+          link: { mobileWebUrl: currentUrl, webUrl: currentUrl },
+        },
+      ],
+    });
+
     onClose();
   };
 

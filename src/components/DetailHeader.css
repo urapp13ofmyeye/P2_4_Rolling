@@ -119,13 +119,14 @@
   align-items: center;
   gap: 4px;
   flex-wrap: wrap;
+  position: relative; /* 팝업의 기준점이 되도록 설정 */
 }
 
 .reaction-item {
   display: flex;
   align-items: center;
   gap: 4px;
-  background: #f8f9fa;
+  background-color: rgba(0, 0, 0, 0.54);
   border: 1px solid #e9ecef;
   border-radius: 20px;
   padding: 6px 12px;
@@ -134,8 +135,8 @@
 }
 
 .reaction-item:hover {
-  background: #e9ecef;
-  border-color: #dee2e6;
+  transition: transform 0.2s ease;
+  transform: scale(1.05);
 }
 
 .reaction-emoji {
@@ -145,7 +146,7 @@
 .reaction-count {
   font-size: 14px;
   font-weight: 500;
-  color: #495057;
+  color: #f8f9fa;
   font-family: "Pretendard", sans-serif;
 }
 
@@ -183,9 +184,9 @@
 }
 
 .add-reaction-btn {
-  width: 32px;
+  width: 75px;
   height: 32px;
-  border-radius: 50%;
+  border-radius: 90.91px;
   background: #f8f9fa;
   border: 1px solid #e9ecef;
   cursor: pointer;
