@@ -33,7 +33,7 @@ section {
 .card-list {
   display: flex;
   gap: 20px;
-  box-sizing: border-box; /* 추가 */
+  box-sizing: border-box;
   transition: transform 0.3s ease;
   will-change: transform;
   overflow-x: hidden;

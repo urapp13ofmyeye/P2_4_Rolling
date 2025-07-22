@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { fetchRecipients } from "../../api/api";
-import "./ListPage.css";
-import Header from "../../components/Header";
-import Button from "../../components/Button";
-import ListSection from "./ListSection";
+import { useEffect, useState } from 'react';
+import { fetchRecipients } from '../../api/api';
+import './ListPage.css';
+import Header from '../../components/Header';
+import Button from '../../components/Button';
+import ListSection from './ListSection';
 
 export default function ListPage() {
   const [cards, setCards] = useState([]);
@@ -11,10 +11,11 @@ export default function ListPage() {
   useEffect(() => {
     async function loadData() {
       try {
-        const data = await fetchRecipients();
+        const data = await fetchRecipients({ limit: 100 });
+        console.log('받아온 카드 개수:', data.length);
         setCards(data); // API에서 받은 데이터로 상태 설정
       } catch (error) {
-        console.error("데이터 로드 실패:", error);
+        console.error('데이터 로드 실패:', error);
       }
     }
 
@@ -26,8 +27,16 @@ export default function ListPage() {
       <Header showPostButton={true} />
 
       <main>
-        <ListSection title="인기 롤링 페이퍼 🔥" cards={cards} sortBy="messageCount" />
-        <ListSection title="최근에 만든 롤링 페이퍼 ⭐️" cards={cards} sortBy="createdAt" />
+        <ListSection
+          title="인기 롤링 페이퍼 🔥"
+          cards={cards}
+          sortBy="messageCount"
+        />
+        <ListSection
+          title="최근에 만든 롤링 페이퍼 ⭐️"
+          cards={cards}
+          sortBy="createdAt"
+        />
 
         <div className="buttonBox">
           <Button id="createLinkButton" type="primary" to="/PostCreate">

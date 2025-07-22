@@ -30,12 +30,17 @@ export default function ListSection({ title, cards, sortBy }) {
   const visibleCards = sortedCards.slice(startIndex, startIndex + visibleCount);
 
   const handlePrev = () => {
-    if (startIndex > 0) setStartIndex((prev) => prev - visibleCount);
+    if (startIndex > 0) {
+      setStartIndex((prev) =>
+        prev - visibleCount >= 0 ? prev - visibleCount : 0
+      );
+    }
   };
 
   const handleNext = () => {
-    if (startIndex + visibleCount < sortedCards.length) {
-      setStartIndex((prev) => prev + visibleCount);
+    const nextIndex = startIndex + visibleCount;
+    if (nextIndex < sortedCards.length) {
+      setStartIndex(nextIndex);
     }
   };
 
@@ -72,7 +77,9 @@ export default function ListSection({ title, cards, sortBy }) {
                     colorMap[card.backgroundColor] || card.backgroundColor,
                   position: 'relative',
                   overflow: 'hidden',
-                  backgroundImage: card.backgroundImage,
+                  backgroundImage: card.backgroundImageURL
+                    ? `url(${card.backgroundImageURL})`
+                    : 'none',
                 }}
               >
                 <div className="card-container">
@@ -89,7 +96,7 @@ export default function ListSection({ title, cards, sortBy }) {
                         ></div>
                       ))}
                       <div className="card-recent-profileImg-count">
-                        +{card.messageCount - card.recentMessages.length}
+                        +{card.messageCount - card.recentMessages.length || 0}
                       </div>
                     </div>
                     <p className="card-message-count">
