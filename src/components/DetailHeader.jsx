@@ -1,13 +1,13 @@
 // src/components/Header.jsx
-import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
-import shareIcon from "/images/shareIcon.svg";
-import addemojiIcon from "/images/addemojiIcon.png";
-import EmojiPicker, { EmojiStyle } from "emoji-picker-react";
-import ShareDropdown from "./ShareDropdown";
-import ReactionPopup from "./ReactionPopup";
-import "./DetailHeader.css";
-import Header from "./Header";
+import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import shareIcon from '/images/shareIcon.svg';
+import addemojiIcon from '/images/addemojiIcon.png';
+import EmojiPicker, { EmojiStyle } from 'emoji-picker-react';
+import ShareDropdown from './ShareDropdown';
+import ReactionPopup from './ReactionPopup';
+import './DetailHeader.css';
+import Header from './Header';
 
 const DetailHeader = ({
   recipientName,
@@ -16,6 +16,7 @@ const DetailHeader = ({
   onReact,
   onShowToast,
   recentMessages,
+  onDeletePage,
 }) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [showShareDropdown, setShowShareDropdown] = useState(false);
@@ -53,9 +54,9 @@ const DetailHeader = ({
         setShowReactionPopup(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [showReactionPopup]);
 
@@ -70,6 +71,9 @@ const DetailHeader = ({
         <div className="detail-header-content">
           <div className="detail-header-left">
             <h1 className="recipient-name">To. {recipientName}</h1>
+            <button className="page-delete-button" onClick={onDeletePage}>
+              <img src="/images/trashIcon.svg" alt="trash" />
+            </button>
           </div>
 
           <div className="detail-header-right">
@@ -114,8 +118,9 @@ const DetailHeader = ({
                     viewBox="0 0 16 16"
                     fill="none"
                     className={`arrow-icon ${
-                      showReactionPopup ? "rotated" : ""
-                    }`}>
+                      showReactionPopup ? 'rotated' : ''
+                    }`}
+                  >
                     <path
                       d="M4 6L8 10L12 6"
                       stroke="currentColor"
@@ -148,8 +153,9 @@ const DetailHeader = ({
 
                 <div
                   className={`emoji-picker-wrapper ${
-                    showEmojiPicker ? "open" : ""
-                  }`}>
+                    showEmojiPicker ? 'open' : ''
+                  }`}
+                >
                   <EmojiPicker
                     onEmojiClick={(emojiData) => {
                       const emoji = emojiData.emoji;

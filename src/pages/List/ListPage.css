@@ -212,7 +212,7 @@ section {
 /* 나도 만들어보기 버튼 */
 .buttonBox {
   width: 100%;
-  padding: 24px 0px;
+  padding: 24px 24px;
   box-sizing: border-box;
 
   display: flex;

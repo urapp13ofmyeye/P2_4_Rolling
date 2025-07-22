@@ -77,11 +77,12 @@ export default function ListSection({ title, cards, sortBy }) {
                   position: "relative",
                   overflow: "hidden",
                   backgroundImage: card.backgroundImageURL
-                    ? `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${card.backgroundImageURL})`
-                    : "none",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}>
+                    ? `linear-gradient(rgba(0,0,0,0.6)), url(${card.backgroundImageURL})`
+                    : 'none',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              >
                 <div className="card-container">
                   <div>
                     <div className="card-name">To. {card.name}</div>
