@@ -1,5 +1,5 @@
-import { NavLink, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import { NavLink, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 // 1.사용자 이름 받아오기
 // 2.사용자가 선택한 배경, 컬러 값 가져오기
@@ -12,7 +12,7 @@ const StyledButton = styled.button`
   display: block;
   width: 100%;
   border: none;
-  background-color: ${({ disabled }) => (disabled ? '#ccc' : '#9935FF')};
+  background-color: ${({ disabled }) => (disabled ? "#ccc" : "#9935FF")};
   border-radius: 12px;
   text-decoration: none;
   color: #ffffff;
@@ -25,13 +25,13 @@ const StyledButton = styled.button`
   // 태블릿 (버튼 아래로)
   @media (min-width: 768px) {
     max-width: 720px;
-    margin-top: 240px;
+    margin-top: 60px;
   }
 
   // 데스크탑
   @media (min-width: 1024px) {
     max-width: 960px;
-    margin-top: 64px;
+    margin-top: 60px;
   }
 `;
 
@@ -57,15 +57,15 @@ const SubmitButton = ({ disabled, recipientName, selectedItem, mode }) => {
       );
       if (!res.ok) {
         const errorData = await res.json();
-        throw new Error(errorData.message || 'API 요청 실패');
+        throw new Error(errorData.message || "API 요청 실패");
       }
 
       const data = await res.json();
-      console.log('요청 성공', data);
+      console.log("요청 성공", data);
 
       navigate(`/post/${data.id}`);
     } catch (error) {
-      console.error('Error!', error);
+      console.error("Error!", error);
     }
   };
   return (
