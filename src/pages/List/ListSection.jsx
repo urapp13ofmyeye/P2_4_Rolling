@@ -20,7 +20,9 @@ export default function ListSection({ title, cards, sortBy }) {
       return [...cards].sort((a, b) => b.messageCount - a.messageCount);
     }
     if (sortBy === "createdAt") {
-      return [...cards].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      return [...cards].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
     }
     return cards;
   }, [cards, sortBy]);
@@ -28,12 +30,17 @@ export default function ListSection({ title, cards, sortBy }) {
   const visibleCards = sortedCards.slice(startIndex, startIndex + visibleCount);
 
   const handlePrev = () => {
-    if (startIndex > 0) setStartIndex((prev) => prev - visibleCount);
+    if (startIndex > 0) {
+      setStartIndex((prev) =>
+        prev - visibleCount >= 0 ? prev - visibleCount : 0
+      );
+    }
   };
 
   const handleNext = () => {
-    if (startIndex + visibleCount < sortedCards.length) {
-      setStartIndex((prev) => prev + visibleCount);
+    const nextIndex = startIndex + visibleCount;
+    if (nextIndex < sortedCards.length) {
+      setStartIndex(nextIndex);
     }
   };
 
@@ -50,7 +57,9 @@ export default function ListSection({ title, cards, sortBy }) {
         <h1 className="card-list-title">{title}</h1>
         <div className="card-list-container">
           {!isMobileScroll && startIndex > 0 && (
-            <button onClick={handlePrev} className="arrow-button arrow-button-prev">
+            <button
+              onClick={handlePrev}
+              className="arrow-button arrow-button-prev">
               <img src="images/list/arrow-left.png" alt="arrow-left" />
             </button>
           )}
@@ -61,13 +70,18 @@ export default function ListSection({ title, cards, sortBy }) {
               <Link
                 to={`/post/${card.id}`}
                 key={card.id}
-                className="card"
+                className={`card ${card.backgroundImageURL ? "has-image" : ""}`}
                 style={{
-                  backgroundColor: colorMap[card.backgroundColor] || card.backgroundColor,
+                  backgroundColor:
+                    colorMap[card.backgroundColor] || card.backgroundColor,
                   position: "relative",
                   overflow: "hidden",
-                }}
-              >
+                  backgroundImage: card.backgroundImageURL
+                    ? `linear-gradient(rgba(0,0,0,0.5)), url(${card.backgroundImageURL})`
+                    : "none",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}>
                 <div className="card-container">
                   <div>
                     <div className="card-name">To. {card.name}</div>
@@ -78,11 +92,12 @@ export default function ListSection({ title, cards, sortBy }) {
                           className="card-profile"
                           style={{
                             backgroundImage: `url(${recent.profileImageURL})`,
-                          }}
-                        ></div>
+                          }}></div>
                       ))}
                       <div className="card-recent-profileImg-count">
-                        +{card.messageCount - card.recentMessages.length}
+                        {card.messageCount - card.recentMessages.length > 0
+                          ? `+${card.messageCount - card.recentMessages.length}`
+                          : "0"}
                       </div>
                     </div>
                     <p className="card-message-count">
@@ -94,7 +109,7 @@ export default function ListSection({ title, cards, sortBy }) {
                       {card.topReactions?.slice(0, 3).map((r) => (
                         <div className="toReaction" key={r.id}>
                           <span className="toReaction-icons">
-                            <div>{r.emoji}</div>
+                            <div className="emotion">{r.emoji}</div>
                             <div>{r.count}</div>
                           </span>
                         </div>
@@ -102,15 +117,24 @@ export default function ListSection({ title, cards, sortBy }) {
                     </div>
                   </div>
                 </div>
-                <img className="card-cover-image" src={`images/list/card-cover-${card.backgroundColor}.png`} />
+                <img
+                  className="card-cover-image"
+                  src={`images/list/card-cover-${card.backgroundColor}.png`}
+                  style={{
+                    display: card.backgroundImageURL ? "none" : "block",
+                  }}
+                />
               </Link>
             ))}
           </div>
-          {!isMobileScroll && startIndex + visibleCount < sortedCards.length && (
-            <button onClick={handleNext} className="arrow-button arrow-button-next">
-              <img src="images/list/arrow-right.png" alt="arrow-right" />
-            </button>
-          )}
+          {!isMobileScroll &&
+            startIndex + visibleCount < sortedCards.length && (
+              <button
+                onClick={handleNext}
+                className="arrow-button arrow-button-next">
+                <img src="images/list/arrow-right.png" alt="arrow-right" />
+              </button>
+            )}
         </div>
       </div>
     </section>

@@ -25,13 +25,13 @@ const StyledButton = styled.button`
   // 태블릿 (버튼 아래로)
   @media (min-width: 768px) {
     max-width: 720px;
-    margin-top: 240px;
+    margin-top: 60px;
   }
 
   // 데스크탑
   @media (min-width: 1024px) {
     max-width: 960px;
-    margin-top: 64px;
+    margin-top: 60px;
   }
 `;
 

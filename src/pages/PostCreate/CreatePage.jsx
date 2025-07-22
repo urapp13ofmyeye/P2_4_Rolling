@@ -126,6 +126,35 @@ function CreatePage() {
 
   const isDisabled = recipientName === "";
 
+  const colorOptions = [
+    { name: "beige", colorCode: "#FFE2AD" },
+    { name: "purple", colorCode: "#ECD9FF" },
+    { name: "blue", colorCode: "#B1E4FF" },
+    { name: "green", colorCode: "#D0F5C3" },
+  ];
+  const imageOptions = [
+    {
+      id: 1,
+      url: "http://localhost:5173/images/Background1.jpg",
+      src: "/images/Background1.jpg",
+    },
+    {
+      id: 2,
+      url: "http://localhost:5173/images/Background2.jpg",
+      src: "/images/Background2.jpg",
+    },
+    {
+      id: 3,
+      url: "http://localhost:5173/images/Background3.jpg",
+      src: "/images/Background3.jpg",
+    },
+    {
+      id: 4,
+      url: "http://localhost:5173/images/Background4.jpg",
+      src: "/images/Background4.jpg",
+    },
+  ];
+
   const [mode, setMode] = useState("color");
   const [selectedItem, setSelectedItem] = useState(colorOptions[0]);
 
@@ -133,9 +162,7 @@ function CreatePage() {
     setMode(type); //color , image
     if (type === "color") {
       setSelectedItem(colorOptions[0]);
-      return;
-    }
-    if (type === "image") {
+    } else if (type === "image") {
       setSelectedItem(imageOptions[0]);
     }
   };
