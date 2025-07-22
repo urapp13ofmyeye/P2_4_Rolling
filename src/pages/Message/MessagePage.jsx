@@ -7,22 +7,16 @@ import Dropdown from "../../components/Dropdown.jsx";
 import Header from "../../components/Header";
 import InputBox from "../../components/InputBox";
 
-const profileImages = [
-  "/images/message/messagepage_profile1.png",
-  "/images/message/messagepage_profile2.png",
-  "/images/message/messagepage_profile3.png",
-  "/images/message/messagepage_profile4.png",
-  "/images/message/messagepage_profile5.png",
-  "/images/message/messagepage_profile6.png",
-  "/images/message/messagepage_profile7.png",
-  "/images/message/messagepage_profile8.png",
-  "/images/message/messagepage_profile9.png",
-  "/images/message/messagepage_profile10.png",
-];
+const PROFILE_IMAGES = Array.from(
+  { length: 10 },
+  (_, i) => `/images/message/messagepage_profile${i + 1}.png`
+);
 
-const relations = ["지인", "친구", "동료", "가족"];
-const fonts = ["Noto Sans", "Pretendard", "나눔명조", "나눔손글씨 손편지체"];
-const fontMap = {
+const RELATIONS = ["지인", "친구", "동료", "가족"];
+
+const FONTS = ["Noto Sans", "Pretendard", "나눔명조", "나눔손글씨 손편지체"];
+
+const FONT_MAP = {
   "Noto Sans": "Noto Sans, sans-serif",
   Pretendard: "Pretendard Variable, sans-serif",
   나눔명조: "Nanum Myeongjo, serif",
@@ -34,24 +28,22 @@ const TEAM_ID = "17-4";
 export default function MessagePage() {
   const navigate = useNavigate();
   const { recipientId } = useParams();
+
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const [content, setContent] = useState("");
   const [sender, setSender] = useState("");
   const [relationship, setRelationship] = useState("지인");
   const [font, setFont] = useState("Noto Sans");
+  const [content, setContent] = useState("");
+
   const [senderError, setSenderError] = useState(false);
   const [contentError, setContentError] = useState(false);
 
   const selectedSrc =
     selectedIndex === null
       ? "/images/message/messagepage_nonselect_icon.png"
-      : profileImages[selectedIndex];
+      : PROFILE_IMAGES[selectedIndex];
 
-  const selectedImageURL =
-    selectedIndex !== null
-      ? window.location.origin + profileImages[selectedIndex]
-      : window.location.origin +
-        "/images/message/messagepage_nonselect_icon.png";
+  const selectedImageURL = window.location.origin + selectedSrc;
 
   const getPlainText = (html) => {
     const div = document.createElement("div");
@@ -59,21 +51,24 @@ export default function MessagePage() {
     return div.textContent || div.innerText || "";
   };
 
+  const validateForm = () => {
+    const trimmedSender = sender.trim();
+    const plainContent = getPlainText(content).trim();
+
+    const senderIsValid = trimmedSender !== "";
+    const contentIsValid = plainContent.length > 0;
+
+    setSenderError(!senderIsValid);
+    setContentError(!contentIsValid);
+
+    return senderIsValid && contentIsValid;
+  };
+
   const handleSubmit = async () => {
-    const plainText = getPlainText(content).trim();
-
-    const isSenderEmpty = !sender.trim();
-    const isContentEmpty = plainText.length === 0;
-
-    setSenderError(isSenderEmpty);
-    setContentError(isContentEmpty);
-
-    if (isSenderEmpty || isContentEmpty) {
-      return;
-    }
+    if (!validateForm()) return;
 
     const data = {
-      sender,
+      sender: sender.trim(),
       profileImageURL: selectedImageURL,
       relationship,
       content,
@@ -85,9 +80,7 @@ export default function MessagePage() {
         `https://rolling-api.vercel.app/${TEAM_ID}/recipients/${recipientId}/messages/`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
         }
       );
@@ -97,23 +90,30 @@ export default function MessagePage() {
       alert("메시지가 전송되었습니다!");
       navigate(`/post/${recipientId}`);
     } catch (error) {
-      console.error("❌ 에러:", error);
+      console.error("❌ 전송 실패:", error);
       alert("메시지 전송에 실패했습니다.");
     }
   };
 
+  const handleSenderChange = (e) => {
+    setSender(e.target.value);
+    if (senderError) setSenderError(false);
+  };
+
+  const handleImageClick = (idx) => {
+    setSelectedIndex((prev) => (prev === idx ? null : idx));
+  };
+
   return (
     <div className="message-page">
-      <Header showPostButton={true} />
+      <Header showPostButton />
+
       <div className="message-content-page">
         <section className="form-section">
           <p className="section-title">From.</p>
           <InputBox
             value={sender}
-            onChange={(e) => {
-              setSender(e.target.value);
-              if (senderError) setSenderError(false);
-            }}
+            onChange={handleSenderChange}
             onBlur={() => setSenderError(!sender.trim())}
             error={senderError}
             placeholder="이름을 입력해 주세요."
@@ -129,18 +129,12 @@ export default function MessagePage() {
             <div className="profile-right">
               <p className="profile-guide">프로필 이미지를 선택해주세요!</p>
               <div className="profile-list">
-                {profileImages.map((src, idx) => (
+                {PROFILE_IMAGES.map((src, idx) => (
                   <img
                     key={idx}
                     src={src}
                     alt={`profile-${idx + 1}`}
-                    onClick={() => {
-                      if (selectedIndex === idx) {
-                        setSelectedIndex(null);
-                      } else {
-                        setSelectedIndex(idx);
-                      }
-                    }}
+                    onClick={() => handleImageClick(idx)}
                     className={`profile-img ${
                       selectedIndex === idx ? "selected" : ""
                     }`}
@@ -154,9 +148,9 @@ export default function MessagePage() {
         <section className="form-section">
           <p className="section-title">상대와의 관계</p>
           <Dropdown
-            options={relations}
+            options={RELATIONS}
             value={relationship}
-            onChange={(val) => setRelationship(val)}
+            onChange={setRelationship}
           />
         </section>
 
@@ -164,12 +158,10 @@ export default function MessagePage() {
           <p className="section-title">내용을 입력해 주세요</p>
           <div
             className="editor-box"
-            style={{ fontFamily: fontMap[font] }}
-            onBlur={() => {
-              const plainText = getPlainText(content).trim();
-              setContentError(plainText.length === 0);
-            }}
-          >
+            style={{ fontFamily: FONT_MAP[font] }}
+            onBlur={() =>
+              setContentError(getPlainText(content).trim().length === 0)
+            }>
             <ReactQuill
               theme="snow"
               value={content}
@@ -184,18 +176,15 @@ export default function MessagePage() {
 
         <section className="form-section">
           <p className="section-title">폰트 선택</p>
-          <Dropdown
-            options={fonts}
-            value={font}
-            onChange={(val) => setFont(val)}
-          />
+          <Dropdown options={FONTS} value={font} onChange={setFont} />
         </section>
 
         <button
           className="submit-button"
           onClick={handleSubmit}
-          disabled={!sender.trim() || getPlainText(content).trim().length === 0}
-        >
+          disabled={
+            !sender.trim() || getPlainText(content).trim().length === 0
+          }>
           생성하기
         </button>
       </div>
