@@ -17,6 +17,7 @@ const DetailHeader = ({
   onShowToast,
   recentMessages,
   onDeletePage,
+  isDeleteMode,
 }) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [showShareDropdown, setShowShareDropdown] = useState(false);
@@ -71,9 +72,11 @@ const DetailHeader = ({
         <div className="detail-header-content">
           <div className="detail-header-left">
             <h1 className="recipient-name">To. {recipientName}</h1>
-            <button className="page-delete-button" onClick={onDeletePage}>
-              <img src="/images/trashIcon.svg" alt="trash" />
-            </button>
+            {isDeleteMode && (
+              <button className="page-delete-button" onClick={onDeletePage}>
+                <img src="/images/trashIcon.svg" alt="trash" />
+              </button>
+            )}
           </div>
 
           <div className="detail-header-right">

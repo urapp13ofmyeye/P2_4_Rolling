@@ -197,6 +197,7 @@ const PostPage = () => {
         onReact={handleReaction} // 🆕 리액션 처리 함수 전달
         recentMessages={recipient.recentMessages}
         onDeletePage={handleDelteRecipient}
+        isDeleteMode={isDeleteMode}
       />
       <div className="post-main-content">
         <div className="btn-wrapper">
