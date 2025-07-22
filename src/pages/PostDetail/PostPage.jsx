@@ -1,10 +1,10 @@
 // src/pages/PostPage.jsx
-import { useState, useEffect, useCallback, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import DetailHeader from "../../components/DetailHeader";
-import MessageGrid from "../../components/MessageGrid";
-import MessageModal from "../../components/MessageModal";
-import Toast from "../../components/Toast";
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import DetailHeader from '../../components/DetailHeader';
+import MessageGrid from '../../components/MessageGrid';
+import MessageModal from '../../components/MessageModal';
+import Toast from '../../components/Toast';
 import {
   fetchRecipientById,
   fetchMessages,
@@ -12,20 +12,27 @@ import {
   updateReaction,
   deleteMessage,
   deleteRecipient,
-} from "../../api/api";
-import "./PostPage.css";
+} from '../../api/api';
+import './PostPage.css';
+
+const colorMap = {
+  beige: '#FFE2AD',
+  purple: '#ECD9FF',
+  blue: '#B1E4FF',
+  green: '#D0F5C3',
+};
 
 const PostPage = () => {
   const { id } = useParams(); // /post/:id에서 대상 id를 추출
   const navigate = useNavigate();
-  const [recipient, setRecipient] = useState([]); // 대상 정보
+  const [recipient, setRecipient] = useState(null); // 대상 정보 (로딩 상태 관리를 위해 null로 변경)
   const [messages, setMessages] = useState([]); // 메시지 목록
   const [reactions, setReactions] = useState([]); // 리액션 목록
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [toast, setToast] = useState({ show: false, message: "" });
+  const [toast, setToast] = useState({ show: false, message: '' });
   const [offset, setOffset] = useState(0);
   const [hasNext, setHasNext] = useState(true);
   const observerTarget = useRef(null);
@@ -40,9 +47,9 @@ const PostPage = () => {
         setRecipient(recipientData);
         setReactions(reactionData.results);
       } catch (err) {
-        console.error("데이터 로딩 실패", err);
-        alert("롤링페이퍼를 불러올 수 없거나 존재하지 않습니다.");
-        navigate("/list");
+        console.error('데이터 로딩 실패', err);
+        alert('롤링페이퍼를 불러올 수 없거나 존재하지 않습니다.');
+        navigate('/list');
       }
     }
 
@@ -57,13 +64,15 @@ const PostPage = () => {
       const { results, next } = await fetchMessages(id, { limit: 8, offset });
       setMessages((prev) => {
         const merged = [...prev, ...results];
-        const unique = merged.filter((msg, index, self) => index === self.findIndex((m) => m.id === msg.id));
+        const unique = merged.filter(
+          (msg, index, self) => index === self.findIndex((m) => m.id === msg.id)
+        );
         return unique;
       });
       setOffset((prev) => prev + results.length);
       setHasNext(!!next);
     } catch (err) {
-      showToast(err.message || "메시지를 불러오는 데 실패했습니다.");
+      showToast(err.message || '메시지를 불러오는 데 실패했습니다.');
     } finally {
       setLoading(false);
     }
@@ -93,11 +102,11 @@ const PostPage = () => {
   // 리액션 클릭 시 처리
   const handleReaction = async (emoji) => {
     try {
-      await updateReaction(id, emoji, "increase");
+      await updateReaction(id, emoji, 'increase');
       const updated = await fetchReactions(id);
       setReactions(updated.results);
     } catch (err) {
-      console.error("리액션 실패", err);
+      console.error('리액션 실패', err);
     }
   };
 
@@ -117,19 +126,20 @@ const PostPage = () => {
   };
 
   const handleDelteRecipient = async () => {
-    if (!window.confirm("정말로 이 롤링페이퍼 페이지를 삭제하시겠습니까?")) return;
+    if (!window.confirm('정말로 이 롤링페이퍼 페이지를 삭제하시겠습니까?'))
+      return;
     try {
       await deleteRecipient(id);
-      showToast("롤링페이퍼가 삭제되었습니다.");
-      navigate("/list"); // 삭제 후 목록 페이지로 이동
+      showToast('롤링페이퍼가 삭제되었습니다.');
+      navigate('/list'); // 삭제 후 목록 페이지로 이동
     } catch (err) {
-      console.error("페이지 삭제 실패:", err);
-      showToast(err.message || "페이지 삭제에 실패했습니다.");
+      console.error('페이지 삭제 실패:', err);
+      showToast(err.message || '페이지 삭제에 실패했습니다.');
     }
   };
 
   const handleDeleteMessage = async (messageId) => {
-    if (!window.confirm("정말로 이 메시지를 삭제하시겠습니까?")) return;
+    if (!window.confirm('정말로 이 메시지를 삭제하시겠습니까?')) return;
     try {
       await deleteMessage(messageId);
       setMessages((prev) => prev.filter((message) => message.id !== messageId));
@@ -137,21 +147,21 @@ const PostPage = () => {
         ...prev,
         messageCount: prev.messageCount - 1,
       }));
-      showToast("메시지가 삭제되었습니다.");
+      showToast('메시지가 삭제되었습니다.');
     } catch (err) {
-      showToast(err.message || "메시지 삭제 실패");
+      showToast(err.message || '메시지 삭제 실패');
     }
   };
 
   const showToast = (message) => {
     setToast({ show: true, message });
     setTimeout(() => {
-      setToast({ show: false, message: "" });
+      setToast({ show: false, message: '' });
     }, 5000);
   };
 
   const handleToastClose = () => {
-    setToast({ show: false, message: "" });
+    setToast({ show: false, message: '' });
   };
 
   if (!recipient) {
@@ -165,8 +175,20 @@ const PostPage = () => {
     );
   }
 
+  const pageStyle = recipient?.backgroundImageURL
+    ? {
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${recipient.backgroundImageURL})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      } // 배경 이미지 그라디언트
+    : {
+        backgroundColor:
+          colorMap[recipient.backgroundColor] || recipient.backgroundColor,
+      };
+
   return (
-    <div className="post-page">
+    <div className="post-page" style={pageStyle}>
       <DetailHeader
         recipientName={recipient.name} // To. 이름
         participantCount={recipient.messageCount}
@@ -174,13 +196,14 @@ const PostPage = () => {
         reactions={reactions} // 🆕 리액션 전달
         onReact={handleReaction} // 🆕 리액션 처리 함수 전달
         recentMessages={recipient.recentMessages}
+        onDeletePage={handleDelteRecipient}
       />
       <div className="post-main-content">
         <div className="btn-wrapper">
-          <button className="btn-delete-floating" onClick={handleDelteRecipient}>
-            페이지 삭제하기
-          </button>
-          <button className={`btn-delete-floating ${isDeleteMode ? "active" : ""}`} onClick={handleDeleteMode}>
+          <button
+            className={`btn-delete-floating ${isDeleteMode ? 'active' : ''}`}
+            onClick={handleDeleteMode}
+          >
             삭제하기
           </button>
         </div>
@@ -197,9 +220,15 @@ const PostPage = () => {
         />
       </div>
 
-      {isModalOpen && <MessageModal message={selectedMessage} onClose={handleCloseModal} />}
+      {isModalOpen && (
+        <MessageModal message={selectedMessage} onClose={handleCloseModal} />
+      )}
 
-      <Toast show={toast.show} message={toast.message} onClose={handleToastClose} />
+      <Toast
+        show={toast.show}
+        message={toast.message}
+        onClose={handleToastClose}
+      />
     </div>
   );
 };

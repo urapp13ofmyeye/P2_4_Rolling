@@ -27,7 +27,7 @@ const ItemWrapper = styled.div`
 `;
 
 const ImageItem = styled.div`
-  background-image: url(${({ src }) => src});
+  background-image: url("${({ $src }) => $src}");
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -119,7 +119,7 @@ function SelectBox({ type, options, selected, onSelect }) {
               </>
             ) : (
               <>
-                <ImageItem src={item.src} dim={selectedFlag} />
+                <ImageItem $src={item.src} dim={selectedFlag} />
                 {selectedFlag && (
                   <CheckMark>
                     <CheckImage
