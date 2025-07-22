@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import shareIcon from "/images/shareIcon.svg";
-import EmojiPicker from "./EmojiPicker";
+import EmojiPicker, { EmojiStyle } from "emoji-picker-react";
 import ShareDropdown from "./ShareDropdown";
 import "./DetailHeader.css";
 import Header from "./Header";
@@ -19,9 +19,10 @@ const DetailHeader = ({
   const [showShareDropdown, setShowShareDropdown] = useState(false);
   const [showAllReactions, setShowAllReactions] = useState(false);
 
-  const handleAddReaction = (emoji) => {
+  const handleAddReaction = (emojiObject) => {
+    const emoji = emojiObject.emoji || emojiObject.native; // 어떤 필드에 들어오는지 확인
     if (onReact) {
-      onReact(emoji);
+      onReact(emoji); // 문자열 이모지만 전달
     }
     setShowEmojiPicker(false);
   };
@@ -96,14 +97,22 @@ const DetailHeader = ({
                 </button>
               )}
 
-              <div className="add-reaction-container">
+              <div className="add-reaction-container" style={{ position: "relative" }}>
                 <button className="add-reaction-btn" onClick={handleEmojiPickerToggle}>
                   <span>+</span>
                 </button>
 
-                {showEmojiPicker && (
-                  <EmojiPicker onEmojiSelect={handleAddReaction} onClose={() => setShowEmojiPicker(false)} />
-                )}
+                <div className={`emoji-picker-wrapper ${showEmojiPicker ? "open" : ""}`}>
+                  <EmojiPicker
+                    onEmojiClick={(emojiData) => {
+                      const emoji = emojiData.emoji;
+                      onReact(emoji);
+                      setShowEmojiPicker(false);
+                    }}
+                    lazyLoadEmojis
+                    suggestedEmojisMode="recent"
+                  />
+                </div>
               </div>
             </div>
 
