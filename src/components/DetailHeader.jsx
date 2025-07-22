@@ -1,9 +1,11 @@
 // src/components/Header.jsx
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import shareIcon from "/images/shareIcon.svg";
+import addemojiIcon from "/images/addemojiIcon.png";
 import EmojiPicker from "./EmojiPicker";
 import ShareDropdown from "./ShareDropdown";
+import ReactionPopup from "./ReactionPopup";
 import "./DetailHeader.css";
 import Header from "./Header";
 
@@ -17,7 +19,9 @@ const DetailHeader = ({
 }) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [showShareDropdown, setShowShareDropdown] = useState(false);
-  const [showAllReactions, setShowAllReactions] = useState(false);
+  const [showReactionPopup, setShowReactionPopup] = useState(false);
+  const popupRef = useRef(null);
+  const toggleRef = useRef(null);
 
   const handleAddReaction = (emoji) => {
     if (onReact) {
@@ -33,14 +37,28 @@ const DetailHeader = ({
     }
   };
 
-  const handleToggleReactions = () => {
-    setShowAllReactions(!showAllReactions);
+  const handleToggleReactionPopup = () => {
+    setShowReactionPopup((prev) => !prev);
   };
 
-  // 표시할 리액션 결정
-  const displayedReactions = showAllReactions
-    ? reactions
-    : reactions.slice(0, 3);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        popupRef.current &&
+        !popupRef.current.contains(event.target) &&
+        toggleRef.current &&
+        !toggleRef.current.contains(event.target)
+      ) {
+        setShowReactionPopup(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showReactionPopup]);
+
+  const displayedReactions = reactions.slice(0, 3);
   const hasMoreReactions = reactions.length > 3;
 
   return (
@@ -89,7 +107,8 @@ const DetailHeader = ({
               {hasMoreReactions && (
                 <button
                   className="toggle-reactions-btn"
-                  onClick={handleToggleReactions}
+                  onClick={handleToggleReactionPopup}
+                  ref={toggleRef}
                 >
                   <svg
                     width="16"
@@ -97,7 +116,7 @@ const DetailHeader = ({
                     viewBox="0 0 16 16"
                     fill="none"
                     className={`arrow-icon ${
-                      showAllReactions ? "rotated" : ""
+                      showReactionPopup ? "rotated" : ""
                     }`}
                   >
                     <path
@@ -111,12 +130,24 @@ const DetailHeader = ({
                 </button>
               )}
 
+              {showReactionPopup && (
+                <ReactionPopup
+                  ref={popupRef}
+                  reactions={reactions}
+                  onClose={() => setShowReactionPopup(false)}
+                  onReact={onReact}
+                />
+              )}
+
               <div className="add-reaction-container">
                 <button
                   className="add-reaction-btn"
                   onClick={handleEmojiPickerToggle}
                 >
-                  <span>+</span>
+                  <span>
+                    <img src={addemojiIcon} alt="addemoji" />
+                    추가
+                  </span>
                 </button>
 
                 {showEmojiPicker && (
