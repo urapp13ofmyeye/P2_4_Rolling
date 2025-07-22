@@ -48,6 +48,21 @@ section {
   scroll-snap-align: start;
 }
 
+.card-cover-image {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 140px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card-container,
+.card-toReactions {
+  position: relative;
+  z-index: 1;
+}
+
 .card-container {
   display: flex;
   flex-direction: column;
@@ -61,12 +76,6 @@ section {
   line-height: 36px;
 }
 
-.card-recent-profileImg {
-  margin: 12px 0;
-  display: flex;
-  align-items: center;
-}
-
 .card-profile {
   background-color: #ffffff;
   width: 28px;
@@ -75,10 +84,19 @@ section {
   margin-left: -12px;
   border: 1.5px solid #ffffff;
   box-sizing: border-box;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .card-profile:first-child {
   margin-left: 0;
+}
+
+.card-recent-profileImg {
+  margin: 12px 0;
+  display: flex;
+  align-items: center;
 }
 
 .card-recent-profileImg-count {

@@ -1,0 +1,18 @@
+.text-input {
+  width: 100%;
+  padding: 15px;
+  border-radius: 6px;
+  border: 1.5px solid #ccc;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.text-input.error {
+  border-color: #dc3a3a;
+}
+
+.error-text {
+  color: #dc3a3a;
+  margin-top: 6px;
+  font-size: 14px;
+}

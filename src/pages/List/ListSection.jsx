@@ -39,6 +39,13 @@ export default function ListSection({ title, cards, sortBy }) {
     }
   };
 
+  const colorMap = {
+    beige: '#FFE2AD',
+    purple: '#ECD9FF',
+    blue: '#B1E4FF',
+    green: '#D0F5C3',
+  };
+
   return (
     <section>
       <div className="card-wrapper">
@@ -61,7 +68,10 @@ export default function ListSection({ title, cards, sortBy }) {
                 key={card.id}
                 className="card"
                 style={{
-                  backgroundColor: card.backgroundColor,
+                  backgroundColor:
+                    colorMap[card.backgroundColor] || card.backgroundColor,
+                  position: 'relative',
+                  overflow: 'hidden',
                   backgroundImage: card.backgroundImage,
                 }}
               >
@@ -99,6 +109,10 @@ export default function ListSection({ title, cards, sortBy }) {
                     </div>
                   </div>
                 </div>
+                <img
+                  className="card-cover-image"
+                  src={`images/list/card-cover-${card.backgroundColor}.png`}
+                />
               </Link>
             ))}
           </div>
