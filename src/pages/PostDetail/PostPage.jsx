@@ -15,10 +15,17 @@ import {
 } from "../../api/api";
 import "./PostPage.css";
 
+const colorMap = {
+  beige: "#FFE2AD",
+  purple: "#ECD9FF",
+  blue: "#B1E4FF",
+  green: "#D0F5C3",
+};
+
 const PostPage = () => {
   const { id } = useParams(); // /post/:id에서 대상 id를 추출
   const navigate = useNavigate();
-  const [recipient, setRecipient] = useState([]); // 대상 정보
+  const [recipient, setRecipient] = useState(null); // 대상 정보 (로딩 상태 관리를 위해 null로 변경)
   const [messages, setMessages] = useState([]); // 메시지 목록
   const [reactions, setReactions] = useState([]); // 리액션 목록
   const [selectedMessage, setSelectedMessage] = useState(null);
@@ -168,8 +175,18 @@ const PostPage = () => {
     );
   }
 
+  const pageStyle = recipient
+    ? {
+        backgroundColor:
+          colorMap[recipient.backgroundColor] || recipient.backgroundColor,
+        ...(recipient.backgroundImageURL && {
+          backgroundImage: `url(${recipient.backgroundImageURL})`,
+        }),
+      }
+    : {};
+
   return (
-    <div className="post-page">
+    <div className="post-page" style={pageStyle}>
       <DetailHeader
         recipientName={recipient.name} // To. 이름
         participantCount={recipient.messageCount}

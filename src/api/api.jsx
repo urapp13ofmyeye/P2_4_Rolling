@@ -7,13 +7,18 @@ export async function fetchRecipients() {
   return data.results;
 }
 
-export async function createRecipient(name, backgroundColor) {
+export async function createRecipient(data) {
   const res = await fetch(`${BASE_URL}/recipients/`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, backgroundColor }),
+    body: JSON.stringify(data),
   });
-  if (!res.ok) throw new Error("대상 생성 실패");
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(
+      Object.values(errorData).join(", ") || "대상 생성에 실패했습니다."
+    );
+  }
   return await res.json();
 }
 

@@ -93,23 +93,23 @@ function CreatePage() {
   const imageOptions = [
     {
       id: 1,
-      url: "https://rolling-api.vercel.app/static/Background1.jpg",
-      src: "../images/Background1.jpg",
+      url: "/images/Background1.jpg",
+      src: "/images/Background1.jpg",
     },
     {
       id: 2,
-      url: "https://rolling-api.vercel.app/static/Background2.jpg",
-      src: "../images/Background2.jpg",
+      url: "/images/Background2.jpg",
+      src: "/images/Background2.jpg",
     },
     {
       id: 3,
-      url: "https://rolling-api.vercel.app/static/Background3.jpg",
-      src: "../images/Background3.jpg",
+      url: "/images/Background3.jpg",
+      src: "/images/Background3.jpg",
     },
     {
       id: 4,
-      url: "https://rolling-api.vercel.app/static/Background4.jpg",
-      src: "../images/Background4.jpg",
+      url: "/images/Background4.jpg",
+      src: "/images/Background4.jpg",
     },
   ];
 
