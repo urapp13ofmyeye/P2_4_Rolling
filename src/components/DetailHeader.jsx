@@ -1,13 +1,13 @@
 // src/components/Header.jsx
-import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import shareIcon from '/images/shareIcon.svg';
-import addemojiIcon from '/images/addemojiIcon.png';
-import EmojiPicker, { EmojiStyle } from 'emoji-picker-react';
-import ShareDropdown from './ShareDropdown';
-import ReactionPopup from './ReactionPopup';
-import './DetailHeader.css';
-import Header from './Header';
+import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
+import shareIcon from "/images/shareIcon.svg";
+import addemojiIcon from "/images/addemojiIcon.svg";
+import EmojiPicker, { EmojiStyle } from "emoji-picker-react";
+import ShareDropdown from "./ShareDropdown";
+import ReactionPopup from "./ReactionPopup";
+import "./DetailHeader.css";
+import Header from "./Header";
 
 const DetailHeader = ({
   recipientName,
@@ -55,9 +55,9 @@ const DetailHeader = ({
         setShowReactionPopup(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showReactionPopup]);
 
@@ -88,7 +88,8 @@ const DetailHeader = ({
                     className="profile-avatar"
                     style={{
                       backgroundImage: `url(${recent.profileImageURL})`,
-                    }}></div>
+                    }}
+                  ></div>
                 ))}
                 <div className="card-recent-profileImg-count">
                   +{participantCount - (recentMessages?.length || 0)}
@@ -104,7 +105,8 @@ const DetailHeader = ({
                 <div
                   key={reaction.id}
                   className="reaction-item"
-                  onClick={() => onReact(reaction.emoji)}>
+                  onClick={() => onReact(reaction.emoji)}
+                >
                   <span className="reaction-emoji">{reaction.emoji}</span>
                   <span className="reaction-count">{reaction.count}</span>
                 </div>
@@ -114,14 +116,15 @@ const DetailHeader = ({
                 <button
                   className="toggle-reactions-btn"
                   onClick={handleToggleReactionPopup}
-                  ref={toggleRef}>
+                  ref={toggleRef}
+                >
                   <svg
                     width="16"
                     height="16"
                     viewBox="0 0 16 16"
                     fill="none"
                     className={`arrow-icon ${
-                      showReactionPopup ? 'rotated' : ''
+                      showReactionPopup ? "rotated" : ""
                     }`}
                   >
                     <path
@@ -147,7 +150,8 @@ const DetailHeader = ({
               <div className="add-reaction-container">
                 <button
                   className="add-reaction-btn"
-                  onClick={handleEmojiPickerToggle}>
+                  onClick={handleEmojiPickerToggle}
+                >
                   <span>
                     <img src={addemojiIcon} alt="addemoji" />
                     추가
@@ -156,7 +160,7 @@ const DetailHeader = ({
 
                 <div
                   className={`emoji-picker-wrapper ${
-                    showEmojiPicker ? 'open' : ''
+                    showEmojiPicker ? "open" : ""
                   }`}
                 >
                   <EmojiPicker
@@ -180,7 +184,8 @@ const DetailHeader = ({
                   if (showEmojiPicker) {
                     setShowEmojiPicker(false);
                   }
-                }}>
+                }}
+              >
                 <img src={shareIcon} alt="공유하기" className="share-icon" />
               </button>
 
