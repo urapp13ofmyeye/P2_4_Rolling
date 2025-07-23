@@ -24,15 +24,21 @@ const MessageModal = ({ message, onClose }) => {
               {message.profileImageURL ? (
                 <img src={message.profileImageURL} alt={message.sender} />
               ) : (
-                <div className="avatar-placeholder">{message.sender?.charAt(0)}</div>
+                <div className="avatar-placeholder">
+                  {message.sender?.charAt(0)}
+                </div>
               )}
             </div>
             <div className="user-details">
               <span className="sender-name">From. {message.sender}</span>
-              <span className={`relationship ${message.relationship}`}>{message.relationship}</span>
+              <span className={`relationship ${message.relationship}`}>
+                {message.relationship}
+              </span>
             </div>
           </div>
-          <div className="modal-date">{new Date(message.createdAt).toLocaleString()}</div>
+          <div className="modal-date">
+            {new Date(message.createdAt).toLocaleString()}
+          </div>
         </div>
 
         <div
@@ -42,7 +48,7 @@ const MessageModal = ({ message, onClose }) => {
         />
 
         <div className="modal-footer">
-          <button className="btn-confirm" onClick={onClose}>
+          <button className="btn-close-confirm" onClick={onClose}>
             확인
           </button>
         </div>

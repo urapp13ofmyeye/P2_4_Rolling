@@ -37,16 +37,6 @@ select {
   font-size: 16px;
 }
 
-.text-input.error {
-  border-color: #dc3a3a;
-}
-
-.error-text {
-  color: #dc3a3a;
-  margin-top: 6px;
-  font-size: 14px;
-}
-
 .half-select {
   width: 50%;
 }

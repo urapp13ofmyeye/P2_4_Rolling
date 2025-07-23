@@ -83,3 +83,11 @@
 .btn-confirm:hover {
   background-color: #c82333;
 }
+
+.btn-confirm.only-confirm {
+  background-color: #9935ff;
+}
+
+.btn-confirm.only-confirm:hover {
+  background-color: #7a28cc;
+}

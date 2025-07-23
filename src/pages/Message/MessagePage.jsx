@@ -6,6 +6,7 @@ import "./MessagePage.css";
 import Dropdown from "../../components/Dropdown.jsx";
 import Header from "../../components/Header";
 import InputBox from "../../components/InputBox";
+import ConfirmationModal from "../../components/ConfirmationModal";
 
 const PROFILE_IMAGES = Array.from(
   { length: 10 },
@@ -37,6 +38,12 @@ export default function MessagePage() {
 
   const [senderError, setSenderError] = useState(false);
   const [contentError, setContentError] = useState(false);
+
+  const [modal, setModal] = useState({
+    isOpen: false,
+    message: "",
+    onConfirm: () => {},
+  });
 
   const selectedSrc =
     selectedIndex === null
@@ -87,11 +94,22 @@ export default function MessagePage() {
 
       if (!response.ok) throw new Error("전송 실패");
 
-      alert("메시지가 전송되었습니다!");
-      navigate(`/post/${recipientId}`);
+      setModal({
+        isOpen: true,
+        message: "메시지가 전송되었습니다!",
+        onConfirm: () => {
+          setModal({ isOpen: false, message: "", onConfirm: () => {} });
+          navigate(`/post/${recipientId}`);
+        },
+      });
     } catch (error) {
       console.error("❌ 전송 실패:", error);
-      alert("메시지 전송에 실패했습니다.");
+      setModal({
+        isOpen: true,
+        message: "메시지 전송에 실패했습니다.",
+        onConfirm: () =>
+          setModal({ isOpen: false, message: "", onConfirm: () => {} }),
+      });
     }
   };
 
@@ -188,6 +206,16 @@ export default function MessagePage() {
           생성하기
         </button>
       </div>
+
+      <ConfirmationModal
+        isOpen={modal.isOpen}
+        message={modal.message}
+        onConfirm={modal.onConfirm}
+        onCancel={() =>
+          setModal({ isOpen: false, message: "", onConfirm: () => {} })
+        }
+        onlyConfirm
+      />
     </div>
   );
 }

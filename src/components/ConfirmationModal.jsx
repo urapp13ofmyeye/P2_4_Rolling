@@ -1,8 +1,13 @@
-// src/components/ConfirmationModal.jsx
 import React from "react";
 import "./ConfirmationModal.css";
 
-const ConfirmationModal = ({ isOpen, message, onConfirm, onCancel }) => {
+const ConfirmationModal = ({
+  isOpen,
+  message,
+  onConfirm,
+  onCancel,
+  onlyConfirm = false,
+}) => {
   if (!isOpen) return null;
 
   const handleConfirm = () => {
@@ -14,10 +19,14 @@ const ConfirmationModal = ({ isOpen, message, onConfirm, onCancel }) => {
       <div className="confirmation-modal" onClick={(e) => e.stopPropagation()}>
         <p className="confirmation-message">{message}</p>
         <div className="confirmation-buttons">
-          <button className="btn-cancel" onClick={onCancel}>
-            취소
-          </button>
-          <button className="btn-confirm" onClick={handleConfirm}>
+          {!onlyConfirm && (
+            <button className="btn-cancel" onClick={onCancel}>
+              취소
+            </button>
+          )}
+          <button
+            className={`btn-confirm ${onlyConfirm ? "only-confirm" : ""}`} // ✅ 수정된 부분
+            onClick={handleConfirm}>
             확인
           </button>
         </div>
