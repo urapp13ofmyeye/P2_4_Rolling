@@ -2,7 +2,7 @@
 .message-card {
   background: white;
   border-radius: 16px;
-  padding: 20px 20px 40px; /* 날짜를 위한 공간 확보를 위해 아래쪽 패딩 늘림 */
+  padding: 20px 20px 47.5px; /* 날짜를 위한 공간 확보를 위해 아래쪽 패딩 늘림 */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: all 0.3s ease;
