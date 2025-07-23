@@ -12,8 +12,8 @@ const BoxContainer = styled.div`
 
 const ItemWrapper = styled.div`
   position: relative;
-  width: 168px;
-  height: 168px;
+  width: 156px;
+  height: 156px;
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
@@ -102,8 +102,7 @@ function SelectBox({ type, options, selected, onSelect }) {
         return (
           <ItemWrapper
             key={type === "color" ? item.name : item.id}
-            onClick={() => onSelect(item)}
-          >
+            onClick={() => onSelect(item)}>
             {type === "color" ? (
               <>
                 <ColorItem color={item.colorCode}>
