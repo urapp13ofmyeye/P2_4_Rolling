@@ -217,8 +217,10 @@
   justify-content: center;
   height: 32px;
   padding: 6px 12px;
-  border: 1px solid #e9ecef;
-  border-radius: 20px;
+
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+
   background: #f8f9fa;
   color: #6c757d;
   font-size: 16px;
@@ -239,8 +241,8 @@
 }
 
 .btn-share {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 8px;
   border: 1px solid #d1d5db;
   cursor: pointer;
@@ -273,15 +275,22 @@
   .detail-header-right {
     gap: 16px;
   }
+
+  .emoji-picker-wrapper {
+    top: 100%; /* 버튼 바로 아래 */
+    right: auto; /* 오른쪽 위치 해제 */
+    left: 50%; /* 가로 중앙 */
+    transform: translateX(-50%);
+    margin-top: 8px; /* 버튼과 간격 */
+    width: 94vw; /* 모바일 화면 너비 거의 채움 */
+    max-height: 50vh; /* 최대 높이 제한 */
+  }
 }
 
 @media (max-width: 768px) {
   .detail-header-content {
     margin: 0 16px;
     padding: 12px 0;
-  }
-
-  .detail-header-content {
     flex-direction: column;
     gap: 16px;
     align-items: flex-start;
@@ -289,26 +298,58 @@
 
   .detail-header-left {
     width: 100%;
-    max-width: none; /* 모바일에서는 너비 제한 해제 */
+    max-width: none;
   }
 
   .detail-header-right {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    flex-direction: row; /* ✅ 세로 → 가로 정렬 */
+    align-items: center;
+    justify-content: space-between; /* 좌우 정렬 */
+    flex-wrap: wrap;
     width: 100%;
+    gap: 8px;
   }
 
   .reactions-section {
     order: 1;
-  }
-
-  .participants-section {
-    order: 2;
+    flex: 1;
+    flex-wrap: wrap;
   }
 
   .action-buttons {
-    order: 3;
-    align-self: flex-end;
+    order: 2;
+    flex-shrink: 0;
+  }
+
+  .btn-share {
+    width: 32px;
+    height: 32px;
+    padding: 6px;
+  }
+
+  .add-reaction-btn {
+    padding: 6px;
+  }
+
+  .participants-section {
+    display: none;
+  }
+
+  .emoji-picker-wrapper {
+    top: 100%;
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 8px;
+    width: 94vw;
+    max-height: 50vh;
+  }
+
+  .emoji-add-text {
+    font-size: 0; /* 텍스트 안 보이게 */
+  }
+
+  .emoji-add-text img {
+    font-size: 18px;
   }
 }

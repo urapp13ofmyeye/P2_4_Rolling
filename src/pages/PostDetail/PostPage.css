@@ -98,4 +98,15 @@
   .btn-delete-floating {
     right: 16px; /* 16px 유지 */
   }
+
+  .btn-wrapper {
+    position: sticky; /* 또는 fixed */
+    top: 30px;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 15px;
+    margin-bottom: 20px;
+  }
 }

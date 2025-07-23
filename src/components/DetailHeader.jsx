@@ -88,8 +88,7 @@ const DetailHeader = ({
                     className="profile-avatar"
                     style={{
                       backgroundImage: `url(${recent.profileImageURL})`,
-                    }}
-                  ></div>
+                    }}></div>
                 ))}
                 {participantCount >= 4 && (
                   <div className="card-recent-profileImg-count">
@@ -107,8 +106,7 @@ const DetailHeader = ({
                 <div
                   key={reaction.id}
                   className="reaction-item"
-                  onClick={() => onReact(reaction.emoji)}
-                >
+                  onClick={() => onReact(reaction.emoji)}>
                   <span className="reaction-emoji">{reaction.emoji}</span>
                   <span className="reaction-count">{reaction.count}</span>
                 </div>
@@ -118,8 +116,7 @@ const DetailHeader = ({
                 <button
                   className="toggle-reactions-btn"
                   onClick={handleToggleReactionPopup}
-                  ref={toggleRef}
-                >
+                  ref={toggleRef}>
                   <svg
                     width="16"
                     height="16"
@@ -127,8 +124,7 @@ const DetailHeader = ({
                     fill="none"
                     className={`arrow-icon ${
                       showReactionPopup ? "rotated" : ""
-                    }`}
-                  >
+                    }`}>
                     <path
                       d="M4 6L8 10L12 6"
                       stroke="currentColor"
@@ -152,9 +148,8 @@ const DetailHeader = ({
               <div className="add-reaction-container">
                 <button
                   className="add-reaction-btn"
-                  onClick={handleEmojiPickerToggle}
-                >
-                  <span>
+                  onClick={handleEmojiPickerToggle}>
+                  <span className="emoji-add-text">
                     <img src={addemojiIcon} alt="addemoji" />
                     추가
                   </span>
@@ -163,8 +158,7 @@ const DetailHeader = ({
                 <div
                   className={`emoji-picker-wrapper ${
                     showEmojiPicker ? "open" : ""
-                  }`}
-                >
+                  }`}>
                   <EmojiPicker
                     onEmojiClick={(emojiData) => {
                       const emoji = emojiData.emoji;
@@ -189,8 +183,7 @@ const DetailHeader = ({
                   if (showEmojiPicker) {
                     setShowEmojiPicker(false);
                   }
-                }}
-              >
+                }}>
                 <img src={shareIcon} alt="공유하기" className="share-icon" />
               </button>
 
