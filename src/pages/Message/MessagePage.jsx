@@ -8,34 +8,33 @@ import Header from "../../components/Header";
 import InputBox from "../../components/InputBox";
 import ConfirmationModal from "../../components/ConfirmationModal";
 
-
 const PROFILE_IMAGES = Array.from(
   { length: 10 },
   (_, i) => `/images/message/messagepage_profile${i + 1}.png`
 );
 
-const RELATIONS = ['지인', '친구', '동료', '가족'];
+const RELATIONS = ["지인", "친구", "동료", "가족"];
 
-const FONTS = ['Noto Sans', 'Pretendard', '나눔명조', '나눔손글씨 손편지체'];
+const FONTS = ["Noto Sans", "Pretendard", "나눔명조", "나눔손글씨 손편지체"];
 
 const FONT_MAP = {
-  'Noto Sans': 'Noto Sans, sans-serif',
-  Pretendard: 'Pretendard Variable, sans-serif',
-  나눔명조: 'Nanum Myeongjo, serif',
-  '나눔손글씨 손편지체': 'Nanum Brush Script, cursive',
+  "Noto Sans": "Noto Sans, sans-serif",
+  Pretendard: "Pretendard Variable, sans-serif",
+  나눔명조: "Nanum Myeongjo, serif",
+  "나눔손글씨 손편지체": "Nanum Brush Script, cursive",
 };
 
-const TEAM_ID = '17-4';
+const TEAM_ID = "17-4";
 
 export default function MessagePage() {
   const navigate = useNavigate();
   const { recipientId } = useParams();
 
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const [sender, setSender] = useState('');
-  const [relationship, setRelationship] = useState('지인');
-  const [font, setFont] = useState('Noto Sans');
-  const [content, setContent] = useState('');
+  const [sender, setSender] = useState("");
+  const [relationship, setRelationship] = useState("지인");
+  const [font, setFont] = useState("Noto Sans");
+  const [content, setContent] = useState("");
 
   const [senderError, setSenderError] = useState(false);
   const [contentError, setContentError] = useState(false);
@@ -48,22 +47,22 @@ export default function MessagePage() {
 
   const selectedSrc =
     selectedIndex === null
-      ? '/images/message/messagepage_nonselect_icon.png'
+      ? "/images/message/messagepage_nonselect_icon.png"
       : PROFILE_IMAGES[selectedIndex];
 
   const selectedImageURL = window.location.origin + selectedSrc;
 
   const getPlainText = (html) => {
-    const div = document.createElement('div');
+    const div = document.createElement("div");
     div.innerHTML = html;
-    return div.textContent || div.innerText || '';
+    return div.textContent || div.innerText || "";
   };
 
   const validateForm = () => {
     const trimmedSender = sender.trim();
     const plainContent = getPlainText(content).trim();
 
-    const senderIsValid = trimmedSender !== '';
+    const senderIsValid = trimmedSender !== "";
     const contentIsValid = plainContent.length > 0;
 
     setSenderError(!senderIsValid);
@@ -72,18 +71,16 @@ export default function MessagePage() {
     return senderIsValid && contentIsValid;
   };
 
-  // handleConfirm을 data를 인자로 받도록 수정
   const handleConfirm = async (data) => {
     try {
       const response = await fetch(
         `https://rolling-api.vercel.app/${TEAM_ID}/recipients/${recipientId}/messages/`,
         {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
         }
       );
-
 
       if (!response.ok) throw new Error("전송 실패");
       navigate(`/post/${recipientId}`, { replace: true });
@@ -106,7 +103,6 @@ export default function MessagePage() {
       font,
     };
 
-    // modal에 onConfirm 콜백으로 data를 넘겨서 최신 데이터를 참조하게 수정
     setModal({
       isOpen: true,
       message: "메시지를 전송할까요?",
@@ -155,7 +151,7 @@ export default function MessagePage() {
                     alt={`profile-${idx + 1}`}
                     onClick={() => handleImageClick(idx)}
                     className={`profile-img ${
-                      selectedIndex === idx ? 'selected' : ''
+                      selectedIndex === idx ? "selected" : ""
                     }`}
                   />
                 ))}
@@ -180,8 +176,7 @@ export default function MessagePage() {
             style={{ fontFamily: FONT_MAP[font] }}
             onBlur={() =>
               setContentError(getPlainText(content).trim().length === 0)
-            }
-          >
+            }>
             <ReactQuill
               theme="snow"
               value={content}
@@ -202,8 +197,9 @@ export default function MessagePage() {
         <button
           className="submit-button"
           onClick={handleSubmit}
-          disabled={!sender.trim() || getPlainText(content).trim().length === 0}
-        >
+          disabled={
+            !sender.trim() || getPlainText(content).trim().length === 0
+          }>
           생성하기
         </button>
       </div>
