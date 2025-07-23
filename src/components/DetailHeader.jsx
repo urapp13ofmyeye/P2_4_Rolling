@@ -181,6 +181,9 @@ const DetailHeader = ({
             <div className="action-buttons">
               <button
                 className="btn-share"
+                onMouseDown={(e) => {
+                  e.stopPropagation();
+                }}
                 onClick={() => {
                   setShowShareDropdown(!showShareDropdown);
                   if (showEmojiPicker) {
