@@ -3,8 +3,10 @@
   padding: 15px;
   border-radius: 6px;
   border: 1.5px solid #ccc;
+  outline: none;
   font-size: 16px;
   box-sizing: border-box;
+  margin-bottom: 6px;
 }
 
 .text-input.error {
@@ -13,6 +15,5 @@
 
 .error-text {
   color: #dc3a3a;
-  margin-top: 6px;
   font-size: 14px;
 }

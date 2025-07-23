@@ -139,7 +139,7 @@
   border-top: 1px solid #e9ecef;
 }
 
-.btn-confirm {
+.btn-close-confirm {
   background: #6c5ce7;
   color: white;
   border: none;
@@ -152,7 +152,7 @@
   font-family: "Pretendard", sans-serif;
 }
 
-.btn-confirm:hover {
+.btn-close-confirm:hover {
   background: #5a4fcf;
 }
 
