@@ -14,7 +14,10 @@ const MessageCard = ({ message, onClick, isDeleteMode, onDelete }) => {
   const fontFamily = fontMap[message.font] || "inherit";
 
   return (
-    <div className={`message-card ${isDeleteMode ? "delete-mode" : ""}`} onClick={onClick}>
+    <div
+      className={`message-card ${isDeleteMode ? "delete-mode" : ""}`}
+      onClick={onClick}
+    >
       {isDeleteMode && (
         <button
           className="delete-button"
@@ -30,24 +33,37 @@ const MessageCard = ({ message, onClick, isDeleteMode, onDelete }) => {
       <div className="message-header">
         <div className="avatar">
           {message.profileImageURL ? (
-            <img src={message.profileImageURL} alt={message.sender || "unknown"} />
+            <img
+              src={message.profileImageURL}
+              alt={message.sender || "unknown"}
+            />
           ) : (
-            <div className="avatar-placeholder">{message?.sender?.charAt(0) || "?"}</div>
+            <div className="avatar-placeholder">
+              {message?.sender?.charAt(0) || "?"}
+            </div>
           )}
         </div>
         <div className="message-info">
           <span className="sender-name">From. {message.sender}</span>
-          <span className={`relationship ${message.relationship}`}>{message.relationship}</span>
+          <span className={`relationship ${message.relationship}`}>
+            {message.relationship}
+          </span>
         </div>
       </div>
 
       <div className="message-divider"></div>
 
-      <div className="message-content">
-        <div style={{ fontFamily }} dangerouslySetInnerHTML={{ __html: message.content }} />
-      </div>
+      <div
+        className="message-content"
+        style={{ fontFamily }}
+        dangerouslySetInnerHTML={{ __html: message.content }}
+      />
 
-      <div className="message-date">{message.createdAt ? new Date(message.createdAt).toLocaleString("ko-KR") : ""}</div>
+      <div className="message-date">
+        {message.createdAt
+          ? new Date(message.createdAt).toLocaleString("ko-KR")
+          : ""}
+      </div>
     </div>
   );
 };
