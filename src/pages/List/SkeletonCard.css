@@ -1,0 +1,46 @@
+.skeleton {
+  background-color: #e0e0e0;
+  border-radius: 6px;
+  animation: shimmer 1.6s infinite linear;
+}
+
+.skeleton-title {
+  width: 100px;
+  height: 20px;
+  margin-bottom: 8px;
+}
+
+.skeleton-profile {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.skeleton-profile-count {
+  width: 30px;
+  height: 20px;
+  margin-left: 4px;
+  border-radius: 4px;
+}
+
+.skeleton-message-count {
+  width: 120px;
+  height: 16px;
+  margin-top: 6px;
+}
+
+.skeleton-reaction {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+/* Shimmer animation */
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
