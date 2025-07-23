@@ -97,28 +97,6 @@ const colorOptions = [
   { name: "blue", colorCode: "#B1E4FF" },
   { name: "green", colorCode: "#D0F5C3" },
 ];
-const imageOptions = [
-  {
-    id: 1,
-    url: "https://p2-4-rolling.vercel.app/static/Background1.jpg",
-    src: "../images/Background1.jpg",
-  },
-  {
-    id: 2,
-    url: "https://p2-4-rolling.vercel.app/static/Background2.jpg",
-    src: "../images/Background2.jpg",
-  },
-  {
-    id: 3,
-    url: "https://p2-4-rolling.vercel.app/static/Background3.jpg",
-    src: "../images/Background3.jpg",
-  },
-  {
-    id: 4,
-    url: "https://p2-4-rolling.vercel.app/static/Background4.jpg",
-    src: "../images/Background4.jpg",
-  },
-];
 
 function CreatePage() {
   const [recipientName, setRecipientName] = useState("");
