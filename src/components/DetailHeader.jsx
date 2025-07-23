@@ -1,13 +1,13 @@
 // src/components/Header.jsx
-import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import shareIcon from '/images/shareIcon.svg';
-import addemojiIcon from '/images/addemojiIcon.png';
-import EmojiPicker, { EmojiStyle } from 'emoji-picker-react';
-import ShareDropdown from './ShareDropdown';
-import ReactionPopup from './ReactionPopup';
-import './DetailHeader.css';
-import Header from './Header';
+import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
+import shareIcon from "/images/shareIcon.svg";
+import addemojiIcon from "/images/addemojiIcon.svg";
+import EmojiPicker, { EmojiStyle } from "emoji-picker-react";
+import ShareDropdown from "./ShareDropdown";
+import ReactionPopup from "./ReactionPopup";
+import "./DetailHeader.css";
+import Header from "./Header";
 
 const DetailHeader = ({
   recipientName,
@@ -55,9 +55,9 @@ const DetailHeader = ({
         setShowReactionPopup(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showReactionPopup]);
 
@@ -91,9 +91,11 @@ const DetailHeader = ({
                     }}
                   ></div>
                 ))}
-                <div className="card-recent-profileImg-count">
-                  +{participantCount - (recentMessages?.length || 0)}
-                </div>
+                {participantCount >= 4 && (
+                  <div className="card-recent-profileImg-count">
+                    +{participantCount - (recentMessages?.length || 0)}
+                  </div>
+                )}
               </div>
               <span className="participant-count">
                 {participantCount}명이 작성했어요!
@@ -124,7 +126,7 @@ const DetailHeader = ({
                     viewBox="0 0 16 16"
                     fill="none"
                     className={`arrow-icon ${
-                      showReactionPopup ? 'rotated' : ''
+                      showReactionPopup ? "rotated" : ""
                     }`}
                   >
                     <path
@@ -160,7 +162,7 @@ const DetailHeader = ({
 
                 <div
                   className={`emoji-picker-wrapper ${
-                    showEmojiPicker ? 'open' : ''
+                    showEmojiPicker ? "open" : ""
                   }`}
                 >
                   <EmojiPicker

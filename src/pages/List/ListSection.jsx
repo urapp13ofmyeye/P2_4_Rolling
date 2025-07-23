@@ -78,7 +78,7 @@ export default function ListSection({ title, cards, sortBy }) {
                   position: 'relative',
                   overflow: 'hidden',
                   backgroundImage: card.backgroundImageURL
-                    ? `linear-gradient(rgba(0,0,0,0.6)), url(${card.backgroundImageURL})`
+                    ? `linear-gradient(rgba(0,0,0,0.5)), url(${card.backgroundImageURL})`
                     : 'none',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
@@ -88,24 +88,34 @@ export default function ListSection({ title, cards, sortBy }) {
                   <div>
                     <div className="card-name">To. {card.name}</div>
                     <div className="card-recent-profileImg">
-                      {card.recentMessages?.map((recent) => (
-                        <div
-                          key={recent.id}
-                          className="card-profile"
-                          style={{
-                            backgroundImage: `url(${recent.profileImageURL})`,
-                          }}
-                        ></div>
-                      ))}
-                      <div className="card-recent-profileImg-count">
-                        {card.messageCount - card.recentMessages.length > 0
-                          ? `+${card.messageCount - card.recentMessages.length}`
-                          : '0'}
-                      </div>
+                      {card.messageCount === 0 ? (
+                        <>
+                          <div className="card-profile placeholder" />
+                        </>
+                      ) : (
+                        card.recentMessages?.map((recent) => (
+                          <div
+                            key={recent.id}
+                            className="card-profile"
+                            style={{
+                              backgroundImage: `url(${recent.profileImageURL})`,
+                            }}
+                          ></div>
+                        ))
+                      )}
+                      {card.messageCount - card.recentMessages.length > 0 ? (
+                        <div className="card-recent-profileImg-count">
+                          +{card.messageCount - card.recentMessages.length}
+                        </div>
+                      ) : null}
                     </div>
-                    <p className="card-message-count">
-                      <span>{card.messageCount}명</span>이 작성했어요
-                    </p>
+                    {card.messageCount === 0 ? (
+                      '아무도 작성하지 않았어요'
+                    ) : (
+                      <p className="card-message-count">
+                        <span>{card.messageCount}명</span>이 작성했어요
+                      </p>
+                    )}
                   </div>
                   <div className="card-toReactions">
                     <div className="card-toReaction">

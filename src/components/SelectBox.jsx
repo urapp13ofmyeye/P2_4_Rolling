@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 const BoxContainer = styled.div`
   display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 10px;
   width: 100%;
   margin-top: 24px;
@@ -15,6 +17,13 @@ const ItemWrapper = styled.div`
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
+
+  // 모바일에서 2X2 정렬
+  @media (max-width: 767px) {
+    width: 48%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
 `;
 
 const ImageItem = styled.div`

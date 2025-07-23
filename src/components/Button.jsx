@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom"; // react-router-dom Link 컴포넌트
-import './Button.css';
+import "./Button.css";
 
 const Button = ({ type = "primary", to, children, id, ...props }) => {
   const className = type === "primary" ? "primaryButton" : "outLinedButton";

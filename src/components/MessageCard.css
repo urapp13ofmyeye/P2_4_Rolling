@@ -2,7 +2,7 @@
 .message-card {
   background: white;
   border-radius: 16px;
-  padding: 20px;
+  padding: 20px 20px 47.5px; /* 날짜를 위한 공간 확보를 위해 아래쪽 패딩 늘림 */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: all 0.3s ease;
@@ -140,8 +140,8 @@
   flex: 1;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 4;
-  line-clamp: 4;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   margin: 0;
   font-family: "Pretendard", sans-serif;
