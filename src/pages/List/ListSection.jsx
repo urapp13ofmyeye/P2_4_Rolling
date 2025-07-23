@@ -118,7 +118,9 @@ export default function ListSection({ title, cards, sortBy, isLoading }) {
                           ) : null}
                         </div>
                         {card.messageCount === 0 ? (
-                          '아무도 작성하지 않았어요'
+                          <p className="card-message-count">
+                            아무도 작성하지 않았어요.
+                          </p>
                         ) : (
                           <p className="card-message-count">
                             <span>{card.messageCount}명</span>이 작성했어요
