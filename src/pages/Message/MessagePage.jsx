@@ -45,6 +45,8 @@ export default function MessagePage() {
     onConfirm: () => {},
   });
 
+  const [pendingData, setPendingData] = useState(null); // ✅ 추가
+
   const selectedSrc =
     selectedIndex === null
       ? "/images/message/messagepage_nonselect_icon.png"
@@ -71,7 +73,7 @@ export default function MessagePage() {
     return senderIsValid && contentIsValid;
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!validateForm()) return;
 
     const data = {
@@ -82,34 +84,37 @@ export default function MessagePage() {
       font,
     };
 
+    // ✅ 전송하지 않고 보류 → 확인 시 전송
+    setPendingData(data);
+    setModal({
+      isOpen: true,
+      message: "메시지를 전송할까요?",
+      onConfirm: handleConfirm,
+    });
+  };
+
+  const handleConfirm = async () => {
+    if (!pendingData) return;
+
     try {
       const response = await fetch(
         `https://rolling-api.vercel.app/${TEAM_ID}/recipients/${recipientId}/messages/`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
+          body: JSON.stringify(pendingData),
         }
       );
 
       if (!response.ok) throw new Error("전송 실패");
 
-      setModal({
-        isOpen: true,
-        message: "메시지가 전송되었습니다!",
-        onConfirm: () => {
-          setModal({ isOpen: false, message: "", onConfirm: () => {} });
-          navigate(`/post/${recipientId}`);
-        },
-      });
+      navigate(`/post/${recipientId}`);
     } catch (error) {
       console.error("❌ 전송 실패:", error);
-      setModal({
-        isOpen: true,
-        message: "메시지 전송에 실패했습니다.",
-        onConfirm: () =>
-          setModal({ isOpen: false, message: "", onConfirm: () => {} }),
-      });
+      alert("메시지 전송에 실패했습니다.");
+    } finally {
+      setPendingData(null);
+      setModal({ isOpen: false, message: "", onConfirm: () => {} });
     }
   };
 
@@ -211,9 +216,7 @@ export default function MessagePage() {
         isOpen={modal.isOpen}
         message={modal.message}
         onConfirm={modal.onConfirm}
-        onCancel={() =>
-          setModal({ isOpen: false, message: "", onConfirm: () => {} })
-        }
+        onCancel={() => {}} // ✅ 모달 외부 클릭 무시
         onlyConfirm
       />
     </div>

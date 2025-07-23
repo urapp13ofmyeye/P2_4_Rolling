@@ -7,7 +7,7 @@ import SubmitButton from "../../components/SubmitButton";
 import Header from "../../components/Header";
 
 const Outer = styled.div`
-  max-width: 750px;
+  max-width: 700px;
   margin: 30px auto 0;
   padding: 0 15px;
   overflow: visible;
