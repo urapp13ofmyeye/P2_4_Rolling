@@ -1,5 +1,5 @@
-import { useState, useMemo, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState, useMemo, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function ListSection({ title, cards, sortBy }) {
   const [startIndex, setStartIndex] = useState(0);
@@ -11,15 +11,15 @@ export default function ListSection({ title, cards, sortBy }) {
       setIsMobileScroll(window.innerWidth <= 768);
     };
     checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   const sortedCards = useMemo(() => {
-    if (sortBy === "messageCount") {
+    if (sortBy === 'messageCount') {
       return [...cards].sort((a, b) => b.messageCount - a.messageCount);
     }
-    if (sortBy === "createdAt") {
+    if (sortBy === 'createdAt') {
       return [...cards].sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
       );
@@ -45,10 +45,10 @@ export default function ListSection({ title, cards, sortBy }) {
   };
 
   const colorMap = {
-    beige: "#FFE2AD",
-    purple: "#ECD9FF",
-    blue: "#B1E4FF",
-    green: "#D0F5C3",
+    beige: '#FFE2AD',
+    purple: '#ECD9FF',
+    blue: '#B1E4FF',
+    green: '#D0F5C3',
   };
 
   return (
@@ -59,7 +59,8 @@ export default function ListSection({ title, cards, sortBy }) {
           {!isMobileScroll && startIndex > 0 && (
             <button
               onClick={handlePrev}
-              className="arrow-button arrow-button-prev">
+              className="arrow-button arrow-button-prev"
+            >
               <img src="images/list/arrow-left.png" alt="arrow-left" />
             </button>
           )}
@@ -70,50 +71,63 @@ export default function ListSection({ title, cards, sortBy }) {
               <Link
                 to={`/post/${card.id}`}
                 key={card.id}
-                className={`card ${card.backgroundImageURL ? "has-image" : ""}`}
+                className={`card ${card.backgroundImageURL ? 'has-image' : ''}`}
                 style={{
                   backgroundColor:
                     colorMap[card.backgroundColor] || card.backgroundColor,
-                  position: "relative",
-                  overflow: "hidden",
+                  position: 'relative',
+                  overflow: 'hidden',
                   backgroundImage: card.backgroundImageURL
                     ? `linear-gradient(rgba(0,0,0,0.5)), url(${card.backgroundImageURL})`
-                    : "none",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}>
+                    : 'none',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              >
                 <div className="card-container">
                   <div>
                     <div className="card-name">To. {card.name}</div>
                     <div className="card-recent-profileImg">
-                      {card.recentMessages?.map((recent) => (
-                        <div
-                          key={recent.id}
-                          className="card-profile"
-                          style={{
-                            backgroundImage: `url(${recent.profileImageURL})`,
-                          }}></div>
-                      ))}
-                      <div className="card-recent-profileImg-count">
-                        {card.messageCount - card.recentMessages.length > 0
-                          ? `+${card.messageCount - card.recentMessages.length}`
-                          : "0"}
-                      </div>
+                      {card.messageCount === 0 ? (
+                        <>
+                          <div className="card-profile placeholder" />
+                        </>
+                      ) : (
+                        card.recentMessages?.map((recent) => (
+                          <div
+                            key={recent.id}
+                            className="card-profile"
+                            style={{
+                              backgroundImage: `url(${recent.profileImageURL})`,
+                            }}
+                          ></div>
+                        ))
+                      )}
+                      {card.messageCount - card.recentMessages.length > 0 ? (
+                        <div className="card-recent-profileImg-count">
+                          +{card.messageCount - card.recentMessages.length}
+                        </div>
+                      ) : null}
                     </div>
-                    <p className="card-message-count">
-                      <span>{card.messageCount}명</span>이 작성했어요
-                    </p>
+                    {card.messageCount === 0 ? (
+                      '아무도 작성하지 않았어요'
+                    ) : (
+                      <p className="card-message-count">
+                        <span>{card.messageCount}명</span>이 작성했어요
+                      </p>
+                    )}
                   </div>
                   <div className="card-toReactions">
                     <div className="card-toReaction">
-                      {card.topReactions?.slice(0, 3).map((r) => (
-                        <div className="toReaction" key={r.id}>
-                          <span className="toReaction-icons">
-                            <div className="emotion">{r.emoji}</div>
-                            <div>{r.count}</div>
-                          </span>
-                        </div>
-                      ))}
+                      {card.topReactions?.length > 0 &&
+                        card.topReactions.slice(0, 3).map((r) => (
+                          <div className="toReaction" key={r.id}>
+                            <span className="toReaction-icons">
+                              <div className="emotion">{r.emoji}</div>
+                              <div>{r.count}</div>
+                            </span>
+                          </div>
+                        ))}
                     </div>
                   </div>
                 </div>
@@ -121,7 +135,7 @@ export default function ListSection({ title, cards, sortBy }) {
                   className="card-cover-image"
                   src={`images/list/card-cover-${card.backgroundColor}.png`}
                   style={{
-                    display: card.backgroundImageURL ? "none" : "block",
+                    display: card.backgroundImageURL ? 'none' : 'block',
                   }}
                 />
               </Link>
@@ -131,7 +145,8 @@ export default function ListSection({ title, cards, sortBy }) {
             startIndex + visibleCount < sortedCards.length && (
               <button
                 onClick={handleNext}
-                className="arrow-button arrow-button-next">
+                className="arrow-button arrow-button-next"
+              >
                 <img src="images/list/arrow-right.png" alt="arrow-right" />
               </button>
             )}
