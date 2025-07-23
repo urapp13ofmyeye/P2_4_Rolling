@@ -7,7 +7,7 @@ function InputBox({
   error,
   onBlur,
   placeholder,
-  maxLength = 5,
+  maxLength = 10,
 }) {
   const [isMessage, setIsMessage] = useState(false);
 
