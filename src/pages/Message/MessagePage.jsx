@@ -45,8 +45,6 @@ export default function MessagePage() {
     onConfirm: () => {},
   });
 
-  const [pendingData, setPendingData] = useState(null); // ✅ 추가
-
   const selectedSrc =
     selectedIndex === null
       ? "/images/message/messagepage_nonselect_icon.png"
@@ -73,6 +71,28 @@ export default function MessagePage() {
     return senderIsValid && contentIsValid;
   };
 
+  // handleConfirm을 data를 인자로 받도록 수정
+  const handleConfirm = async (data) => {
+    try {
+      const response = await fetch(
+        `https://rolling-api.vercel.app/${TEAM_ID}/recipients/${recipientId}/messages/`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        }
+      );
+
+      if (!response.ok) throw new Error("전송 실패");
+      navigate(`/post/${recipientId}`, { replace: true });
+    } catch (error) {
+      console.error("❌ 전송 실패:", error);
+      alert("메시지 전송에 실패했습니다.");
+    } finally {
+      setModal({ isOpen: false, message: "", onConfirm: () => {} });
+    }
+  };
+
   const handleSubmit = () => {
     if (!validateForm()) return;
 
@@ -84,38 +104,12 @@ export default function MessagePage() {
       font,
     };
 
-    // ✅ 전송하지 않고 보류 → 확인 시 전송
-    setPendingData(data);
+    // modal에 onConfirm 콜백으로 data를 넘겨서 최신 데이터를 참조하게 수정
     setModal({
       isOpen: true,
       message: "메시지를 전송할까요?",
-      onConfirm: handleConfirm,
+      onConfirm: () => handleConfirm(data),
     });
-  };
-
-  const handleConfirm = async () => {
-    if (!pendingData) return;
-
-    try {
-      const response = await fetch(
-        `https://rolling-api.vercel.app/${TEAM_ID}/recipients/${recipientId}/messages/`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(pendingData),
-        }
-      );
-
-      if (!response.ok) throw new Error("전송 실패");
-
-      navigate(`/post/${recipientId}`);
-    } catch (error) {
-      console.error("❌ 전송 실패:", error);
-      alert("메시지 전송에 실패했습니다.");
-    } finally {
-      setPendingData(null);
-      setModal({ isOpen: false, message: "", onConfirm: () => {} });
-    }
   };
 
   const handleSenderChange = (e) => {
@@ -216,7 +210,9 @@ export default function MessagePage() {
         isOpen={modal.isOpen}
         message={modal.message}
         onConfirm={modal.onConfirm}
-        onCancel={() => {}} // ✅ 모달 외부 클릭 무시
+        onCancel={() =>
+          setModal({ isOpen: false, message: "", onConfirm: () => {} })
+        }
         onlyConfirm
       />
     </div>
