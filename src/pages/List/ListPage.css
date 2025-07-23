@@ -86,10 +86,6 @@ section {
   font-size: 24px;
   font-weight: 700;
   line-height: 36px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
 }
 
 .card-profile {
@@ -153,7 +149,6 @@ section {
 .card-toReaction {
   display: flex;
   gap: 8px;
-  min-height: 36px;
 }
 
 .toReaction {
@@ -217,7 +212,7 @@ section {
 /* 나도 만들어보기 버튼 */
 .buttonBox {
   width: 100%;
-  padding: 24px 24px;
+  padding: 24px 0px;
   box-sizing: border-box;
 
   display: flex;
