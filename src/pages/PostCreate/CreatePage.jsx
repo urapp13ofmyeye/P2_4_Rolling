@@ -48,7 +48,7 @@ const Book = styled.h2`
   margin-bottom: 14px;
 `;
 
-const Parah = styled.p`
+const Paragraph = styled.p`
   font-weight: 400;
   font-size: 16px;
   color: #555555;
@@ -166,7 +166,9 @@ function CreatePage() {
 
           <Section>
             <Book>배경화면을 선택해 주세요.</Book>
-            <Parah>컬러를 선택하거나, 이미지를 선택할 수 있습니다.</Parah>
+            <Paragraph>
+              컬러를 선택하거나, 이미지를 선택할 수 있습니다.
+            </Paragraph>
             <ButtonBox>
               <Button
                 onClick={() => handleClick("color")}
