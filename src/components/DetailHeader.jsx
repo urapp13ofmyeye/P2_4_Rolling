@@ -91,9 +91,11 @@ const DetailHeader = ({
                     }}
                   ></div>
                 ))}
-                <div className="card-recent-profileImg-count">
-                  +{participantCount - (recentMessages?.length || 0)}
-                </div>
+                {participantCount >= 4 && (
+                  <div className="card-recent-profileImg-count">
+                    +{participantCount - (recentMessages?.length || 0)}
+                  </div>
+                )}
               </div>
               <span className="participant-count">
                 {participantCount}명이 작성했어요!
