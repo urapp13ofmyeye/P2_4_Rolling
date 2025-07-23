@@ -71,17 +71,8 @@ export default function MessagePage() {
     return senderIsValid && contentIsValid;
   };
 
-  const handleSubmit = async () => {
-    if (!validateForm()) return;
-
-    const data = {
-      sender: sender.trim(),
-      profileImageURL: selectedImageURL,
-      relationship,
-      content,
-      font,
-    };
-
+  // handleConfirm을 data를 인자로 받도록 수정
+  const handleConfirm = async (data) => {
     try {
       const response = await fetch(
         `https://rolling-api.vercel.app/${TEAM_ID}/recipients/${recipientId}/messages/`,
@@ -93,24 +84,32 @@ export default function MessagePage() {
       );
 
       if (!response.ok) throw new Error("전송 실패");
-
-      setModal({
-        isOpen: true,
-        message: "메시지가 전송되었습니다!",
-        onConfirm: () => {
-          setModal({ isOpen: false, message: "", onConfirm: () => {} });
-          navigate(`/post/${recipientId}`);
-        },
-      });
+      navigate(`/post/${recipientId}`, { replace: true });
     } catch (error) {
       console.error("❌ 전송 실패:", error);
-      setModal({
-        isOpen: true,
-        message: "메시지 전송에 실패했습니다.",
-        onConfirm: () =>
-          setModal({ isOpen: false, message: "", onConfirm: () => {} }),
-      });
+      alert("메시지 전송에 실패했습니다.");
+    } finally {
+      setModal({ isOpen: false, message: "", onConfirm: () => {} });
     }
+  };
+
+  const handleSubmit = () => {
+    if (!validateForm()) return;
+
+    const data = {
+      sender: sender.trim(),
+      profileImageURL: selectedImageURL,
+      relationship,
+      content,
+      font,
+    };
+
+    // modal에 onConfirm 콜백으로 data를 넘겨서 최신 데이터를 참조하게 수정
+    setModal({
+      isOpen: true,
+      message: "메시지를 전송할까요?",
+      onConfirm: () => handleConfirm(data),
+    });
   };
 
   const handleSenderChange = (e) => {
