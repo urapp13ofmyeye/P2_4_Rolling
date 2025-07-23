@@ -144,7 +144,7 @@ function CreatePage() {
       setSelectedItem(imageOptions[0]);
     }
   };
-  console.log(selectedItem);
+
   return (
     <>
       <Header />
