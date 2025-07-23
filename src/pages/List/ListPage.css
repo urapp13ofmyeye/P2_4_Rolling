@@ -86,6 +86,10 @@ section {
   font-size: 24px;
   font-weight: 700;
   line-height: 36px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .card-profile {
@@ -144,12 +148,12 @@ section {
 .card-toReactions {
   border-top: 1px solid rgba(0, 0, 0, 0.12);
   padding-top: 16px;
-  min-height: 52px;
 }
 
 .card-toReaction {
   display: flex;
   gap: 8px;
+  min-height: 36px;
 }
 
 .toReaction {
